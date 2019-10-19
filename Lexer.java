@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.lang.Math;
+
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 
@@ -14,14 +16,25 @@ public class Lexer
 
     private int lineNumber = 1;
     private int columnNumber = 0;
-
     private ArrayList<Token> tokens;
 
     private StringBuilder buffer;
     private char curChar;
     private int tokenStart = 0;
     private int tokenLine = 1;
+    private TokenType tokenType;
+
+    private int intValue;
+    private float floatValue;
+    private int floatExp;
+    private boolean boolValue;
+    private char charValue;
+    private String stringValue;
+    private boolean isFloatExp;
+    private boolean isFloatWithNegativeExp;
+
     private boolean readNext = true;
+    private int temp = 0;
     private Map<Character, Character> special_symbols;
     private Map<String, String> keywords;
 
@@ -62,14 +75,13 @@ public class Lexer
     {
         curState = State.START;
         FileReader input = new FileReader(fileName);
-        int temp = 0;
         while(true)
         {
             if(readNext) temp = input.read();   
             curChar = (char)temp;
             columnNumber++;
-            if(temp == -1) break;
             parse();
+            if(temp == -1) { break;}
             if(!readNext) 
             {
                 readNext = true; columnNumber--;;
@@ -97,23 +109,50 @@ public class Lexer
     private void beginToken(State state)
     {
         buffer = new StringBuilder();
+        tokenType = TokenType.NONE;
         curState = state;
         tokenStart = columnNumber;
         tokenLine = lineNumber;
+        
+        intValue = 0;
+        floatValue = 0f;
+        floatExp = 1;
     }
 
     private void endToken()
     {
-        endToken(String.format("%s", curState), false);
+        endToken(curState, false);
     }
-    private void endToken(String type)
+    private void endToken(State state)
     {
-        endToken(type, false);
+        endToken(state, false);
     }
-    private void endToken(String type, boolean isKwd)
+    private void endToken(State state, boolean isKwd)
     {
-        //Token l = new Token( isKwd ? "" : buffer, type, tokenLine, tokenStart);
-        Token l = new Token( buffer.toString(), type, tokenLine, tokenStart);
+        //Token l = new Token( isKwd ? "" : buffer.toString(), state, tokenLine, tokenStart);
+        Token l = new Token( buffer.toString(), state, tokenType, tokenLine, tokenStart);
+        switch (tokenType) {
+            case INT:
+                l.setValue(intValue);
+                break;
+            case FLOAT:
+                l.setValue(floatValue);
+                break;
+            case FLOAT_EXP:
+                l.setValue(floatValue * (float)Math.pow(10, intValue));
+                break;
+            case BOOL:
+                l.setValue(boolValue);
+                break;
+            case CHAR:
+                l.setValue(charValue);
+                break;
+            case STRING:
+                l.setValue(stringValue);
+                break;
+            default:
+                break;
+        }
         tokenStart = 0;
         tokens.add(l);
         curState = State.START;
@@ -216,6 +255,8 @@ public class Lexer
     // States
     private void st_start()
     {
+        if(temp == -1)
+            return;
         if(isLetter(curChar))
         {
             beginToken(State.IDENTIFIER);
@@ -226,6 +267,8 @@ public class Lexer
         {
             beginToken(State.INT_LITERAL);
             buffer.append(curChar);
+            intValue *= 10;
+            intValue += (int)(curChar - '0');
             return;
         }
         switch (curChar) {
@@ -339,14 +382,17 @@ public class Lexer
         }
         if(!buffer.toString().equals(""))
         {
-            String kw = keywords.get(buffer);
+            String kw = keywords.get(buffer.toString());
             if(kw != null)
             {
-                endToken(kw, true);
+                buffer = new StringBuilder(kw);
+                tokenType = TokenType.KEYWORD;
+                endToken(State.KEYWORD, true);
                 readNext = false;
                 return;
             }
             readNext = false;
+            tokenType = TokenType.IDENTIFIER;
             endToken();
         }
         else
@@ -359,6 +405,14 @@ public class Lexer
         if(isDigit(curChar))
         {
             buffer.append(curChar);
+            intValue *= 10;
+            intValue += (int)(curChar - '0');
+            return;
+        }
+        if(temp == -1)
+        {
+            tokenType = TokenType.INT;
+            endToken();
             return;
         }
         switch(curChar)
@@ -369,11 +423,16 @@ public class Lexer
                 break;
             case 'e':
                 buffer.append(curChar);
+                floatValue = intValue;
+                intValue = 0;
+                isFloatExp = true;
+                tokenType = TokenType.FLOAT_EXP;
                 curState = State.FLOAT_LITERAL_EXP;
                 break;
             case ' ':
             case '\n':
             case '\t':
+                tokenType = TokenType.INT;
                 endToken();
                 break;
             default:
@@ -388,11 +447,15 @@ public class Lexer
         {
             buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_END;
+            isFloatWithNegativeExp = false;
+            intValue *= 10;
+            intValue += (int)(curChar - '0');
         }
         else if(curChar == '-')
-        {            
+        {
             buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_NEGATIVE;
+            isFloatWithNegativeExp = true;
         }
         else
         {
@@ -406,6 +469,9 @@ public class Lexer
         {
             buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_END;
+            intValue *= 10;
+            intValue += (int)(curChar - '0');
+            floatExp *= 10;
         }
         else
         {
@@ -419,9 +485,13 @@ public class Lexer
         {
             buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_END;
+            intValue *= 10;
+            intValue += (int)(curChar - '0');
         }
-        else if(curChar == ' ' || curChar == '\t' || curChar == '\n')
+        else if(curChar == ' ' || curChar == '\t' || curChar == '\n' || temp == -1)
         {
+            tokenType = TokenType.FLOAT_EXP;
+            if(isFloatWithNegativeExp) intValue *= -1;
             endToken();
         }
         else
@@ -436,10 +506,14 @@ public class Lexer
         if(isDigit(curChar))
         {
             buffer.append(curChar);
+            floatExp *= 10;
+            floatValue += (float)(curChar - '0') / floatExp;
         }
         else
         {
+            tokenType = TokenType.FLOAT;
             readNext = false;
+            floatValue = intValue + floatValue;
             endToken();
         }
     }
@@ -456,6 +530,7 @@ public class Lexer
             default:
                 buffer.append(curChar);
                 curState = State.CHAR_LITERAL_END;
+                charValue = curChar;
                 break;
         }
     }
@@ -464,7 +539,8 @@ public class Lexer
         Character special_char = special_symbols.get(curChar);
         if(special_char != null)
         {
-            buffer.append(special_char.charValue());
+            charValue = special_char.charValue();
+            buffer.append(charValue);
             curState = State.CHAR_LITERAL_END;
         }
         else
@@ -476,7 +552,8 @@ public class Lexer
     {
         if(curChar == '\'')
         {
-            endToken(String.format("%s", State.CHAR_LITERAL));
+            tokenType = TokenType.CHAR;
+            endToken(State.CHAR_LITERAL);
         }
         else
         {
@@ -491,6 +568,8 @@ public class Lexer
                 curState = State.STRING_LITERAL_SPEC;
                 break;
             case '\"':
+                tokenType = TokenType.STRING;
+                stringValue = buffer.toString();
                 endToken();
                 break;
             case '\n':

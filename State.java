@@ -19,7 +19,8 @@ public enum State {
     L_BRACKET("["),
     R_BRACKET("]"),
     COMMA(","),
-  
+    KEYWORD("keyword"),
+    
     SEMI_CLN(";"),
     OP_EXP("^"),
     OP_PLUS("+"),
@@ -38,7 +39,7 @@ public enum State {
     M_COMMENT_START("``"),
     MULTI_COMMENT("``"),
     M_COMMENT_END("``"),
-  
+    
     COMP_OP_MORE(">"),
     COMP_OP_LESS("<"),
     COMP_OP_MORE_EQ(">="),
