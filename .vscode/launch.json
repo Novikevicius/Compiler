@@ -7,7 +7,7 @@
         {
             "type": "java",
             "name": "Debug (Launch)-Main",
-            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/lab2/Example.txt",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example.txt",
             "request": "launch",
             "mainClass": "Main"
         }
