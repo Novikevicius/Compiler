@@ -77,15 +77,16 @@ public class Lexer
         FileReader input = new FileReader(fileName);
         while(true)
         {
-            if(readNext) temp = input.read();   
+            if(readNext) temp = input.read();               
+            else
+            {
+                readNext = true; columnNumber--;;
+            }
             curChar = (char)temp;
             columnNumber++;
             parse();
             if(temp == -1) { break;}
-            if(!readNext) 
-            {
-                readNext = true; columnNumber--;;
-            }
+
         }
         input.close();
         if (curState != State.START && curState != State.L_COMMENT)
@@ -385,8 +386,14 @@ public class Lexer
             String kw = keywords.get(buffer.toString());
             if(kw != null)
             {
+                if(kw.equals("LIT_TRUE") || kw.equals("LIT_FALSE"))
+                {
+                    tokenType = TokenType.BOOL;
+                    boolValue = Boolean.parseBoolean(buffer.toString());
+                }  else {
+                    tokenType = TokenType.KEYWORD;
+                }
                 buffer = new StringBuilder(kw);
-                tokenType = TokenType.KEYWORD;
                 endToken(State.KEYWORD, true);
                 readNext = false;
                 return;
@@ -432,6 +439,9 @@ public class Lexer
             case ' ':
             case '\n':
             case '\t':
+            case ';':
+            case ')':
+            case '(':
                 tokenType = TokenType.INT;
                 endToken();
                 break;
@@ -488,7 +498,7 @@ public class Lexer
             intValue *= 10;
             intValue += (int)(curChar - '0');
         }
-        else if(curChar == ' ' || curChar == '\t' || curChar == '\n' || temp == -1)
+        else if(curChar == ' ' || curChar == '\t' || curChar == '\n' || curChar == ';' || curChar == '(' || curChar == ')' || temp == -1)
         {
             tokenType = TokenType.FLOAT_EXP;
             if(isFloatWithNegativeExp) intValue *= -1;
@@ -509,12 +519,15 @@ public class Lexer
             floatExp *= 10;
             floatValue += (float)(curChar - '0') / floatExp;
         }
-        else
+        else if(curChar == ' ' || curChar == '\n' || curChar == '\t' || curChar == ';' || curChar == '(' || curChar == ')' || temp == -1)
         {
             tokenType = TokenType.FLOAT;
             readNext = false;
             floatValue = intValue + floatValue;
             endToken();
+        }
+        else {
+            error("Unexpected symbol after float literal");
         }
     }
     private void st_char_literal()
@@ -790,7 +803,7 @@ public class Lexer
                 break;
             default:            
                 readNext = false;
-                error("Unrecognized symbol"); // TODO: FIX ERROR MESSAGE
+                error("Unrecognized symbol in not operator");
                 break;
         }
     }
@@ -832,7 +845,7 @@ public class Lexer
         else
         {
             readNext = false;
-            error("Unrecognized symbol");
+            error("Unrecognized symbol after |");
         }
     }
     private void error(String msg)
@@ -840,6 +853,7 @@ public class Lexer
         buffer = new StringBuilder();
         curState = State.START;
         String[] array = fileName.split("/"); // get file name
-        System.out.println("LexerError: " + array[array.length - 1] + ":" + lineNumber + ":" + columnNumber + ": " + msg + " '" +curChar +"'");
+        String errorMsg = "LexerError: " + array[array.length - 1] + ":" + lineNumber + ":" + columnNumber + ": " + msg + " '" + (curChar == 13 ? "\\n": curChar) + "'(" + (int)curChar + ")";
+        System.out.println(errorMsg);
     }
 }
