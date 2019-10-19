@@ -367,9 +367,14 @@ public class Lexer
                 buffer += curChar;
                 curState = State.FLOAT_LITERAL_EXP;
                 break;
+            case ' ':
+            case '\n':
+            case '\t':
+                endToken();
+                break;
             default:
                 readNext = false;
-                endToken();
+                error("Unrecognized int literal value");
                 break;
         }
     }
@@ -725,7 +730,7 @@ public class Lexer
     {
         buffer = "";
         curState = State.START;
-        String[] array = fileName.split("/");
-        System.out.println(array[array.length - 1] + ":" + lineNumber + ":" + columnNumber + ": " + msg + " '" +curChar +"'");
+        String[] array = fileName.split("/"); // get file name
+        System.out.println("LexerError: " + array[array.length - 1] + ":" + lineNumber + ":" + columnNumber + ": " + msg + " '" +curChar +"'");
     }
 }
