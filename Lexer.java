@@ -448,10 +448,10 @@ public class Lexer
         {
             case '\\':
                 curState = State.CHAR_LITERAL_SPEC;
-                buffer += curChar;
                 break;
             case '\'':
                 error("Empty char literal");
+                break;
             default:
                 buffer += curChar;
                 curState = State.CHAR_LITERAL_END;
@@ -463,7 +463,7 @@ public class Lexer
         Character special_char = special_symbols.get(curChar);
         if(special_char != null)
         {
-            //buffer += special_char.charValue();
+            buffer += special_char.charValue();
             curState = State.CHAR_LITERAL_END;
         }
         else
