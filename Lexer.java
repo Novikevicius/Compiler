@@ -60,24 +60,22 @@ public class Lexer
     public void start() throws IOException
     {
         curState = State.START;
-        Scanner input = new Scanner(new FileReader(fileName));
-        String line = "";
-        while(input.hasNext())
+        FileReader input = new FileReader(fileName);
+        int temp = 0;
+        while(true)
         {
-            line = input.nextLine() + "\n";
-            for(int i = 0; i < line.length(); i++)
+            if(readNext) temp = input.read();   
+            curChar = (char)temp;
+            columnNumber++;
+            if(temp == -1) break;
+            parse();
+            if(!readNext) 
             {
-                curChar = line.charAt(i);
-                columnNumber++;
-                parse();
-                if(!readNext) 
-                {
-                    readNext = true; columnNumber--; i--;
-                }
+                readNext = true; columnNumber--;;
             }
         }
         input.close();
-        if (curState != State.START)
+        if (curState != State.START && curState != State.L_COMMENT)
         {
             if(curState == State.MULTI_COMMENT || curState == State.M_COMMENT_START)
                 error("Multi line comment not closed");
@@ -324,6 +322,8 @@ public class Lexer
                 lineNumber++;
                 columnNumber = 0;
                 break;  
+            case (char)13:
+                break;
             default:
                 error("Unrecognized symbol");
                 break;
@@ -517,8 +517,9 @@ public class Lexer
     {
         if(curChar == '\n')
         {
-             curState = State.START;
-             readNext = false;
+            lineNumber++;
+            columnNumber = 0;
+            curState = State.START;
         }
     }
     private void st_m_comment_start()
