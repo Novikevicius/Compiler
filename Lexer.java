@@ -399,6 +399,12 @@ public class Lexer
         }
         else
         {
+            if(curState == State.FLOAT_LITERAL_EXP_NEGATIVE)
+            {
+                readNext = false;
+                error("Unexpected character");
+                return;
+            }
             readNext = false;
             curState = State.FLOAT_LITERAL_EXP;
             endToken();
