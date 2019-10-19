@@ -17,7 +17,7 @@ public class Lexer
 
     private ArrayList<Token> tokens;
 
-    private String buffer = "";
+    private StringBuilder buffer;
     private char curChar;
     private int tokenStart = 0;
     private int tokenLine = 1;
@@ -28,6 +28,7 @@ public class Lexer
     public Lexer(String file)
     {
         this.fileName = file;
+        buffer = new StringBuilder();
         tokens = new ArrayList<Token>();
         keywords = new HashMap<>();
         keywords.put("while",  "KW_WHILE");
@@ -95,7 +96,7 @@ public class Lexer
     }
     private void beginToken(State state)
     {
-        buffer = "";
+        buffer = new StringBuilder();
         curState = state;
         tokenStart = columnNumber;
         tokenLine = lineNumber;
@@ -112,17 +113,17 @@ public class Lexer
     private void endToken(String type, boolean isKwd)
     {
         //Token l = new Token( isKwd ? "" : buffer, type, tokenLine, tokenStart);
-        Token l = new Token( buffer, type, tokenLine, tokenStart);
+        Token l = new Token( buffer.toString(), type, tokenLine, tokenStart);
         tokenStart = 0;
         tokens.add(l);
         curState = State.START;
-        buffer = "";
+        buffer = new StringBuilder();
         tokenLine = 1;
     }
     private void oneSymbolToken(State state)
     {
         beginToken(state);
-        buffer += curChar;
+        buffer.append(curChar);
         endToken();
     }
 
@@ -218,23 +219,23 @@ public class Lexer
         if(isLetter(curChar))
         {
             beginToken(State.IDENTIFIER);
-            buffer += curChar;
+            buffer.append(curChar);
             return;
         }
         if(isDigit(curChar))
         {
             beginToken(State.INT_LITERAL);
-            buffer += curChar;
+            buffer.append(curChar);
             return;
         }
         switch (curChar) {
             case '_':
                 beginToken(State.IDENTIFIER);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '.':
                 beginToken(State.FLOAT_LITERAL);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '^':
                 oneSymbolToken(State.OP_EXP);  
@@ -277,43 +278,43 @@ public class Lexer
                 break;
             case '-':
                 beginToken(State.OP_MINUS);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '+':
                 beginToken(State.OP_PLUS);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '*':
                 beginToken(State.OP_MULT);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '/':
                 beginToken(State.OP_DIV);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '<':
                 beginToken(State.COMP_OP_LESS);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '>':
                 beginToken(State.COMP_OP_MORE);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '!':
                 beginToken(State.COMP_OP_NOT_EQ);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '=':
                 beginToken(State.ASSIGN_OP);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '&':
                 beginToken(State.LOGIC_OP_AND);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case '|':
                 beginToken(State.LOGIC_OP_OR);
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
             case ' ':
                 columnNumber--;
@@ -333,10 +334,10 @@ public class Lexer
     {
         if(isLetter(curChar) || isDigit(curChar) || curChar == '_')
         {
-            buffer += curChar;
+            buffer.append(curChar);
             return;
         }
-        if(!buffer.isEmpty())
+        if(!buffer.toString().equals(""))
         {
             String kw = keywords.get(buffer);
             if(kw != null)
@@ -357,17 +358,17 @@ public class Lexer
     {
         if(isDigit(curChar))
         {
-            buffer += curChar;
+            buffer.append(curChar);
             return;
         }
         switch(curChar)
         {
             case '.':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState = State.FLOAT_LITERAL;
                 break;
             case 'e':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState = State.FLOAT_LITERAL_EXP;
                 break;
             case ' ':
@@ -385,12 +386,12 @@ public class Lexer
     {
         if(isDigit(curChar))
         {
-            buffer += curChar;
+            buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_END;
         }
         else if(curChar == '-')
         {            
-            buffer += curChar;
+            buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_NEGATIVE;
         }
         else
@@ -403,7 +404,7 @@ public class Lexer
     {
         if(isDigit(curChar))
         {
-            buffer += curChar;
+            buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_END;
         }
         else
@@ -416,7 +417,7 @@ public class Lexer
     {
         if(isDigit(curChar))
         {
-            buffer += curChar;
+            buffer.append(curChar);
             curState = State.FLOAT_LITERAL_EXP_END;
         }
         else if(curChar == ' ' || curChar == '\t' || curChar == '\n')
@@ -434,7 +435,7 @@ public class Lexer
     {
         if(isDigit(curChar))
         {
-            buffer += curChar;
+            buffer.append(curChar);
         }
         else
         {
@@ -453,7 +454,7 @@ public class Lexer
                 error("Empty char literal");
                 break;
             default:
-                buffer += curChar;
+                buffer.append(curChar);
                 curState = State.CHAR_LITERAL_END;
                 break;
         }
@@ -463,7 +464,7 @@ public class Lexer
         Character special_char = special_symbols.get(curChar);
         if(special_char != null)
         {
-            buffer += special_char.charValue();
+            buffer.append(special_char.charValue());
             curState = State.CHAR_LITERAL_END;
         }
         else
@@ -496,7 +497,7 @@ public class Lexer
                 lineNumber++;
                 break;
             default:
-                buffer += curChar;
+                buffer.append(curChar);
                 break;
         }
     }
@@ -506,7 +507,7 @@ public class Lexer
         if(special_char != null)
         {
             curState = State.STRING_LITERAL;
-            buffer += special_char;
+            buffer.append(special_char.charValue());
         }
         else
         {
@@ -554,12 +555,12 @@ public class Lexer
         switch(curChar)
         {
             case '-':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.OP_AFFIX_MINUS;
                 endToken();
                 break;
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.ASSIGN_OP_MINUS;
                 endToken();
                 break;
@@ -581,12 +582,12 @@ public class Lexer
         switch(curChar)
         {
             case '+':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.OP_AFFIX_PLUS;
                 endToken();
                 break;
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.ASSIGN_OP_PLUS;
                 endToken();
                 break;
@@ -608,7 +609,7 @@ public class Lexer
         switch(curChar)
         {
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.ASSIGN_OP_MULT;
                 endToken();
                 break;
@@ -630,7 +631,7 @@ public class Lexer
         switch(curChar)
         {
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.ASSIGN_OP_DIV;
                 endToken();
                 break;
@@ -652,7 +653,7 @@ public class Lexer
         switch(curChar)
         {
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.COMP_OP_LESS_EQ;
                 endToken();
                 break;
@@ -674,7 +675,7 @@ public class Lexer
         switch(curChar)
         {
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.COMP_OP_MORE_EQ;
                 endToken();
                 break;
@@ -697,7 +698,7 @@ public class Lexer
         switch(curChar)
         {
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.COMP_OP_NOT_EQ;
                 endToken();
                 break;
@@ -719,7 +720,7 @@ public class Lexer
         switch(curChar)
         {
             case '=':
-                buffer += curChar;
+                buffer.append(curChar);
                 curState  = State.COMP_OP_EQ;
                 endToken();
                 break;
@@ -733,7 +734,7 @@ public class Lexer
     {
         if(curChar == '&')
         {
-            buffer += curChar;
+            buffer.append(curChar);
             endToken();
         }
         else
@@ -746,7 +747,7 @@ public class Lexer
     {
         if(curChar == '|')
         {
-            buffer += curChar;
+            buffer.append(curChar);
             endToken();
         }
         else
@@ -757,7 +758,7 @@ public class Lexer
     }
     private void error(String msg)
     {
-        buffer = "";
+        buffer = new StringBuilder();
         curState = State.START;
         String[] array = fileName.split("/"); // get file name
         System.out.println("LexerError: " + array[array.length - 1] + ":" + lineNumber + ":" + columnNumber + ": " + msg + " '" +curChar +"'");
