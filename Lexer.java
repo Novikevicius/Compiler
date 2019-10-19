@@ -488,12 +488,12 @@ public class Lexer
         {
             case '\\':
                 curState = State.STRING_LITERAL_SPEC;
-                buffer += curChar;
                 break;
             case '\"':
                 endToken();
                 break;
             case '\n':
+                lineNumber++;
                 break;
             default:
                 buffer += curChar;
@@ -506,6 +506,7 @@ public class Lexer
         if(special_char != null)
         {
             curState = State.STRING_LITERAL;
+            buffer += special_char;
         }
         else
         {
