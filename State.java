@@ -5,6 +5,7 @@ public enum State {
     FLOAT_LITERAL("float number"),
     FLOAT_LITERAL_EXP("float number exponential form"),
     FLOAT_LITERAL_EXP_NEGATIVE("float number negative exponential form"),
+    FLOAT_LITERAL_EXP_END("float number or e or -e"),
     CHAR_LITERAL("'"),
     CHAR_LITERAL_SPEC("'"),
     CHAR_LITERAL_END("'"),

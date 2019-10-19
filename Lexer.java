@@ -149,6 +149,9 @@ public class Lexer
             case FLOAT_LITERAL_EXP_NEGATIVE:
                 st_float_literal_exp_negative();
                 break;
+            case FLOAT_LITERAL_EXP_END:
+                st_float_literal_exp_end();
+                break;
             case CHAR_LITERAL:
                 st_char_literal();
                 break;
@@ -380,7 +383,12 @@ public class Lexer
     }
     private void st_float_literal_exp()
     {
-        if(curChar == '-' || isDigit(curChar))
+        if(isDigit(curChar))
+        {
+            buffer += curChar;
+            curState = State.FLOAT_LITERAL_EXP_END;
+        }
+        else if(curChar == '-')
         {            
             buffer += curChar;
             curState = State.FLOAT_LITERAL_EXP_NEGATIVE;
@@ -396,20 +404,32 @@ public class Lexer
         if(isDigit(curChar))
         {
             buffer += curChar;
+            curState = State.FLOAT_LITERAL_EXP_END;
         }
         else
         {
-            if(curState == State.FLOAT_LITERAL_EXP_NEGATIVE)
-            {
-                readNext = false;
-                error("Unexpected character");
-                return;
-            }
             readNext = false;
-            curState = State.FLOAT_LITERAL_EXP;
-            endToken();
+            error("Unexpected character in float literal after '-'");
         }
     }
+    private void st_float_literal_exp_end()
+    {
+        if(isDigit(curChar))
+        {
+            buffer += curChar;
+            curState = State.FLOAT_LITERAL_EXP_END;
+        }
+        else if(curChar == ' ' || curChar == '\t' || curChar == '\n')
+        {
+            endToken();
+        }
+        else
+        {
+            readNext = false;
+            error("Unexpected symbol after float literal");
+        }
+    }
+
     private void st_float_literal()
     {
         if(isDigit(curChar))
