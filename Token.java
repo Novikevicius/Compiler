@@ -95,6 +95,7 @@ public class Token
                 break;
             case KEYWORD:
                 value = "";
+                break;
             default:
                 value = token;
                 break;
