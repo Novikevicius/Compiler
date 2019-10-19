@@ -387,6 +387,7 @@ public class Lexer
         }
         else
         {
+            readNext = false;
             error("Unrecognized float literal");
         }
     }
