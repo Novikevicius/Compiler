@@ -14,7 +14,7 @@ public class Token
 
     public Token()
     {
-        this("", "", 0, 0);
+        this("", State.START, TokenType.NONE, 0, 0);
     }
     public Token(String lex, State state, TokenType type, int l, int c)
     {
