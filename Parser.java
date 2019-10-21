@@ -17,6 +17,7 @@ public class Parser {
     {
         for(; offset < tokens.size(); offset++)
         {
+            curState = tokens.get(offset).getType();
             expect(State.EOF);
         }
 
