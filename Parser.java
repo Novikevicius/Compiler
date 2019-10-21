@@ -3,7 +3,7 @@ import java.util.*;
 public class Parser {
 
     private ArrayList<Token> tokens;
-    private State curState;
+    private Token curToken;
     private int offset;
     private String fileName;
 
@@ -17,7 +17,7 @@ public class Parser {
     {
         for(; offset < tokens.size(); offset++)
         {
-            curState = tokens.get(offset).getType();
+            curToken = tokens.get(offset);
             expect(State.EOF);
         }
 
@@ -31,9 +31,9 @@ public class Parser {
         String[] array = fileName.split("/"); // get file name
         throw new Error("ParserError:" + array[array.length-1] + ":" + line + ":" + column + ": " + msg);
     }
-    private void expect(State lex)
+    private void expect(State tokenType)
     {
-        if(curState == lex)
+        if(curToken.getType() == tokenType)
         {
             offset++;
         }
