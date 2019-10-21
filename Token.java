@@ -6,11 +6,7 @@ public class Token
     private int column;
 
     private TokenType type;
-    private int intValue;
-    private float floatValue;
-    private boolean boolValue;
-    private char charValue;
-    private String stringValue;
+    private Object value;
 
     public Token()
     {
@@ -24,16 +20,13 @@ public class Token
         setLine(l);
         setColumn(c);
     }
-    public void setValue(int v)     { intValue = v;}
-    public void setValue(float v)   { floatValue = v;}
-    public void setValue(boolean v) { boolValue = v;}
-    public void setValue(char v)    { charValue = v;}
-    public void setValue(String v)  { stringValue = v;}
-    public int getInt() {return intValue;}
-    public float getFloat() {return floatValue;}
-    public boolean getBool() {return boolValue;}
-    public char getChar() {return charValue;}
-    public String getString() {return stringValue;}
+    public void setValue(Object v) { value = v;}
+    public Object getValue() {return value;}
+    public int getInt() {return (int)value;}
+    public float getFloat() {return (float)value;}
+    public boolean getBool() {return (boolean)value;}
+    public char getChar() {return (char)value;}
+    public String getString() {return (String)value;}
     public String getIdentifier() {return token;}
     public String getKeyword() {return token;}
 
@@ -75,23 +68,23 @@ public class Token
         switch(type)
         {
             case INT:
-                value = Integer.toString(intValue);
+                value = Integer.toString(getInt());
                 break;
             case FLOAT:
             case FLOAT_EXP:
-                value = Float.toString(floatValue);
+                value = Float.toString(getFloat());
                 break;
             case IDENTIFIER:
                 value = token;
                 break;
             case BOOL:
-                value = Boolean.toString(boolValue);
+                value = Boolean.toString(getBool());
                 break;
             case STRING:
-                value = stringValue;
+                value = getString();
                 break;
             case CHAR:
-                value = Character.toString(charValue);
+                value = Character.toString(getChar());
                 break;
             case KEYWORD:
                 value = "";
