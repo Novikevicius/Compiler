@@ -585,6 +585,8 @@ public class Lexer
                 stringValue = buffer.toString();
                 endToken();
                 break;
+            case 13:
+                break;
             case '\n':
                 lineNumber++;
                 break;
