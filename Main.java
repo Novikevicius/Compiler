@@ -18,18 +18,21 @@ public class Main
                 path += " " + args[i];
             }
         }
-        Lexer lexer = new Lexer(path);
         try
         {
+            Lexer lexer = new Lexer(path);
             lexer.start();
             ArrayList<Token> tokens = lexer.getTokens();
+            /*
             for (Token token : tokens) {
                 String line   = String.format("%-3s",token.getLine());
                 String column = String.format("%-3s",token.getColumn());
                 String type   = String.format("%-25s",token.getState());
                 String value  = token.getValue() == null ? "" : String.format("%-5s",token.getValue());
                 System.out.println(line + " | " + column + " | " + type + " | " + value);
-            }
+            }*/
+            Parser parser = new Parser(path, tokens);
+            parser.parse();
         }
         catch(Exception e)
         {
