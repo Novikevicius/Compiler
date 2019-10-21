@@ -63,40 +63,8 @@ public class Token
         column = c;
     }
     public void print()
-    {        
-        String value = "";
-        switch(type)
-        {
-            case INT:
-                value = Integer.toString(getInt());
-                break;
-            case FLOAT:
-            case FLOAT_EXP:
-                value = Float.toString(getFloat());
-                break;
-            case IDENTIFIER:
-                value = token;
-                break;
-            case BOOL:
-                value = Boolean.toString(getBool());
-                break;
-            case STRING:
-                value = getString();
-                break;
-            case CHAR:
-                value = Character.toString(getChar());
-                break;
-            case KEYWORD:
-                value = "";
-                break;
-            case NONE:
-                value = "";
-                break;
-            default:
-                value = token;
-                break;
-        }
-        System.out.println(String.format("%-3s", line) + " | " + String.format("%-3s",column) + " | "+ String.format("%-25s", state) + " | " + value);
+    {   
+        System.out.println(String.format("%-3s", line) + " | " + String.format("%-3s",column) + " | "+ String.format("%-25s", state) + " | " + (value == null ? "" : value));
     }
     public void addSymbol(char s)
     {
