@@ -30,6 +30,7 @@ public class Token
     public String getIdentifier() {return token;}
     public String getKeyword() {return token;}
 
+    public State getType() {return state;}
     public String getToken()
     {
         return token;

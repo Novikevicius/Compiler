@@ -1,8 +1,7 @@
+import java.util.*;
+
 public class Main 
 {
-    /*
-    
-    */
     public static void main(String[] args) 
     {
         String path;
@@ -23,6 +22,14 @@ public class Main
         try
         {
             lexer.start();
+            ArrayList<Token> tokens = lexer.getTokens();
+            for (Token token : tokens) {
+                String line   = String.format("%-3s",token.getLine());
+                String column = String.format("%-3s",token.getColumn());
+                String type   = String.format("%-25s",token.getState());
+                String value  = token.getValue() == null ? "" : String.format("%-5s",token.getValue());
+                System.out.println(line + " | " + column + " | " + type + " | " + value);
+            }
         }
         catch(Exception e)
         {

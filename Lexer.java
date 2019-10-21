@@ -70,7 +70,7 @@ public class Lexer
         special_symbols.put('\"', '\"');
         special_symbols.put('\'', '\'');
     }
-
+    public ArrayList<Token> getTokens() {return tokens;}
     public void start() throws IOException
     {
         curState = State.START;
@@ -100,10 +100,6 @@ public class Lexer
         {
             beginToken(State.EOF);
             endToken();
-        }
-        for(int i = 0; i < tokens.size(); i++)
-        {
-            tokens.get(i).print();
         }
 
     }
