@@ -59,8 +59,8 @@ public class Lexer
         keywords.put("read",   "KW_READ");
         keywords.put("write",  "KW_WRITE");
         keywords.put("return", "KW_RETURN");
-        keywords.put("break",  "TYPE_BREAK");
-        keywords.put("continue",  "TYPE_CONTINUE");
+        keywords.put("break",  "KW_BREAK");
+        keywords.put("continue",  "KW_CONTINUE");
         special_symbols = new HashMap<>();
         special_symbols.put('n', '\n');
         special_symbols.put('t', '\t');
@@ -394,7 +394,7 @@ public class Lexer
                     tokenType = TokenType.KEYWORD;
                 }
                 buffer = new StringBuilder(kw);
-                endToken(State.KEYWORD, true);
+                endToken(State.valueOf(kw), true);
                 readNext = false;
                 return;
             }

@@ -96,7 +96,7 @@ public class Token
                 value = token;
                 break;
         }
-        System.out.println(String.format("%-3s", line) + " | " + String.format("%-3s",column) + " | "+ String.format("%-25s", type == TokenType.KEYWORD  || type == TokenType.BOOL ? token : state) + " | " + value);
+        System.out.println(String.format("%-3s", line) + " | " + String.format("%-3s",column) + " | "+ String.format("%-25s", state) + " | " + value);
     }
     public void addSymbol(char s)
     {
