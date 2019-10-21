@@ -37,7 +37,7 @@ public class Main
         }
         catch(Error e)
         {
-            System.out.println(e.getMessage());           
+            e.printStackTrace();       
         }
         catch(Exception e)
         {

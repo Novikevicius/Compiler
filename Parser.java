@@ -15,10 +15,8 @@ public class Parser {
     }
     public void parse()
     {
-        for(; offset < tokens.size(); offset++)
-        {
-            curToken = tokens.get(offset);
-            expect(State.EOF);
+        while (accept(State.EOF) == null) {
+            expect(State.EOF);            
         }
 
     }
@@ -36,10 +34,21 @@ public class Parser {
         if(curToken.getType() == tokenType)
         {
             offset++;
+            curToken = tokens.get(offset);
         }
         else
         {
             error();
         }
+    }
+    private State accept(State tokenType)
+    {
+        curToken = tokens.get(offset);
+        if(curToken.getType() == tokenType)
+        {
+            offset++;
+            return curToken.getType();
+        }
+        return null;
     }
 }
