@@ -656,13 +656,6 @@ public class Lexer
                 curState  = State.ASSIGN_OP_MINUS;
                 endToken();
                 break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
-                break;
             default:            
                 endToken();
                 readNext = false;
@@ -683,13 +676,6 @@ public class Lexer
                 curState  = State.ASSIGN_OP_PLUS;
                 endToken();
                 break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
-                break;
             default:            
                 endToken();
                 readNext = false;
@@ -704,13 +690,6 @@ public class Lexer
                 buffer.append(curChar);
                 curState  = State.ASSIGN_OP_MULT;
                 endToken();
-                break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
                 break;
             default:            
                 endToken();
@@ -727,13 +706,6 @@ public class Lexer
                 curState  = State.ASSIGN_OP_DIV;
                 endToken();
                 break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
-                break;
             default:            
                 endToken();
                 readNext = false;
@@ -748,13 +720,6 @@ public class Lexer
                 buffer.append(curChar);
                 curState  = State.COMP_OP_LESS_EQ;
                 endToken();
-                break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
                 break;
             default:            
                 endToken();
@@ -771,13 +736,6 @@ public class Lexer
                 curState  = State.COMP_OP_MORE_EQ;
                 endToken();
                 break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
-                break;
             default:            
                 endToken();
                 readNext = false;
@@ -793,13 +751,6 @@ public class Lexer
                 buffer.append(curChar);
                 curState  = State.COMP_OP_NOT_EQ;
                 endToken();
-                break;
-            case ' ':
-                columnNumber--;
-                break;
-            case '\n':
-                columnNumber = 0;
-                lineNumber++;
                 break;
             default:            
                 readNext = false;
