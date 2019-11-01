@@ -1,4 +1,4 @@
-void main(bool b = f(2 + x)--)
+void main(bool b = 1+4 * (2 + 10 / 3^-10)^fn(-1^3))
 {
 
 }

@@ -254,13 +254,13 @@ public class Parser {
     // <expr-mult> ::= <expr-negation> { ("*" | "/" ) <expr-negation>}
     private Expression parse_expr_mult()
     {
-        Expression result = parse_expr_negation();
+        Expression result = parse_exponent();
         while(true)
         {
             if(accept(State.OP_MULT) != null) {
-                result = new ExprBinary(State.OP_MULT, result, parse_expr_negation());
+                result = new ExprBinary(State.OP_MULT, result, parse_exponent());
             } else if(accept(State.OP_DIV) != null) {
-                result = new ExprBinary(State.OP_DIV, result, parse_expr_negation());
+                result = new ExprBinary(State.OP_DIV, result, parse_exponent());
             } else {
                 break;
             }
@@ -274,15 +274,15 @@ public class Parser {
         {
             return new ExprNegation(parse_expr_negation());
         }
-        return parse_exponent();
+        return parse_expr_parent();
     }
     // <expr-exponen> ::= <expr-parent> { "^" <expr-parent> }
     private Expression parse_exponent()
     {
-        Expression result = parse_expr_parent();
+        Expression result = parse_expr_negation();
         while(accept(State.OP_EXP) != null)
         {
-            result = new ExprBinary(State.OP_EXP, result, parse_expr_parent());
+            result = new ExprBinary(State.OP_EXP, result, parse_expr_negation());
         }
         return result;
     }
