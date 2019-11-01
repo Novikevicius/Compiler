@@ -178,6 +178,7 @@ public class Parser {
         ArrayList<Statement> stmts = new ArrayList<Statement>();
         expect(State.L_CURLY);
         while(accept(State.R_CURLY) == null){
+            if(accept(State.SEMI_CLN) != null) {continue;}
             stmts.add(parse_stmt());
         }
         return new StmtBody(stmts);
@@ -190,7 +191,7 @@ public class Parser {
             case KW_WHILE:
                 return parse_stmt_while();
             case KW_FOR:
-                    return parse_stmt_for();
+                return parse_stmt_for();
             default:
                 error();
                 return null;
