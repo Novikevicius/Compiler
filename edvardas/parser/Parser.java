@@ -15,9 +15,12 @@ import edvardas.ast.nodes.Expression;
 import edvardas.ast.nodes.FunctionCall;
 import edvardas.ast.nodes.Program;
 import edvardas.ast.nodes.Statement;
+import edvardas.ast.nodes.StatementAssignment;
 import edvardas.ast.nodes.StatementElse;
 import edvardas.ast.nodes.StatementElseIf;
+import edvardas.ast.nodes.StatementFor;
 import edvardas.ast.nodes.StatementIf;
+import edvardas.ast.nodes.StatementWhile;
 import edvardas.ast.nodes.StmtBody;
 import edvardas.ast.nodes.Type;
 import edvardas.ast.nodes.TypePrim;
@@ -184,6 +187,10 @@ public class Parser {
         switch (curToken.getType()) {
             case KW_IF:
                 return parse_stmt_if();
+            case KW_WHILE:
+                return parse_stmt_while();
+            case KW_FOR:
+                    return parse_stmt_for();
             default:
                 error();
                 return null;
@@ -212,6 +219,65 @@ public class Parser {
             break;
         }
         return new StatementIf(cond, body, elseif, stmtElse);  
+    }
+    // <while_loop> ::= "while" "(" <expression> ")" <block>
+    private Statement parse_stmt_while()
+    {
+        expect(State.KW_WHILE);
+        expect(State.L_PARENT);
+        Expression condition = parse_expression();
+        expect(State.R_PARENT);
+        StmtBody body = parse_block();
+        return new StatementWhile(condition, body);
+    }
+    // <for_loop>   ::= "for" "(" <for_loop_conditions> ")" <block>
+    /* 
+    <for_loop_conditions> ::= <var_decl> ";" <expression> ";" <statement>
+                        |                 ";" <expression> ";" <statement>
+                        |     <var_decl> ";" <expression> ";"
+                        |                 ";" <expression> ";"
+    */
+    private Statement parse_stmt_for()
+    {
+        expect(State.KW_FOR);
+        expect(State.L_PARENT);
+        VarDeclaration init = null;
+        if(accept(State.SEMI_CLN) == null)
+        {
+            init = parse_var_decl();
+            expect(State.SEMI_CLN);
+        }
+        Expression condition = parse_expression();
+        expect(State.SEMI_CLN);
+        StatementAssignment assign = null;
+        if(accept(State.R_PARENT) == null)
+        {
+            assign = parse_stmt_assignment();
+            expect(State.R_PARENT);
+        }
+        StmtBody body = parse_block();
+        return new StatementFor(init, condition, assign, body);
+    }
+    // <assignement> ::= <identifier> <assignement_ops> <expression> | <array_elem> <assignement_ops> <expression>
+    private StatementAssignment parse_stmt_assignment()
+    {
+        Token name = expect(State.IDENTIFIER);
+        State operator = null;
+        if(accept(State.ASSIGN_OP) != null) {
+            operator = State.ASSIGN_OP;
+        } else if(accept(State.ASSIGN_OP_DIV) != null) {
+            operator = State.ASSIGN_OP_DIV;
+        } else if(accept(State.ASSIGN_OP_MULT) != null) {
+            operator = State.ASSIGN_OP_MULT;
+        } else if(accept(State.ASSIGN_OP_MINUS) != null) {
+            operator = State.ASSIGN_OP_MINUS;
+        } else if(accept(State.ASSIGN_OP_PLUS) != null) {
+            operator = State.ASSIGN_OP_PLUS;
+        } else {
+            error();
+        } for(int i = 0; i < 10; i++) {}
+        Expression expr = parse_expression();
+        return new StatementAssignment(name, operator, expr);
     }
     //<expression> ::=  <expression> { ("++" | "--")}
     private Expression parse_expression()
