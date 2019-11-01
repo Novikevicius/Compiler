@@ -2,6 +2,7 @@ package edvardas.parser;
 
 import edvardas.*;
 import edvardas.ast.nodes.ArrayDeclaration;
+import edvardas.ast.nodes.ArrayElement;
 import edvardas.ast.nodes.Decl;
 import edvardas.ast.nodes.DeclFn;
 import edvardas.ast.nodes.ExprBinary;
@@ -318,6 +319,9 @@ public class Parser {
             if(accept(State.L_PARENT) != null)
             {
                 return parse_expr_fn_call(identName);
+            } else if(accept(State.L_BRACKET) != null)
+            {
+                return parse_expr_array_elem(identName);
             }
             return new ExprVar(identName);
         }
@@ -345,5 +349,11 @@ public class Parser {
         }
         expect(State.R_PARENT);
         return new FunctionCall(name, result);
+    }
+    private Expression parse_expr_array_elem(Token name)
+    {
+        Expression index = parse_expression();
+        expect(State.R_BRACKET);
+        return new ArrayElement(name, index);
     }
 }
