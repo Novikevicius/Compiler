@@ -8,7 +8,11 @@ import edvardas.Token;
 import edvardas.ast.nodes.Node;
 
 public class ASTPrinter {
+    private StringBuilder indent;
     private int indentLevel = 0;
+    public ASTPrinter() {
+        indent = new StringBuilder();
+    }
     public void print(String title, Object obj) throws Exception
     {
         if(obj instanceof ArrayList) {
@@ -42,14 +46,16 @@ public class ASTPrinter {
     private void printNode(String title, Object obj) throws Exception
     {
         printText(title, obj.getClass().getSimpleName() + ":");
-        indentLevel += 2;
+        indentLevel += 3;
+        indent.append("|  ");
         ((Node)obj).print(this);
-        indentLevel -= 2;
+        indent.delete(indentLevel-3, indentLevel);
+        indentLevel -= 3;
     }
     private void printText(String title, Object obj) throws Exception 
     {
         String indentation = new String(new char[indentLevel]).replace("\0", " ");
-        System.out.println(indentation + title + (title.isEmpty() ? "" : ": ") + obj);
+        System.out.println(indent + title + (title.isEmpty() ? "" : ": ") + obj);
     }
     private void printToken(String title, Object obj) throws Exception 
     {
