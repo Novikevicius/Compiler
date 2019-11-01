@@ -29,7 +29,6 @@ public class Lexer
     private boolean boolValue;
     private char charValue;
     private String stringValue;
-    private boolean isFloatExp;
     private boolean isFloatWithNegativeExp;
 
     private boolean readNext = true;
@@ -427,7 +426,6 @@ public class Lexer
                 buffer.append(curChar);
                 floatValue = intValue;
                 intValue = 0;
-                isFloatExp = true;
                 tokenType = TokenType.FLOAT_EXP;
                 curState = State.FLOAT_LITERAL_EXP;
                 break;
