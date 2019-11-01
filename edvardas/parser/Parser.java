@@ -15,6 +15,8 @@ import edvardas.ast.nodes.Expression;
 import edvardas.ast.nodes.FunctionCall;
 import edvardas.ast.nodes.Program;
 import edvardas.ast.nodes.Statement;
+import edvardas.ast.nodes.StatementElse;
+import edvardas.ast.nodes.StatementElseIf;
 import edvardas.ast.nodes.StatementIf;
 import edvardas.ast.nodes.StmtBody;
 import edvardas.ast.nodes.Type;
@@ -181,16 +183,35 @@ public class Parser {
     {
         switch (curToken.getType()) {
             case KW_IF:
-                expect(State.KW_IF);
-                expect(State.L_PARENT);
-                Expression cond = parse_expression();
-                expect(State.R_PARENT);
-                StmtBody body = parse_block();
-                return new StatementIf(cond, body);  
+                return parse_stmt_if();
             default:
                 error();
                 return null;
         }
+    }
+    private Statement parse_stmt_if()
+    {
+        ArrayList<StatementElseIf> elseif = new ArrayList<StatementElseIf>();
+        StatementElse stmtElse = null;
+        expect(State.KW_IF);
+        expect(State.L_PARENT);
+        Expression cond = parse_expression();
+        expect(State.R_PARENT);
+        StmtBody body = parse_block();
+        while(accept(State.KW_ELSE) != null) {
+            if(accept(State.KW_IF) != null) {
+                expect(State.L_PARENT);
+                Expression elseIfCond = parse_expression();
+                expect(State.R_PARENT);
+                StmtBody elseIfbody = parse_block();
+                elseif.add(new StatementElseIf(elseIfCond, elseIfbody));
+                continue;
+            }
+            StmtBody elsebody = parse_block();
+            stmtElse = new StatementElse(elsebody);
+            break;
+        }
+        return new StatementIf(cond, body, elseif, stmtElse);  
     }
     //<expression> ::=  <expression> { ("++" | "--")}
     private Expression parse_expression()
