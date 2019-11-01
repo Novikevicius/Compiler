@@ -14,7 +14,8 @@ import edvardas.ast.nodes.ExprVar;
 import edvardas.ast.nodes.Expression;
 import edvardas.ast.nodes.FunctionCall;
 import edvardas.ast.nodes.Program;
-import edvardas.ast.nodes.Stmt;
+import edvardas.ast.nodes.Statement;
+import edvardas.ast.nodes.StatementIf;
 import edvardas.ast.nodes.StmtBody;
 import edvardas.ast.nodes.Type;
 import edvardas.ast.nodes.TypePrim;
@@ -169,11 +170,27 @@ public class Parser {
     }
     private StmtBody parse_block()
     {
-        ArrayList<Stmt> stmts = new ArrayList<Stmt>();
+        ArrayList<Statement> stmts = new ArrayList<Statement>();
         expect(State.L_CURLY);
-        // do nothing, yet TODO: parse stmt
-        expect(State.R_CURLY);
+        while(accept(State.R_CURLY) == null){
+            stmts.add(parse_stmt());
+        }
         return new StmtBody(stmts);
+    }
+    private Statement parse_stmt()
+    {
+        switch (curToken.getType()) {
+            case KW_IF:
+                expect(State.KW_IF);
+                expect(State.L_PARENT);
+                Expression cond = parse_expression();
+                expect(State.R_PARENT);
+                StmtBody body = parse_block();
+                return new StatementIf(cond, body);  
+            default:
+                error();
+                return null;
+        }
     }
     //<expression> ::=  <expression> { ("++" | "--")}
     private Expression parse_expression()

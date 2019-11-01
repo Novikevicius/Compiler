@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import edvardas.ast.ASTPrinter;
 
 public class StmtBody extends Node {
-    private ArrayList<Stmt> stmts;
-    public StmtBody(ArrayList<Stmt> s) {
+    private ArrayList<Statement> stmts;
+    public StmtBody(ArrayList<Statement> s) {
         stmts = s;
     }
     public void print(ASTPrinter printer) throws Exception
     {
-        printer.print("stms", stmts);
+        printer.print("statements", stmts);
     }
 }
