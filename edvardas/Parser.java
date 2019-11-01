@@ -26,17 +26,18 @@ public class Parser {
         String expected = expectedType == null ? " Got: " : " Expected:" + String.format("%s", expectedType) + " got: ";
         throw new Error("ParserError:" + array[array.length-1] + ":" + line + ":" + column + ": " + msg + expected + String.format("%s",curToken.getType()));
     }
-    private void expect(State tokenType)
+    private Token expect(State tokenType)
     {
         if(curToken.getType() == tokenType)
         {
             offset++;
-            curToken = tokens.get(offset);
+            return curToken = tokens.get(offset);
         }
         else
         {
             error("Unexpected token error. ", tokenType);
         }
+        return null;
     }
     private State accept(State tokenType)
     {
