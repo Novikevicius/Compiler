@@ -410,6 +410,12 @@ public class Lexer
             intValue += (int)(curChar - '0');
             return;
         }
+        if(isLetter(curChar))
+        {
+            readNext = false;
+            error("Unrecognized int literal value");
+            return;
+        }
         if(temp == -1)
         {
             tokenType = TokenType.INT;
@@ -429,18 +435,10 @@ public class Lexer
                 tokenType = TokenType.FLOAT_EXP;
                 curState = State.FLOAT_LITERAL_EXP;
                 break;
-            case ' ':
-            case '\n':
-            case '\t':
-            case ';':
-            case ')':
-            case '(':
-                tokenType = TokenType.INT;
-                endToken();
-                break;
             default:
+                tokenType = TokenType.INT;
                 readNext = false;
-                error("Unrecognized int literal value");
+                endToken();
                 break;
         }
     }

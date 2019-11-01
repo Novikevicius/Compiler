@@ -3,10 +3,10 @@ package edvardas.ast.nodes;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 
-public class Param {
-    private Token name;
+public class VarPrimaryDeclaration extends VarDeclaration {
     private Type type;
-    public Param(Token name, Type type) {
+    private Token name;
+    public VarPrimaryDeclaration(Token name, Type type) {
         this.name = name;
         this.type = type;
     }

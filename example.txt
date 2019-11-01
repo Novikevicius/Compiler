@@ -1,2 +1,4 @@
-void main(){}
-bool test(){}
+void main(int i, bool b = ((x*10^3)+2))
+{
+
+}

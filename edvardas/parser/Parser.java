@@ -1,16 +1,23 @@
 package edvardas.parser;
 
 import edvardas.*;
+import edvardas.ast.nodes.ArrayDeclaration;
 import edvardas.ast.nodes.Decl;
 import edvardas.ast.nodes.DeclFn;
-import edvardas.ast.nodes.Param;
+import edvardas.ast.nodes.ExprBinary;
+import edvardas.ast.nodes.ExprLiteral;
+import edvardas.ast.nodes.ExprNegation;
+import edvardas.ast.nodes.ExprVar;
+import edvardas.ast.nodes.Expression;
 import edvardas.ast.nodes.Program;
 import edvardas.ast.nodes.Stmt;
 import edvardas.ast.nodes.StmtBody;
 import edvardas.ast.nodes.Type;
 import edvardas.ast.nodes.TypePrim;
+import edvardas.ast.nodes.VarAssignDeclaration;
+import edvardas.ast.nodes.VarDeclaration;
+import edvardas.ast.nodes.VarPrimaryDeclaration;
 
-import java.util.*;
 import java.util.ArrayList;
 
 public class Parser {
@@ -42,7 +49,9 @@ public class Parser {
         curToken = tokens.get(offset);
         if(curToken.getType() == tokenType)
         {
-            return curToken = tokens.get(offset++);
+            Token result = curToken;
+            curToken = tokens.get(++offset);
+            return result;
         }
         else
         {
@@ -55,8 +64,11 @@ public class Parser {
         curToken = tokens.get(offset);
         if(curToken.getType() == tokenType)
         {
-            offset++;
-            return curToken;
+            Token result = curToken;
+            if(offset < tokens.size()-1) {
+                curToken = tokens.get(++offset);
+            }
+            return result;
         }
         return null;
     }
@@ -80,7 +92,7 @@ public class Parser {
         Type retType = parse_return_type();
         Token name = expect(State.IDENTIFIER);
         expect(State.L_PARENT);
-        ArrayList<Param> params = parse_params();
+        ArrayList<VarDeclaration> params = parse_params();
         expect(State.R_PARENT);
         StmtBody body = parse_block();
         return new DeclFn(retType, name, params, body);
@@ -117,10 +129,39 @@ public class Parser {
                 return null;
         }
     }
-    private ArrayList<Param> parse_params()
+    // <fnc_params> ::= <var_decl> { "," <var_decl> }
+    private ArrayList<VarDeclaration> parse_params()
     {
-        // do nothing, yet TODO: parse params
-        return new ArrayList<Param>();
+        ArrayList<VarDeclaration> params = new ArrayList<VarDeclaration>();
+        if(curToken.getType() == State.R_PARENT)
+        {
+            return params;
+        }
+        params.add(parse_var_decl());
+        while(accept(State.COMMA) != null)
+        {
+            params.add(parse_var_decl());
+        }
+        return params;
+    }
+    // <var_decl> ::= <type> <identifier> | <type> <identifier> "=" <expression> | <type> "[" <int_literal> "]" <identifier>
+    private VarDeclaration parse_var_decl()
+    {
+        Type type = parse_type();
+        if(accept(State.L_BRACKET) != null)
+        {
+            Token size = expect(State.INT_LITERAL);
+            expect(State.R_BRACKET);
+            Token name = expect(State.IDENTIFIER);
+            return new ArrayDeclaration(type, name, size);
+        }
+        Token name = expect(State.IDENTIFIER);
+        if(accept(State.ASSIGN_OP) != null)
+        {
+            Expression expr = parse_expression();
+            return new VarAssignDeclaration(name, type, expr);
+        }
+        return new VarPrimaryDeclaration(name, type);
     }
     private StmtBody parse_block()
     {
@@ -129,5 +170,135 @@ public class Parser {
         // do nothing, yet TODO: parse stmt
         expect(State.R_CURLY);
         return new StmtBody(stmts);
+    }
+    //<expression> ::=  <expr-and> { "||" <expr-and> }
+    private Expression parse_expression()
+    {
+        Expression result = parse_expr_and();
+        while(accept(State.LOGIC_OP_OR) != null)
+        {
+            result = new ExprBinary(State.LOGIC_OP_OR, result, parse_expr_and());
+        }
+        return result;
+    }
+    //<expr-and> ::= <expr-comp_equal> { "&&" <expr-comp_equal>  }
+    private Expression parse_expr_and()
+    {
+        Expression result = parse_expr_comp_equal();
+        while(accept(State.LOGIC_OP_OR) != null)
+        {
+            result = new ExprBinary(State.LOGIC_OP_AND, result, parse_expr_comp_equal());
+        }
+        return result;
+    }
+    //<expr-comp_equal> ::= <expr-compare_op>  { ("==" | "!=") <expr-compare_op> }
+    private Expression parse_expr_comp_equal()
+    {
+        Expression result = parse_expr_comp_op();
+        while(true)
+        {
+            if(accept(State.COMP_OP_EQ) != null) {
+                result = new ExprBinary(State.COMP_OP_EQ, result, parse_expr_comp_op());
+            } else if(accept(State.COMP_OP_NOT_EQ) != null) {
+                result = new ExprBinary(State.COMP_OP_NOT_EQ, result, parse_expr_comp_op());
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+    // <expr-comp_op> ::= <expr-sum> { <compare_op> <expr_sum> }
+    private Expression parse_expr_comp_op()
+    {
+        Expression result = parse_expr_sum();
+        while(true)
+        {
+            if(accept(State.COMP_OP_LESS) != null) {
+                result = new ExprBinary(State.COMP_OP_LESS, result, parse_expr_sum());
+            } else if(accept(State.COMP_OP_LESS_EQ) != null) {
+                result = new ExprBinary(State.COMP_OP_LESS_EQ, result, parse_expr_sum());
+            } else if(accept(State.COMP_OP_MORE) != null) {
+                result = new ExprBinary(State.COMP_OP_MORE, result, parse_expr_sum());
+            } else if(accept(State.COMP_OP_MORE_EQ) != null) {
+                result = new ExprBinary(State.COMP_OP_MORE_EQ, result, parse_expr_sum());
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+    // <expr-sum> ::= <expr-mult> { ("+" | "-" ) <expr-mult>}
+    private Expression parse_expr_sum()
+    {
+        Expression result = parse_expr_mult();
+        while(true)
+        {
+            if(accept(State.OP_PLUS) != null) {
+                result = new ExprBinary(State.OP_PLUS, result, parse_expr_mult());
+            } else if(accept(State.OP_MINUS) != null) {
+                result = new ExprBinary(State.OP_MINUS, result, parse_expr_mult());
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+    // <expr-mult> ::= <expr-negation> { ("*" | "/" ) <expr-negation>}
+    private Expression parse_expr_mult()
+    {
+        Expression result = parse_expr_negation();
+        while(true)
+        {
+            if(accept(State.OP_MULT) != null) {
+                result = new ExprBinary(State.OP_MULT, result, parse_expr_negation());
+            } else if(accept(State.OP_DIV) != null) {
+                result = new ExprBinary(State.OP_DIV, result, parse_expr_negation());
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+    // <expr-negation> ::= "-" <expr-negation> | <expr-exponent>
+    private Expression parse_expr_negation()
+    {
+        if(accept(State.OP_MINUS) != null)
+        {
+            return new ExprNegation(parse_expr_negation());
+        }
+        return parse_exponent();
+    }
+    // <expr-exponen> ::= <expr-parent> { "^" <expr-parent> }
+    private Expression parse_exponent()
+    {
+        Expression result = parse_expr_parent();
+        while(accept(State.OP_EXP) != null)
+        {
+            result = new ExprBinary(State.OP_EXP, result, parse_expr_parent());
+        }
+        return result;
+    }
+    // <expr-parent> ::= <expr-affix> | "(" <expression> ")"
+    // <expr-8>       ::= <affix> | "(" <expr-0> ")" | <func_call> | <identifier> | <literal> | <array_elem>
+    private Expression parse_expr_parent()
+    {
+        if(accept(State.L_PARENT) != null)
+        {
+            Expression result = parse_expression();
+            expect(State.R_PARENT);
+            return result;
+        }
+        Token identName;
+        if((identName = accept(State.IDENTIFIER)) != null)
+        {
+            return new ExprVar(identName);
+        }
+        return new ExprLiteral(expect(State.INT_LITERAL));
+        /*
+        Expression smth = parse_literal();
+        if(smth != null)
+        {
+            
+        }*/
     }
 }

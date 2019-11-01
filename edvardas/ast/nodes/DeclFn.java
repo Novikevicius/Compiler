@@ -8,10 +8,10 @@ import edvardas.ast.ASTPrinter;
 public class DeclFn extends Decl {
     private Type returnType;
     private Token name;
-    private ArrayList<Param> params;
+    private ArrayList<VarDeclaration> params;
     private StmtBody body;
 
-    public DeclFn(Type retType, Token name, ArrayList<Param> params, StmtBody body)
+    public DeclFn(Type retType, Token name, ArrayList<VarDeclaration> params, StmtBody body)
     {
         this.returnType = retType;
         this.name = name;
