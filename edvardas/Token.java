@@ -23,7 +23,10 @@ public class Token
         setColumn(c);
     }
     public void setValue(Object v) { value = v;}
-    public Object getValue() {return value;}
+    public Object getValue() 
+    {
+        return value;
+    }
     public int getInt() {return (int)value;}
     public float getFloat() {return (float)value;}
     public boolean getBool() {return (boolean)value;}

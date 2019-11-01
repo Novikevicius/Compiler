@@ -18,7 +18,7 @@ public class ASTPrinter {
         } else if(obj instanceof State){
             printText(title, obj);
         } else if(obj instanceof Token){
-            printToken(title, "NULL");
+            printToken(title, obj);
         } else if(obj == null){
             printText(title, "NULL");
         }
@@ -28,31 +28,33 @@ public class ASTPrinter {
     }
     private void printArray(String title, Object obj) throws Exception
     {
-        Object[] objects = (Object[]) obj;
-        if(objects.length < 1)
+        ArrayList<?> objects = (ArrayList<?>) obj;
+        if(objects.size() < 1)
         {
             printText(title, "[]");
         }
-        for (int i = 0; i < objects.length; i++)
+        for (int i = 0; i < objects.size(); i++)
         {
-            print(String.format("%s[%i]", title, i), objects[i]);
+            String t = title + "[" + i + "]";
+            print(t, objects.get(i));
         }
     }
     private void printNode(String title, Object obj) throws Exception
     {
-        printText(title, obj.getClass().getName() + ":");
-        indentLevel += 1;
-        ((Node)obj).print();
-        indentLevel += 1;
+        printText(title, obj.getClass().getSimpleName() + ":");
+        indentLevel += 2;
+        ((Node)obj).print(this);
+        indentLevel -= 2;
     }
     private void printText(String title, Object obj) throws Exception 
     {
         String indentation = new String(new char[indentLevel]).replace("\0", " ");
-        System.out.println(indentation + title + ":" + obj);
+        System.out.println(indentation + title + (title.isEmpty() ? "" : ": ") + obj);
     }
     private void printToken(String title, Object obj) throws Exception 
     {
         Token t = (Token)obj;
-        printText(title, t.getValue() + " (" + t.getLine() + ")");
+        String value = (t.getType() == State.IDENTIFIER) ? t.getIdentifier() : t.getValue().toString();
+        printText(title, value + " (" + t.getLine() + ")");
     }
 }

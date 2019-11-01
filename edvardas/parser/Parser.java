@@ -1,7 +1,17 @@
 package edvardas.parser;
+
 import edvardas.*;
+import edvardas.ast.nodes.Decl;
+import edvardas.ast.nodes.DeclFn;
+import edvardas.ast.nodes.Param;
+import edvardas.ast.nodes.Program;
+import edvardas.ast.nodes.Stmt;
+import edvardas.ast.nodes.StmtBody;
+import edvardas.ast.nodes.Type;
+import edvardas.ast.nodes.TypePrim;
 
 import java.util.*;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -29,10 +39,10 @@ public class Parser {
     }
     private Token expect(State tokenType)
     {
+        curToken = tokens.get(offset);
         if(curToken.getType() == tokenType)
         {
-            offset++;
-            return curToken = tokens.get(offset);
+            return curToken = tokens.get(offset++);
         }
         else
         {
@@ -51,66 +61,73 @@ public class Parser {
         return null;
     }
     // <start> ::= <func_declarations> EOF
-    public void parse()
+    public Program parse() throws Exception
     {
-        parse_def_fns();
+        return new Program(parse_def_fns());
     }
     // <func_declarations> ::= { <func_declaration> } EOF
-    private void parse_def_fns()
+    private ArrayList<Decl> parse_def_fns()
     {
+        ArrayList<Decl> decls = new ArrayList<Decl>();
         while (accept(State.EOF) == null) {
-            parse_def_fn();
+            decls.add(parse_def_fn());
         }
+        return decls;
     }
     // <func_declaration>  ::= <return_type> <identifier> "(" <fnc_params> ")" <block> 
-    private void parse_def_fn()
+    private DeclFn parse_def_fn()
     {
-        parse_return_type();
-        expect(State.IDENTIFIER);
+        Type retType = parse_return_type();
+        Token name = expect(State.IDENTIFIER);
         expect(State.L_PARENT);
-        parse_params();
+        ArrayList<Param> params = parse_params();
         expect(State.R_PARENT);
-        parse_block();
+        StmtBody body = parse_block();
+        return new DeclFn(retType, name, params, body);
     }
     // <return_type>  ::= "void" | <type>
-    private void parse_return_type()
+    private Type parse_return_type()
     {
-        if( accept(State.TYPE_VOID) == null )  {
-            parse_type();
+        if(accept(State.TYPE_VOID) == null )  {
+            return parse_type();
         }
+        return new TypePrim(State.TYPE_VOID);
     }
     // <type> ::= "int" | "char" | "float" | "string" | "bool" 
-    private void parse_type()
+    private TypePrim parse_type()
     {
         switch (curToken.getType()) {
             case TYPE_INT:
                 expect(State.TYPE_INT);
-                break;
+                return new TypePrim(State.TYPE_INT);
             case TYPE_CHAR:
                 expect(State.TYPE_CHAR);
-                break;
+                return new TypePrim(State.TYPE_CHAR);
             case TYPE_FLOAT:
                 expect(State.TYPE_FLOAT);
-                break;
+                return new TypePrim(State.TYPE_FLOAT);
             case TYPE_STRING:
                 expect(State.TYPE_STRING);
-                break;
+                return new TypePrim(State.TYPE_STRING);
             case TYPE_BOOL:
                 expect(State.TYPE_BOOL);
-                break;
+                return new TypePrim(State.TYPE_BOOL);
             default:
                 error();
-                break;
+                return null;
         }
     }
-    private void parse_params()
+    private ArrayList<Param> parse_params()
     {
         // do nothing, yet TODO: parse params
+        return new ArrayList<Param>();
     }
-    private void parse_block()
+    private StmtBody parse_block()
     {
+        ArrayList<Stmt> stmts = new ArrayList<Stmt>();
         expect(State.L_CURLY);
         // do nothing, yet TODO: parse stmt
         expect(State.R_CURLY);
+        return new StmtBody(stmts);
     }
 }

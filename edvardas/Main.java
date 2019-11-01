@@ -1,6 +1,9 @@
 package edvardas;
 
 import java.util.*;
+
+import edvardas.ast.ASTPrinter;
+import edvardas.ast.nodes.Node;
 import edvardas.parser.*;
 
 public class Main 
@@ -35,7 +38,9 @@ public class Main
                 System.out.println(line + " | " + column + " | " + type + " | " + value);
             }
             Parser parser = new Parser(path, tokens);
-            parser.parse();
+            Node root = parser.parse();
+            ASTPrinter astPrinter = new ASTPrinter();
+            astPrinter.print("", root);
             System.out.println("YAY");
         }
         catch(Error e)
