@@ -7,6 +7,7 @@ import edvardas.ast.nodes.DeclFn;
 import edvardas.ast.nodes.ExprBinary;
 import edvardas.ast.nodes.ExprLiteral;
 import edvardas.ast.nodes.ExprNegation;
+import edvardas.ast.nodes.ExprPrefix;
 import edvardas.ast.nodes.ExprVar;
 import edvardas.ast.nodes.Expression;
 import edvardas.ast.nodes.Program;
@@ -292,6 +293,14 @@ public class Parser {
         if((identName = accept(State.IDENTIFIER)) != null)
         {
             return new ExprVar(identName);
+        }
+        if(accept(State.OP_AFFIX_PLUS) != null)
+        {
+            return new ExprPrefix(State.OP_AFFIX_PLUS, parse_expression());
+        }
+        if(accept(State.OP_AFFIX_MINUS) != null)
+        {
+            return new ExprPrefix(State.OP_AFFIX_MINUS, parse_expression());
         }
         return new ExprLiteral(expect(State.INT_LITERAL));
         /*
