@@ -1,3 +1,5 @@
+package edvardas;
+
 public enum State {
     START("start"),
     IDENTIFIER("identifier"),

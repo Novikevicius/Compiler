@@ -1,3 +1,5 @@
+package edvardas;
+
 public enum TokenType {
     STRING(0),
     IDENTIFIER(1),
