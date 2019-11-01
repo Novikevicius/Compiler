@@ -1,4 +1,4 @@
-void main(int i, bool b = -2-2)
+void main(bool b = f(2 + x)--)
 {
 
 }

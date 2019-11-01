@@ -7,9 +7,11 @@ import edvardas.ast.nodes.DeclFn;
 import edvardas.ast.nodes.ExprBinary;
 import edvardas.ast.nodes.ExprLiteral;
 import edvardas.ast.nodes.ExprNegation;
+import edvardas.ast.nodes.ExprPostfix;
 import edvardas.ast.nodes.ExprPrefix;
 import edvardas.ast.nodes.ExprVar;
 import edvardas.ast.nodes.Expression;
+import edvardas.ast.nodes.FunctionCall;
 import edvardas.ast.nodes.Program;
 import edvardas.ast.nodes.Stmt;
 import edvardas.ast.nodes.StmtBody;
@@ -172,8 +174,13 @@ public class Parser {
         expect(State.R_CURLY);
         return new StmtBody(stmts);
     }
-    //<expression> ::=  <expr-and> { "||" <expr-and> }
+    //<expression> ::=  <expression> { ("++" | "--")}
     private Expression parse_expression()
+    {
+        Expression result = parse_expr_or();
+        return result;
+    }
+    private Expression parse_expr_or()
     {
         Expression result = parse_expr_and();
         while(accept(State.LOGIC_OP_OR) != null)
@@ -283,6 +290,22 @@ public class Parser {
     // <expr-8>       ::= <affix> | "(" <expr-0> ")" | <func_call> | <identifier> | <literal> | <array_elem>
     private Expression parse_expr_parent()
     {
+        Expression result = parse_expr_primary();
+        while (true) {
+            if(accept(State.OP_AFFIX_PLUS) != null)
+            {
+                return new ExprPostfix(State.OP_AFFIX_PLUS, result);
+            } else if(accept(State.OP_AFFIX_MINUS) != null)
+            {
+                return new ExprPostfix(State.OP_AFFIX_MINUS, result);
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+    private Expression parse_expr_primary()
+    {
         if(accept(State.L_PARENT) != null)
         {
             Expression result = parse_expression();
@@ -292,6 +315,10 @@ public class Parser {
         Token identName;
         if((identName = accept(State.IDENTIFIER)) != null)
         {
+            if(accept(State.L_PARENT) != null)
+            {
+                return parse_expr_fn_call(identName);
+            }
             return new ExprVar(identName);
         }
         if(accept(State.OP_AFFIX_PLUS) != null)
@@ -303,11 +330,20 @@ public class Parser {
             return new ExprPrefix(State.OP_AFFIX_MINUS, parse_expression());
         }
         return new ExprLiteral(expect(State.INT_LITERAL));
-        /*
-        Expression smth = parse_literal();
-        if(smth != null)
+    }
+    private Expression parse_expr_fn_call(Token name)
+    {
+        ArrayList<Expression> result = new ArrayList<Expression>();
+        if(accept(State.R_PARENT) != null)
         {
-            
-        }*/
+            return new FunctionCall(name, result);
+        }
+        result.add(parse_expression());
+        while(accept(State.COMMA) != null)
+        {
+            result.add(parse_expression());
+        }
+        expect(State.R_PARENT);
+        return new FunctionCall(name, result);
     }
 }

@@ -34,7 +34,7 @@ public class Main
                 String line   = String.format("%-3s",token.getLine());
                 String column = String.format("%-3s",token.getColumn());
                 String type   = String.format("%-25s",token.getState());
-                String value  = token.getValue() == null ? "" : String.format("%-5s",token.getValue());
+                String value  = token.getValue() == null ? (token.getType() == State.IDENTIFIER ? token.getIdentifier() : "") : String.format("%-5s",token.getValue());
                 System.out.println(line + " | " + column + " | " + type + " | " + value);
             }
             Parser parser = new Parser(path, tokens);
