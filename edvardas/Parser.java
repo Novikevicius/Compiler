@@ -39,13 +39,13 @@ public class Parser {
         }
         return null;
     }
-    private State accept(State tokenType)
+    private Token accept(State tokenType)
     {
         curToken = tokens.get(offset);
         if(curToken.getType() == tokenType)
         {
             offset++;
-            return curToken.getType();
+            return curToken;
         }
         return null;
     }
