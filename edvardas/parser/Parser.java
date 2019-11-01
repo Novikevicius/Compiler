@@ -1,4 +1,5 @@
-package edvardas;
+package edvardas.parser;
+import edvardas.*;
 
 import java.util.*;
 
