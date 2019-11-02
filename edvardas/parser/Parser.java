@@ -3,6 +3,7 @@ package edvardas.parser;
 import edvardas.*;
 import edvardas.ast.nodes.ArrayDeclaration;
 import edvardas.ast.nodes.ArrayElement;
+import edvardas.ast.nodes.ArrayReadArgument;
 import edvardas.ast.nodes.Decl;
 import edvardas.ast.nodes.DeclFn;
 import edvardas.ast.nodes.ExprBinary;
@@ -14,6 +15,7 @@ import edvardas.ast.nodes.ExprVar;
 import edvardas.ast.nodes.Expression;
 import edvardas.ast.nodes.FunctionCall;
 import edvardas.ast.nodes.Program;
+import edvardas.ast.nodes.ReadArgument;
 import edvardas.ast.nodes.Statement;
 import edvardas.ast.nodes.StatementAssignment;
 import edvardas.ast.nodes.StatementBreak;
@@ -22,6 +24,7 @@ import edvardas.ast.nodes.StatementElse;
 import edvardas.ast.nodes.StatementElseIf;
 import edvardas.ast.nodes.StatementFor;
 import edvardas.ast.nodes.StatementIf;
+import edvardas.ast.nodes.StatementRead;
 import edvardas.ast.nodes.StatementReturn;
 import edvardas.ast.nodes.StatementWhile;
 import edvardas.ast.nodes.StmtBody;
@@ -30,6 +33,7 @@ import edvardas.ast.nodes.TypePrim;
 import edvardas.ast.nodes.VarAssignDeclaration;
 import edvardas.ast.nodes.VarDeclaration;
 import edvardas.ast.nodes.VarPrimaryDeclaration;
+import edvardas.ast.nodes.VarReadArgument;
 
 import java.util.ArrayList;
 
@@ -211,10 +215,40 @@ public class Parser {
                 Expression returnValue = parse_expression();
                 expect(State.SEMI_CLN);
                 return new StatementReturn(ret, returnValue);
+            case KW_READ:
+                Token read = expect(State.KW_READ);
+                ArrayList<ReadArgument> readArgs = parse_read_args();
+                expect(State.SEMI_CLN);
+                return new StatementRead(read, readArgs);
             default:
                 error();
                 return null;
         }
+    }
+    private ArrayList<ReadArgument> parse_read_args()
+    {
+        ArrayList<ReadArgument> args = new ArrayList<ReadArgument>();
+        Token name = expect(State.IDENTIFIER);
+        if(accept(State.L_BRACKET) != null){
+            Expression index = parse_expression();
+            expect(State.R_BRACKET);
+            args.add(new ArrayReadArgument(name, index));
+        }
+        else {
+            args.add(new VarReadArgument(name));
+        }
+        while(accept(State.COMMA) != null){
+            name = expect(State.IDENTIFIER);
+            if(accept(State.L_BRACKET) != null){
+                Expression index = parse_expression();
+                expect(State.R_BRACKET);
+                args.add(new ArrayReadArgument(name, index));
+            }
+            else {
+                args.add(new VarReadArgument(name));
+            }
+        }
+        return args;
     }
     private Statement parse_stmt_if()
     {

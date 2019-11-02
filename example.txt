@@ -1,4 +1,4 @@
 void main()
 {
-    return true ^ -10 * false / true;
+    read x, y, arr[x+2];
 }
