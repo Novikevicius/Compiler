@@ -1,42 +1,7 @@
 package edvardas.parser;
 
 import edvardas.*;
-import edvardas.ast.nodes.ArrayDeclaration;
-import edvardas.ast.nodes.ArrayElement;
-import edvardas.ast.nodes.ArrayReadArgument;
-import edvardas.ast.nodes.Decl;
-import edvardas.ast.nodes.DeclFn;
-import edvardas.ast.nodes.ExprBinary;
-import edvardas.ast.nodes.ExprLiteral;
-import edvardas.ast.nodes.ExprNegation;
-import edvardas.ast.nodes.ExprPostfix;
-import edvardas.ast.nodes.ExprPrefix;
-import edvardas.ast.nodes.ExprVar;
-import edvardas.ast.nodes.Expression;
-import edvardas.ast.nodes.FunctionCall;
-import edvardas.ast.nodes.Program;
-import edvardas.ast.nodes.ReadArgument;
-import edvardas.ast.nodes.Statement;
-import edvardas.ast.nodes.StatementAssignment;
-import edvardas.ast.nodes.StatementBreak;
-import edvardas.ast.nodes.StatementContinue;
-import edvardas.ast.nodes.StatementElse;
-import edvardas.ast.nodes.StatementElseIf;
-import edvardas.ast.nodes.StatementExpression;
-import edvardas.ast.nodes.StatementFor;
-import edvardas.ast.nodes.StatementIf;
-import edvardas.ast.nodes.StatementRead;
-import edvardas.ast.nodes.StatementReturn;
-import edvardas.ast.nodes.StatementVarDecl;
-import edvardas.ast.nodes.StatementWhile;
-import edvardas.ast.nodes.StatementWrite;
-import edvardas.ast.nodes.StmtBody;
-import edvardas.ast.nodes.Type;
-import edvardas.ast.nodes.TypePrim;
-import edvardas.ast.nodes.VarAssignDeclaration;
-import edvardas.ast.nodes.VarDeclaration;
-import edvardas.ast.nodes.VarPrimaryDeclaration;
-import edvardas.ast.nodes.VarReadArgument;
+import edvardas.ast.nodes.*;
 
 import java.util.ArrayList;
 
