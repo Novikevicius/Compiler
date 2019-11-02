@@ -250,7 +250,9 @@ public class Parser {
             case TYPE_FLOAT:
             case TYPE_INT:
             case TYPE_STRING:
-                return new StatementVarDecl(parse_var_decl());
+                StatementVarDecl varDecl = new StatementVarDecl(parse_var_decl());
+                expect(State.SEMI_CLN);
+                return varDecl;
             default:
                 StatementExpression expr = new StatementExpression(parse_expression());
                 expect(State.SEMI_CLN);

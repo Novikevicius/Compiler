@@ -4,7 +4,7 @@ void f1()
 
     }
     read _var;
-    write text_with_underscores
+    write text_with_underscores;
     #this is a comment
     ;
     ``
@@ -17,7 +17,7 @@ void f1()
     ----(24+-1);
     var1;
     25;
-    string text = "some \" text "
+    string text = "some \" text ";
     float fl;
     char c = '\\';
     f1 = .01;
