@@ -1,4 +1,4 @@
 void main()
 {
-    read x, y, arr[x+2];
+    write "Hello World!", 'i', 12*3;
 }

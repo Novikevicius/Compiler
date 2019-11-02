@@ -27,6 +27,7 @@ import edvardas.ast.nodes.StatementIf;
 import edvardas.ast.nodes.StatementRead;
 import edvardas.ast.nodes.StatementReturn;
 import edvardas.ast.nodes.StatementWhile;
+import edvardas.ast.nodes.StatementWrite;
 import edvardas.ast.nodes.StmtBody;
 import edvardas.ast.nodes.Type;
 import edvardas.ast.nodes.TypePrim;
@@ -220,10 +221,23 @@ public class Parser {
                 ArrayList<ReadArgument> readArgs = parse_read_args();
                 expect(State.SEMI_CLN);
                 return new StatementRead(read, readArgs);
+            case KW_WRITE:
+                Token write = expect(State.KW_WRITE);
+                ArrayList<Expression> writeArgs = parse_write_args();
+                expect(State.SEMI_CLN);
+                return new StatementWrite(write, writeArgs);
             default:
                 error();
                 return null;
         }
+    }
+    private ArrayList<Expression> parse_write_args()
+    {
+        ArrayList<Expression> args = new ArrayList<Expression>();
+        do {
+            args.add(parse_expression());
+        } while(accept(State.COMMA) != null);
+        return args;
     }
     private ArrayList<ReadArgument> parse_read_args()
     {
