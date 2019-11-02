@@ -1,4 +1,43 @@
-void main()
+void f1() 
 {
-     x++;
+    if( a > 2e-3 && 1e1 <= c || d != f){
+        
+    }
+    read _var;
+    write text_with_underscores
+    #this is a comment
+    ;
+    ``
+    line1 comment
+    line2 comment
+    last comment
+    ``
+    int[25] array;
+    array[23 - var];
+    ----(24+-1);
+    var1;
+    25;
+    string text = "some \" text "
+    float fl;
+    char c = '\\';
+    f1 = .01;
+    float f = 23.;
+    var3 = 98 + 24;
+    --((29 - 15) / 16++ + f2());
+    f3(2, 5.) >= 0 * 1;
+    if(23 > 0)   {}
+    else if(var != var2) {}
+    else if(true)
+    else {}
+    x^2
+    break
+    for(;i>0;)
+}
+int f2(){}
+char f3(int p1, float){}
+
+
+void f1(int p)
+{
+--((29 - 15) / v++ + f2());
 }

@@ -392,7 +392,7 @@ public class Parser {
     private Expression parse_expr_and()
     {
         Expression result = parse_expr_comp_equal();
-        while(accept(State.LOGIC_OP_OR) != null)
+        while(accept(State.LOGIC_OP_AND) != null)
         {
             result = new ExprBinary(State.LOGIC_OP_AND, result, parse_expr_comp_equal());
         }
