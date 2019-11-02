@@ -252,8 +252,9 @@ public class Parser {
             case TYPE_STRING:
                 return new StatementVarDecl(parse_var_decl());
             default:
-                error();
-                return null;
+                StatementExpression expr = new StatementExpression(parse_expression());
+                expect(State.SEMI_CLN);
+                return expr;
         }
     }
     private ArrayList<Expression> parse_write_args()
