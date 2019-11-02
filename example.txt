@@ -1,4 +1,4 @@
 void main()
 {
-    return 2+3;
+    return true ^ -10 * false / true;
 }

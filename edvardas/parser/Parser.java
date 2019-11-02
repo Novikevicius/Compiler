@@ -457,7 +457,26 @@ public class Parser {
         {
             return new ExprPrefix(State.OP_AFFIX_MINUS, parse_expression());
         }
-        return new ExprLiteral(expect(State.INT_LITERAL));
+        if(curToken.getType() == State.INT_LITERAL){
+            return new ExprLiteral(expect(State.INT_LITERAL));
+        }
+        if(curToken.getType() == State.FLOAT_LITERAL){
+            return new ExprLiteral(expect(State.FLOAT_LITERAL));
+        }
+        if(curToken.getType() == State.CHAR_LITERAL){
+            return new ExprLiteral(expect(State.CHAR_LITERAL));
+        }
+        if(curToken.getType() == State.STRING_LITERAL){
+            return new ExprLiteral(expect(State.STRING_LITERAL));
+        }
+        if(curToken.getType() == State.LIT_TRUE){
+            return new ExprLiteral(expect(State.LIT_TRUE));
+        }
+        if(curToken.getType() == State.LIT_FALSE){
+            return new ExprLiteral(expect(State.LIT_FALSE));
+        }
+        error();
+        return null;
     }
     private Expression parse_expr_fn_call(Token name)
     {
