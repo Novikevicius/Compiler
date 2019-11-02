@@ -27,6 +27,7 @@ import edvardas.ast.nodes.StatementFor;
 import edvardas.ast.nodes.StatementIf;
 import edvardas.ast.nodes.StatementRead;
 import edvardas.ast.nodes.StatementReturn;
+import edvardas.ast.nodes.StatementVarDecl;
 import edvardas.ast.nodes.StatementWhile;
 import edvardas.ast.nodes.StatementWrite;
 import edvardas.ast.nodes.StmtBody;
@@ -244,6 +245,12 @@ public class Parser {
                     expect(State.SEMI_CLN);
                     return expr;
                 }
+            case TYPE_BOOL:
+            case TYPE_CHAR:
+            case TYPE_FLOAT:
+            case TYPE_INT:
+            case TYPE_STRING:
+                return new StatementVarDecl(parse_var_decl());
             default:
                 error();
                 return null;
