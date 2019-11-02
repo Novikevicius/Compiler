@@ -16,6 +16,8 @@ import edvardas.ast.nodes.FunctionCall;
 import edvardas.ast.nodes.Program;
 import edvardas.ast.nodes.Statement;
 import edvardas.ast.nodes.StatementAssignment;
+import edvardas.ast.nodes.StatementBreak;
+import edvardas.ast.nodes.StatementContinue;
 import edvardas.ast.nodes.StatementElse;
 import edvardas.ast.nodes.StatementElseIf;
 import edvardas.ast.nodes.StatementFor;
@@ -192,6 +194,14 @@ public class Parser {
                 return parse_stmt_while();
             case KW_FOR:
                 return parse_stmt_for();
+            case KW_BREAK:
+                Token br = expect(State.KW_BREAK);
+                expect(State.SEMI_CLN);
+                return new StatementBreak(br);
+            case KW_CONTINUE:
+                Token cont = expect(State.KW_CONTINUE);
+                expect(State.SEMI_CLN);
+                return new StatementContinue(cont);
             default:
                 error();
                 return null;

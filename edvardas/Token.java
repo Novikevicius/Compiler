@@ -22,6 +22,7 @@ public class Token
         setLine(l);
         setColumn(c);
     }
+    public TokenType getTokenType() {return type;}
     public void setValue(Object v) { value = v;}
     public Object getValue() 
     {

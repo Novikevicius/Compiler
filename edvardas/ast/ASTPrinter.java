@@ -5,6 +5,7 @@ import java.lang.Object;
 
 import edvardas.State;
 import edvardas.Token;
+import edvardas.TokenType;
 import edvardas.ast.nodes.Node;
 
 public class ASTPrinter {
@@ -60,7 +61,7 @@ public class ASTPrinter {
     private void printToken(String title, Object obj) throws Exception 
     {
         Token t = (Token)obj;
-        String value = (t.getType() == State.IDENTIFIER) ? t.getIdentifier() : t.getValue().toString();
+        String value = (t.getType() == State.IDENTIFIER || t.getTokenType() == TokenType.KEYWORD) ? t.getIdentifier() : t.getValue().toString();
         printText(title, value + " (" + t.getLine() + ")");
     }
 }
