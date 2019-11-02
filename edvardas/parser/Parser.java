@@ -22,6 +22,7 @@ import edvardas.ast.nodes.StatementElse;
 import edvardas.ast.nodes.StatementElseIf;
 import edvardas.ast.nodes.StatementFor;
 import edvardas.ast.nodes.StatementIf;
+import edvardas.ast.nodes.StatementReturn;
 import edvardas.ast.nodes.StatementWhile;
 import edvardas.ast.nodes.StmtBody;
 import edvardas.ast.nodes.Type;
@@ -202,6 +203,14 @@ public class Parser {
                 Token cont = expect(State.KW_CONTINUE);
                 expect(State.SEMI_CLN);
                 return new StatementContinue(cont);
+            case KW_RETURN:
+                Token ret = expect(State.KW_RETURN);
+                if(accept(State.SEMI_CLN) != null){
+                    return new StatementReturn(ret, null);
+                }
+                Expression returnValue = parse_expression();
+                expect(State.SEMI_CLN);
+                return new StatementReturn(ret, returnValue);
             default:
                 error();
                 return null;

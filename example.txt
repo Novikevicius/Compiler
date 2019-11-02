@@ -1,5 +1,4 @@
 void main()
 {
-    break;
-    continue;
+    return 2+3;
 }
