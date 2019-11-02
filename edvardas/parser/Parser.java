@@ -22,6 +22,7 @@ import edvardas.ast.nodes.StatementBreak;
 import edvardas.ast.nodes.StatementContinue;
 import edvardas.ast.nodes.StatementElse;
 import edvardas.ast.nodes.StatementElseIf;
+import edvardas.ast.nodes.StatementExpression;
 import edvardas.ast.nodes.StatementFor;
 import edvardas.ast.nodes.StatementIf;
 import edvardas.ast.nodes.StatementRead;
@@ -226,6 +227,23 @@ public class Parser {
                 ArrayList<Expression> writeArgs = parse_write_args();
                 expect(State.SEMI_CLN);
                 return new StatementWrite(write, writeArgs);
+            case IDENTIFIER:
+                curToken = tokens.get(++offset);
+                State curType = curToken.getType();
+                if(curType == State.ASSIGN_OP || curType == State.ASSIGN_OP_DIV || 
+                    curType == State.ASSIGN_OP_MULT || curType == State.ASSIGN_OP_PLUS || 
+                    curType == State.ASSIGN_OP_MINUS){
+                        curToken = tokens.get(--offset);
+                        StatementAssignment stmt = parse_stmt_assignment();
+                        expect(State.SEMI_CLN);
+                        return stmt;
+                    }
+                else{
+                    curToken = tokens.get(--offset);
+                    StatementExpression expr = new StatementExpression(parse_expression());
+                    expect(State.SEMI_CLN);
+                    return expr;
+                }
             default:
                 error();
                 return null;
