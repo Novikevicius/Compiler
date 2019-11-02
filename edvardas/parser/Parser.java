@@ -19,7 +19,6 @@ public class Parser {
         offset = 0;
     }
     private void error() {error("Unexpected token.", null);}
-    private void error(State type) {error("Unexpected token.", type);}
     private void error(String msg, State expectedType)
     {
         Token t = tokens.get(offset);
