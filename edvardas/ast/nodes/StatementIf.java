@@ -8,9 +8,9 @@ public class StatementIf extends Statement {
     private Expression condition;
     private StmtBody body;
     private ArrayList<StatementElseIf> elseif;
-    private StatementElse stmtElse;
+    private StmtBody stmtElse;
 
-    public StatementIf(Expression cond, StmtBody body, ArrayList<StatementElseIf> elseif, StatementElse stmtElse) {
+    public StatementIf(Expression cond, StmtBody body, ArrayList<StatementElseIf> elseif, StmtBody stmtElse) {
         condition = cond;
         this.body = body;
         this.elseif = elseif;
