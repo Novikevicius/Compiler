@@ -8,6 +8,7 @@ import edvardas.parser.*;
 
 public class Main 
 {
+    static boolean debug = false;
     public static void main(String[] args) 
     {
         String path;
@@ -41,11 +42,13 @@ public class Main
             Node root = parser.parse();
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
-            System.out.println("YAY");
         }
         catch(Error e)
         {
-            e.printStackTrace();       
+            if(debug)
+                e.printStackTrace();   
+            else
+                System.out.println(e.getMessage());    
         }
         catch(Exception e)
         {

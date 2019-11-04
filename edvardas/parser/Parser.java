@@ -25,8 +25,8 @@ public class Parser {
         int line = t.getLine();
         int column = t.getColumn();
         String[] array = fileName.split("/"); // get file name
-        String expected = expectedType == null ? " Got: " : " Expected:" + String.format("%s", expectedType) + " got: ";
-        throw new Error("ParserError:" + array[array.length-1] + ":" + line + ":" + column + ": " + msg + expected + String.format("%s",curToken.getType()));
+        String expected = expectedType == null ? " Got: " : " Expected:" + String.format("%s", expectedType) + " Got: ";
+        throw new Error("SyntaxError:" + array[array.length-1] + ":" + line + ":" + column + ": " + msg + expected + String.format("%s",curToken.getType()));
     }
     private Token expect(State tokenType)
     {
