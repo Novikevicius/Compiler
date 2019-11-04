@@ -1,11 +1,13 @@
 package edvardas.ast;
 
 import java.util.ArrayList;
+
 import java.lang.Object;
 
 import edvardas.State;
 import edvardas.Token;
 import edvardas.TokenType;
+import edvardas.*;
 import edvardas.ast.nodes.Node;
 
 public class ASTPrinter {
@@ -20,7 +22,7 @@ public class ASTPrinter {
             printArray(title, obj);
         } else if(obj instanceof Node){
             printNode(title, obj);
-        } else if(obj instanceof State){
+        } else if(obj instanceof State || obj instanceof BinaryOperator || obj instanceof UnaryOperator){
             printText(title, obj);
         } else if(obj instanceof Token){
             printToken(title, obj);

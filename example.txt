@@ -1,12 +1,12 @@
 int f()
 {
-    if(a)
-{
-    aa();
-}
-else if(b)
-{
-    b;
-}
-else {c();}
+    if(a+b)
+    {
+        aa();
+    }
+    else if(b)
+    {
+        b;
+    }
+    else {c();}
 }
