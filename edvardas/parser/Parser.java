@@ -258,26 +258,27 @@ public class Parser {
     }
     private Statement parse_stmt_if()
     {
-        ArrayList<StatementElseIf> elseif = new ArrayList<StatementElseIf>();
+        ArrayList<Branch> elseif = new ArrayList<Branch>();
         expect(State.KW_IF);
         expect(State.L_PARENT);
         Expression cond = parse_expression();
         expect(State.R_PARENT);
         StmtBody body = parse_block();
         StmtBody elsebody = null;
+        Branch branch = new Branch(cond, body);
         while(accept(State.KW_ELSE) != null) {
             if(accept(State.KW_IF) != null) {
                 expect(State.L_PARENT);
                 Expression elseIfCond = parse_expression();
                 expect(State.R_PARENT);
                 StmtBody elseIfbody = parse_block();
-                elseif.add(new StatementElseIf(elseIfCond, elseIfbody));
+                elseif.add(new Branch(elseIfCond, elseIfbody));
                 continue;
             }
             elsebody = parse_block();;
             break;
         }
-        return new StatementIf(cond, body, elseif, elsebody);  
+        return new StatementIf(branch, elseif, elsebody);  
     }
     // <while_loop> ::= "while" "(" <expression> ")" <block>
     private Statement parse_stmt_while()

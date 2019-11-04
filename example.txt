@@ -1,8 +1,9 @@
 int f()
 {
+    c = 5;
     if(-a+b)
     {
-        aa();
+        int x = aa();
     }
     else if(b)
     {

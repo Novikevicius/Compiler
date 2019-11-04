@@ -2,11 +2,11 @@ package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
 
-public class StatementElseIf extends Statement {
+public class Branch extends Node {
     private Expression condition;
     private StmtBody body;
     
-    public StatementElseIf(Expression cond, StmtBody body) {
+    public Branch(Expression cond, StmtBody body) {
         condition = cond;
         this.body = body;
     }
