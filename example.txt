@@ -1,6 +1,7 @@
 int f()
 {
-    if(a+b)
+    x--;
+    if(-a+b)
     {
         aa();
     }

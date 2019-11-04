@@ -5,20 +5,27 @@ import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Expression;
 
 public class ExprUnary extends Expression {
-    private Expression left;
+    private Expression expr;
     private UnaryOperator operator;
-    private Expression right;
-    public ExprUnary(UnaryOperator operator, Expression left, Expression right) {
+    private boolean isPostfix;
+
+    public ExprUnary(UnaryOperator operator, Expression expr) { 
+        this(operator, expr, false);
+    }
+
+	public ExprUnary(UnaryOperator operator, Expression expr, boolean isPostfix) {
         this.operator = operator;
-        this.left = left;
-        this.right = right;
+        this.expr = expr;
+        this.isPostfix = isPostfix;
     }
 
     @Override
     public void print(ASTPrinter printer) throws Exception {
        printer.print("operator", operator);
-       printer.print("left", left);
-       printer.print("right", right);
+       printer.print("expr", expr);
+       if(operator == UnaryOperator.INCREMENT || operator == UnaryOperator.DECREMENT){
+           printer.print("isPostfix", isPostfix);
+       }
     }
     
 }

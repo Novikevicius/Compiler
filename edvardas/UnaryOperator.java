@@ -1,6 +1,7 @@
 package edvardas;
 
 public enum UnaryOperator {
+    NEGATION("-"),
     INCREMENT("++"),
     DECREMENT("--");
 

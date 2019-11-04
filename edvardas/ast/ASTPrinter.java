@@ -28,6 +28,8 @@ public class ASTPrinter {
             printToken(title, obj);
         } else if(obj == null){
             printText(title, "NULL");
+        } else if(obj instanceof Boolean){
+            printText(title, obj);
         }
         else {
             throw new Exception("Invalid print argument: " + obj.getClass().getName());

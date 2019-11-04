@@ -437,7 +437,7 @@ public class Parser {
     {
         if(accept(State.OP_MINUS) != null)
         {
-            return new ExprNegation(parse_expr_negation());
+            return new ExprUnary(UnaryOperator.NEGATION, parse_expr_negation());
         }
         return parse_expr_parent();
     }
@@ -459,10 +459,10 @@ public class Parser {
         while (true) {
             if(accept(State.OP_AFFIX_PLUS) != null)
             {
-                return new ExprPostfix(State.OP_AFFIX_PLUS, result);
+                return new ExprUnary(UnaryOperator.INCREMENT, result, true);
             } else if(accept(State.OP_AFFIX_MINUS) != null)
             {
-                return new ExprPostfix(State.OP_AFFIX_MINUS, result);
+                return new ExprUnary(UnaryOperator.DECREMENT, result, true);
             } else {
                 break;
             }
@@ -491,11 +491,11 @@ public class Parser {
         }
         if(accept(State.OP_AFFIX_PLUS) != null)
         {
-            return new ExprPrefix(State.OP_AFFIX_PLUS, parse_expression());
+            return new ExprUnary(UnaryOperator.INCREMENT, parse_expression());
         }
         if(accept(State.OP_AFFIX_MINUS) != null)
         {
-            return new ExprPrefix(State.OP_AFFIX_MINUS, parse_expression());
+            return new ExprUnary(UnaryOperator.DECREMENT, parse_expression());
         }
         if(curToken.getType() == State.INT_LITERAL){
             return new ExprLiteral(expect(State.INT_LITERAL));
