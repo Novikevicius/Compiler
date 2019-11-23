@@ -2,10 +2,9 @@ package edvardas.ast.nodes;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class VarAssignDeclaration extends VarDeclaration {
-    private Type type;
-    private Token name;
     private Expression expr;
 
     public VarAssignDeclaration(Token name, Type type, Expression expr) {
@@ -18,5 +17,11 @@ public class VarAssignDeclaration extends VarDeclaration {
         printer.print("type", type);
         printer.print("name", name);
         printer.print("expr", expr);
+    }
+    @Override
+    public void resolveNames(Scope parentScope)
+    {
+        parentScope.add(name, this);
+        expr.resolveNames(parentScope);
     }
 }

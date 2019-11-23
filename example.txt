@@ -1,4 +1,4 @@
-int f()
+int f(int a, int b = 5)
 {
     c = 5;
     if(-a+b)

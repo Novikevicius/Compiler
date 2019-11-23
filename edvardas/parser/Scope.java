@@ -42,7 +42,7 @@ public class Scope {
     }
     private void error(Token token, String message)
     {
-        System.err.println(String.format("file:%i:%s: %s", token.getLine(), message, token.getIdentifier()));
+        System.err.println(String.format("file:%d:%s: %s", token.getLine(), message, token.getIdentifier()));
 
     }
 

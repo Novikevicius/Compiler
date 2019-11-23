@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class DeclFn extends Decl {
     private Type returnType;
@@ -24,5 +25,12 @@ public class DeclFn extends Decl {
         printer.print("params", params);
         printer.print("returnType", returnType);
         printer.print("body", body);
+    }
+    @Override
+    public void resolveNames(Scope parentScope)
+    {
+        Scope scope = new Scope(parentScope);
+        params.forEach( (param) -> param.resolveNames(scope) );
+        body.resolveNames(scope);
     }
 }
