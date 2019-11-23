@@ -7,7 +7,6 @@ import edvardas.ast.ASTPrinter;
 
 public class DeclFn extends Decl {
     private Type returnType;
-    private Token name;
     private ArrayList<VarDeclaration> params;
     private StmtBody body;
 

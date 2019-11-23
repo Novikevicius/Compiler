@@ -12,6 +12,7 @@ public class Scope {
     public Scope(Scope scope)
     {
         parentScope = scope;
+        members = new HashMap<String, Node>();
     }
     public void add(Token name_token, Node node)
     {
