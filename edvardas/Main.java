@@ -40,6 +40,8 @@ public class Main
             }
             Parser parser = new Parser(path, tokens);
             Node root = parser.parse();
+            Scope scope = new Scope(null);
+            root.resolveNames(scope);
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
         }
