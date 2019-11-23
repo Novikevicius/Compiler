@@ -3,6 +3,7 @@ package edvardas.ast.nodes;
 import edvardas.UnaryOperator;
 import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Expression;
+import edvardas.parser.Scope;
 
 public class ExprUnary extends Expression {
     private Expression expr;
@@ -26,6 +27,11 @@ public class ExprUnary extends Expression {
        if(operator == UnaryOperator.INCREMENT || operator == UnaryOperator.DECREMENT){
            printer.print("isPostfix", isPostfix);
        }
+    }
+    @Override
+    public void resolveNames(Scope scope)
+    {
+        expr.resolveNames(scope);
     }
     
 }
