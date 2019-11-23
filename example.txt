@@ -3,7 +3,7 @@ int f(int a, int[2] b)
     a = 5;
     if(-a+b)
     {
-        int x = aa();
+        int x = f();
     }
     else if(b)
     {

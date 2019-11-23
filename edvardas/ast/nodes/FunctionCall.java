@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class FunctionCall extends Expression {
     private Token name;
@@ -16,5 +17,11 @@ public class FunctionCall extends Expression {
     {
         printer.print("name", name);
         printer.print("args", args);
+    }
+    @Override
+    public void resolveNames(Scope scope)
+    {
+        scope.resolveName(name);
+        args.forEach( (arg) -> ((Expression)arg).resolveNames(scope) );
     }
 }
