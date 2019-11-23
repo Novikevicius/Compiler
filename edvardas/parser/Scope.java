@@ -14,6 +14,10 @@ public class Scope {
         parentScope = scope;
         members = new HashMap<String, Node>();
     }
+    public Scope getParent()
+    {
+        return parentScope;
+    }
     public void add(Token name_token, Node node)
     {
         String name = name_token.getIdentifier();
