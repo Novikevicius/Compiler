@@ -1,6 +1,7 @@
 package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class Branch extends Node {
     private Expression condition;
@@ -14,5 +15,11 @@ public class Branch extends Node {
     {
         printer.print("condition", condition);
         printer.print("body", body);
+    }
+    @Override
+    public void resolveNames(Scope parentScope)
+    {
+        condition.resolveNames(parentScope);
+        body.resolveNames(parentScope);
     }
 }

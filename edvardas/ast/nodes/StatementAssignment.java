@@ -3,6 +3,7 @@ package edvardas.ast.nodes;
 import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementAssignment extends Statement {
     private Token name;
@@ -19,5 +20,11 @@ public class StatementAssignment extends Statement {
         printer.print("name", name);
         printer.print("operator", operator);
         printer.print("value", value);
+    }
+    @Override
+    public void resolveNames(Scope scope)
+    {
+        scope.add(name, this);
+        value.resolveNames(scope);
     }
 }

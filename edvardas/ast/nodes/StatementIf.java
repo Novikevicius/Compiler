@@ -3,6 +3,7 @@ package edvardas.ast.nodes;
 import java.util.ArrayList;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementIf extends Statement {
     private Branch branch;
@@ -19,5 +20,12 @@ public class StatementIf extends Statement {
         printer.print("branch", branch);
         printer.print("elseif", elseif);
         printer.print("else", stmtElse);
+    }
+    @Override
+    public void resolveNames(Scope scope)
+    {
+        branch.resolveNames(scope);
+        elseif.forEach( (branch) -> ((Branch)branch).resolveNames(scope) );
+        stmtElse.resolveNames(scope);
     }
 }
