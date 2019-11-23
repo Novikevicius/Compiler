@@ -3,6 +3,7 @@ package edvardas.ast.nodes;
 import edvardas.BinaryOperator;
 import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Expression;
+import edvardas.parser.Scope;
 
 public class ExprBinary extends Expression {
     private Expression left;
@@ -21,5 +22,10 @@ public class ExprBinary extends Expression {
        printer.print("left", left);
        printer.print("right", right);
     }
-    
+    @Override
+    public void resolveNames(Scope scope)
+    {
+        left.resolveNames(scope);
+        right.resolveNames(scope);
+    }
 }
