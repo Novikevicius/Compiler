@@ -2,6 +2,7 @@ package edvardas.ast.nodes;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class ArrayDeclaration extends VarDeclaration {
     private Type type;
@@ -18,5 +19,10 @@ public class ArrayDeclaration extends VarDeclaration {
         printer.print("type", type);
         printer.print("name", name);
         printer.print("size", size);
+    }
+    @Override
+    public void resolveNames(Scope scope)
+    {
+        scope.add(name, this);
     }
 }
