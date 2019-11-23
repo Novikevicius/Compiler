@@ -1,6 +1,6 @@
 int f(int a, int[2] b)
 {
-    c = 5;
+    a = 5;
     if(-a+b)
     {
         int x = aa();

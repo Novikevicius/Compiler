@@ -24,7 +24,7 @@ public class StatementAssignment extends Statement {
     @Override
     public void resolveNames(Scope scope)
     {
-        scope.add(name, this);
+        scope.resolveName(name);
         value.resolveNames(scope);
     }
 }
