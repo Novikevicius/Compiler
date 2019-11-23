@@ -1,6 +1,7 @@
 package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementWhile extends Statement {
     private Expression condition;
@@ -14,5 +15,11 @@ public class StatementWhile extends Statement {
     {
         printer.print("condition", condition);
         printer.print("body", body);
+    }
+    @Override
+    public void resolveNames(Scope s) 
+    {
+        condition.resolveNames(s);
+        body.resolveNames(s);
     }
 }

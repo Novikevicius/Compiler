@@ -1,6 +1,7 @@
 package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementFor extends Statement {
     private VarDeclaration initialization;
@@ -20,5 +21,14 @@ public class StatementFor extends Statement {
         printer.print("condition", condition);
         printer.print("afterthought", afterthought);
         printer.print("body", body);
+    }
+    @Override
+    public void resolveNames(Scope parentScope) 
+    {
+        Scope scope = new Scope(parentScope);
+        initialization.resolveNames(scope);
+        condition.resolveNames(scope);
+        afterthought.resolveNames(scope);
+        body.resolveNames(scope);
     }
 }

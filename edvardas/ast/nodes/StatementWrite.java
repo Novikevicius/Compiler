@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementWrite extends Statement {
     private Token keyword;
@@ -17,5 +18,10 @@ public class StatementWrite extends Statement {
     {
         printer.print("keyword", keyword);
         printer.print("args", args);
+    }
+    @Override
+    public void resolveNames(Scope s) 
+    {
+        args.forEach((arg) -> ((Expression)arg).resolveNames(s));
     }
 }

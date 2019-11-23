@@ -1,5 +1,9 @@
 int f(int a, int[2] b)
 {
+    string s = "Hello World!";
+    string text;
+    read s;
+    write text;
     a = 5;
     if(-a+b)
     {
@@ -11,3 +15,4 @@ int f(int a, int[2] b)
     }
     else {c();}
 }
+void c(){}

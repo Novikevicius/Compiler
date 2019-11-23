@@ -2,6 +2,7 @@ package edvardas.ast.nodes;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementReturn extends Statement {
     private Token keyword;
@@ -15,5 +16,10 @@ public class StatementReturn extends Statement {
     {
         printer.print("keyword", keyword);
         printer.print("value", value);
+    }
+    @Override
+    public void resolveNames(Scope s) 
+    {
+        value.resolveNames(s);
     }
 }

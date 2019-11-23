@@ -2,6 +2,7 @@ package edvardas.ast.nodes;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.parser.Scope;
 
 public class StatementBreak extends Statement {
     private Token keyword;
@@ -12,4 +13,6 @@ public class StatementBreak extends Statement {
     {
         printer.print("stmtBreak", keyword);
     }
+    @Override
+    public void resolveNames(Scope s) {}
 }
