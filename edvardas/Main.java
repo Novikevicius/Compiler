@@ -8,7 +8,9 @@ import edvardas.parser.*;
 
 public class Main 
 {
-    static boolean debug = false;
+    public static String filename;
+    public static boolean debug = false;
+    private static ArrayList<String> errors;
     public static void main(String[] args) 
     {
         String path;
@@ -24,6 +26,8 @@ public class Main
             {
                 path += " " + args[i];
             }
+            String[] array = path.split("/"); // get file name
+            Main.filename = array[array.length-1];
         }
         try
         {
@@ -44,6 +48,12 @@ public class Main
             root.resolveNames(scope);
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
+            if(errors != null)
+            {
+                for (String err : errors) {
+                    System.err.println(err);
+                }
+            }
         }
         catch(Error e)
         {
@@ -56,5 +66,11 @@ public class Main
         {
             e.printStackTrace();
         }
+    }
+    public static void error(String err)
+    {
+        if(errors == null)
+            errors = new ArrayList<String>();
+        errors.add(err);
     }
 }

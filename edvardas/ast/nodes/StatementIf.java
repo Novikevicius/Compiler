@@ -31,6 +31,7 @@ public class StatementIf extends Statement {
     {
         branch.resolveNames(scope);
         elseif.forEach( (branch) -> ((Branch)branch).resolveNames(scope) );
-        stmtElse.resolveNames(scope);
+        if(stmtElse != null)
+            stmtElse.resolveNames(scope);
     }
 }

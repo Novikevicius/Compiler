@@ -1,5 +1,6 @@
 package edvardas.ast.nodes;
 
+import edvardas.Main;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
@@ -14,5 +15,11 @@ public class StatementContinue extends Statement {
         printer.print("stmtContinue", keyword);
     }
     @Override
-    public void resolveNames(Scope s) {}
+    public void resolveNames(Scope s) {
+        Node ancestor = findAncestor(StatementWhile.class);
+        if(ancestor != null) return;
+        ancestor = findAncestor(StatementFor.class);
+        if(ancestor != null) return;
+        Main.error(Main.filename + ":" + keyword.getLine() + ": " + "continue is not inside a loop statement");
+    }
 }

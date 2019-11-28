@@ -1,6 +1,10 @@
 int f(int a, int[2] b)
 {
-    break;
+    continue;
+    while(1)
+    {
+        
+    }
     string s = "Hello World!";
     string text;
     b[0] = 1;
