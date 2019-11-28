@@ -25,5 +25,19 @@ public abstract class Node {
             child.parent = this;
         }
     }
+    public Node findAncestor(Class<?> cls)
+    {
+        Node curNode = parent;
+        while(curNode != null)
+        {
+            if(curNode.getClass() == cls)
+            {
+                return curNode;
+            }
+            curNode = curNode.parent;
+        }
+        return null;
+    }
+
     public abstract void resolveNames(Scope scope);
 }
