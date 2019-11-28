@@ -17,6 +17,11 @@ public class DeclFn extends Decl {
         this.name = name;
         this.params = params;
         this.body = body;
+        addChildren(returnType);
+        for (VarDeclaration param : params) {
+            addChildren(param);
+        }
+        addChildren(body);
     }
     @Override
     public void print(ASTPrinter printer) throws Exception 

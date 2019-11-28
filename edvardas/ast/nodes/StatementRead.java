@@ -13,6 +13,9 @@ public class StatementRead extends Statement {
     public StatementRead(Token keyword, ArrayList<ReadArgument> args) {
         this.keyword = keyword;
         this.args = args;
+        for (ReadArgument arg : args) {
+            addChildren(arg);
+        }
     }
     public void print(ASTPrinter printer) throws Exception
     {

@@ -7,6 +7,7 @@ public class StatementExpression extends Statement {
     private Expression expr;
     public StatementExpression(Expression expr) {
         this.expr = expr;
+        addChildren(expr);
     }
     public void print(ASTPrinter printer) throws Exception
     {

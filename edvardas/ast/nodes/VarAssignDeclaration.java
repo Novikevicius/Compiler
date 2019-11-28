@@ -11,6 +11,8 @@ public class VarAssignDeclaration extends VarDeclaration {
         this.name = name;
         this.type = type;
         this.expr = expr;
+        addChildren(type);
+        addChildren(expr);
     }
     public void print(ASTPrinter printer) throws Exception
     {

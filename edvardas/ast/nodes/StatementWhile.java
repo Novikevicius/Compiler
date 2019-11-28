@@ -10,6 +10,8 @@ public class StatementWhile extends Statement {
     public StatementWhile(Expression cond, StmtBody body) {
         condition = cond;
         this.body = body;
+        addChildren(condition);
+        addChildren(body);
     }
     public void print(ASTPrinter printer) throws Exception
     {

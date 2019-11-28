@@ -9,6 +9,7 @@ public class VarTarget extends AssignmentTarget {
     public VarTarget(ExprVar var)
     {
         this.var = var;
+        addChildren(var);
     }
     @Override
     public void print(ASTPrinter printer) throws Exception {

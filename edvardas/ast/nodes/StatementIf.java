@@ -13,7 +13,12 @@ public class StatementIf extends Statement {
     public StatementIf(Branch branch, ArrayList<Branch> elseif, StmtBody stmtElse) {
         this.branch = branch;
         this.elseif = elseif;
-        this.stmtElse = stmtElse;
+        this.stmtElse = stmtElse;;
+        addChildren(branch);
+        for (Branch eif : elseif) {
+            addChildren(eif);
+        }
+        addChildren(stmtElse);
     }
     public void print(ASTPrinter printer) throws Exception
     {

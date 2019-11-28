@@ -8,6 +8,7 @@ public class StatementVarDecl extends Statement {
     
     public StatementVarDecl(VarDeclaration declaration) {
         this.declaration = declaration;
+        addChildren(declaration);
     }
     public void print(ASTPrinter printer) throws Exception
     {

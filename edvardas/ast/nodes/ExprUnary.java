@@ -12,6 +12,7 @@ public class ExprUnary extends Expression {
 
     public ExprUnary(UnaryOperator operator, Expression expr) { 
         this(operator, expr, false);
+        addChildren(expr);
     }
 
 	public ExprUnary(UnaryOperator operator, Expression expr, boolean isPostfix) {

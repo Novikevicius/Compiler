@@ -13,6 +13,9 @@ public class StatementWrite extends Statement {
     public StatementWrite(Token keyword, ArrayList<Expression> args) {
         this.keyword = keyword;
         this.args = args;
+        for (Expression arg : args) {
+            addChildren(arg);
+        }
     }
     public void print(ASTPrinter printer) throws Exception
     {

@@ -9,6 +9,7 @@ public class ArrayTarget extends AssignmentTarget {
     public ArrayTarget(ArrayElement elem)
     {
         this.arrayElement = elem;
+        addChildren(elem);
     }
     @Override
     public void print(ASTPrinter printer) throws Exception {

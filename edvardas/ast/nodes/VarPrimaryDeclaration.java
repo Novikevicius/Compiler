@@ -8,6 +8,7 @@ public class VarPrimaryDeclaration extends VarDeclaration {
     public VarPrimaryDeclaration(Token name, Type type) {
         this.name = name;
         this.type = type;
+        addChildren(type);
     }
     public void print(ASTPrinter printer) throws Exception
     {

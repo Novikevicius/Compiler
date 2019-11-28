@@ -8,6 +8,7 @@ public class StatementElse extends Statement {
     
     public StatementElse(StmtBody body) {
         this.body = body;
+        addChildren(body);
     }
     public void print(ASTPrinter printer) throws Exception
     {

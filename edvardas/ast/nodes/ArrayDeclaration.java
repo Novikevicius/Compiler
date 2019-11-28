@@ -1,7 +1,5 @@
 package edvardas.ast.nodes;
 
-import java.util.ArrayList;
-
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
@@ -15,6 +13,7 @@ public class ArrayDeclaration extends VarDeclaration {
         this.type = type;
         this.name = name;
         this.size = size;
+        addChildren(type);
     }
     public void print(ASTPrinter printer) throws Exception
     {

@@ -12,6 +12,9 @@ public class FunctionCall extends Expression {
     public FunctionCall(Token name, ArrayList<Expression> args) {
         this.name = name;
         this.args = args;
+        for (Expression arg : args) {
+            addChildren(arg);
+        }
     }
     public void print(ASTPrinter printer) throws Exception
     {

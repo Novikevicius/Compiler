@@ -14,6 +14,8 @@ public class ExprBinary extends Expression {
         this.operator = operator;
         this.left = left;
         this.right = right;
+        addChildren(left);
+        addChildren(right);
     }
 
     @Override

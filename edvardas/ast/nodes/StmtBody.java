@@ -9,6 +9,9 @@ public class StmtBody extends Node {
     private ArrayList<Statement> stmts;
     public StmtBody(ArrayList<Statement> s) {
         stmts = s;
+        for (Statement stmt : stmts) {
+            addChildren(stmt);
+        }
     }
     public void print(ASTPrinter printer) throws Exception
     {

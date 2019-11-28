@@ -14,6 +14,10 @@ public class StatementFor extends Statement {
         this.initialization = initialization;
         this.afterthought = afterthought;
         this.body = body;
+        addChildren(initialization);
+        addChildren(condition);
+        addChildren(afterthought);
+        addChildren(body);
     }
     public void print(ASTPrinter printer) throws Exception
     {

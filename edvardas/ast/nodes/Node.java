@@ -14,9 +14,16 @@ public abstract class Node {
         children.forEach((child) -> {
             if(child != null)
             {
-                ((Node)child).parent = this;
+                addChildren(child);
             }
         });
+    }
+    public void addChildren(Node child)
+    {
+        if(child != null)
+        {
+            child.parent = this;
+        }
     }
     public abstract void resolveNames(Scope scope);
 }

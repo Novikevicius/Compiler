@@ -11,6 +11,7 @@ public class StatementReturn extends Statement {
     public StatementReturn(Token keyword, Expression value) {
         this.keyword = keyword;
         this.value = value;
+        addChildren(value);
     }
     public void print(ASTPrinter printer) throws Exception
     {

@@ -10,6 +10,7 @@ public class Program extends Node {
 
     public Program(ArrayList<Decl> decls) {
         decl = decls;
+        decls.forEach ((d) -> addChildren(d));
     }
 
     @Override

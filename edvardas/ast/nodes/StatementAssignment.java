@@ -14,6 +14,8 @@ public class StatementAssignment extends Statement {
         this.target = target;
         this.operator = operator;
         this.value = value;
+        addChildren(target);
+        addChildren(value);
     }
     public void print(ASTPrinter printer) throws Exception
     {
