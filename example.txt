@@ -1,9 +1,8 @@
 int f(int a, int[2] b)
 {
-    continue;
     while(1)
     {
-        
+        continue;
     }
     string s = "Hello World!";
     string text;
