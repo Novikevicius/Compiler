@@ -3,7 +3,7 @@ int f(int a, int[2] b)
     break;
     string s = "Hello World!";
     string text;
-    s = b[1];
+    b[0] = 1;
     read s;
     write text;
     a = 5;

@@ -197,7 +197,7 @@ public class Parser {
                 State curType = curToken.getType();
                 if(curType == State.ASSIGN_OP || curType == State.ASSIGN_OP_DIV || 
                     curType == State.ASSIGN_OP_MULT || curType == State.ASSIGN_OP_PLUS || 
-                    curType == State.ASSIGN_OP_MINUS){
+                    curType == State.ASSIGN_OP_MINUS || curType == State.L_BRACKET){
                         curToken = tokens.get(--offset);
                         StatementAssignment stmt = parse_stmt_assignment();
                         expect(State.SEMI_CLN);
@@ -322,6 +322,15 @@ public class Parser {
     private StatementAssignment parse_stmt_assignment()
     {
         Token name = expect(State.IDENTIFIER);
+        AssignmentTarget target = null;
+        if(accept(State.L_BRACKET) != null)
+        {
+            Expression index = parse_expression();
+            expect(State.R_BRACKET);
+            target = new ArrayTarget(new ArrayElement(name, index));
+        } else {
+            target = new VarTarget(new ExprVar(name));
+        }
         State operator = null;
         if(accept(State.ASSIGN_OP) != null) {
             operator = State.ASSIGN_OP;
@@ -335,9 +344,9 @@ public class Parser {
             operator = State.ASSIGN_OP_PLUS;
         } else {
             error();
-        } for(int i = 0; i < 10; i++) {}
+        }
         Expression expr = parse_expression();
-        return new StatementAssignment(name, operator, expr);
+        return new StatementAssignment(target, operator, expr);
     }
     //<expression> ::=  <expression> { ("++" | "--")}
     private Expression parse_expression()
