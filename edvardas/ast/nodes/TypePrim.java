@@ -18,4 +18,5 @@ public class TypePrim extends Type {
     {
         
     }
+    public State getKind() { return kind;}
 }
