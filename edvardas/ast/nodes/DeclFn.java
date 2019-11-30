@@ -38,4 +38,10 @@ public class DeclFn extends Decl {
         params.forEach( (param) -> param.resolveNames(scope) );
         body.resolveNames(scope);
     }
+    @Override
+    public void checkTypes()
+    {
+        params.forEach( (param) -> param.checkTypes() );
+        body.checkTypes();
+    }
 }
