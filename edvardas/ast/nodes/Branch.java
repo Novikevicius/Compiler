@@ -1,5 +1,6 @@
 package edvardas.ast.nodes;
 
+import edvardas.State;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
@@ -23,5 +24,14 @@ public class Branch extends Node {
     {
         condition.resolveNames(parentScope);
         body.resolveNames(parentScope);
+    }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        TypePrim tBool = new TypePrim(State.TYPE_BOOL);
+        Node tCond = condition.checkTypes();
+        unifyTypes(tCond, tBool);
+        body.checkTypes();
+        return null;
     }
 }

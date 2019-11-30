@@ -11,8 +11,7 @@ public class DeclFn extends Decl {
     private ArrayList<VarDeclaration> params;
     private StmtBody body;
 
-    public DeclFn(Type retType, Token name, ArrayList<VarDeclaration> params, StmtBody body)
-    {
+    public DeclFn(Type retType, Token name, ArrayList<VarDeclaration> params, StmtBody body) {
         this.returnType = retType;
         this.name = name;
         this.params = params;
@@ -23,25 +22,31 @@ public class DeclFn extends Decl {
         }
         addChildren(body);
     }
+
     @Override
-    public void print(ASTPrinter printer) throws Exception 
-    {
+    public void print(ASTPrinter printer) throws Exception {
         printer.print("name", name);
         printer.print("params", params);
         printer.print("returnType", returnType);
         printer.print("body", body);
     }
+
     @Override
-    public void resolveNames(Scope parentScope)
-    {
+    public void resolveNames(Scope parentScope) {
         Scope scope = new Scope(parentScope);
-        params.forEach( (param) -> param.resolveNames(scope) );
+        params.forEach((param) -> param.resolveNames(scope));
         body.resolveNames(scope);
     }
+
     @Override
-    public Node checkTypes()
-    {
-        params.forEach( (param) -> param.checkTypes() );
+    public Node checkTypes() throws Exception {
+        params.forEach((param) -> {
+            try {
+                param.checkTypes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         body.checkTypes();
         return null;
     }

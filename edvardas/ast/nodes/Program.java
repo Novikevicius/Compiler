@@ -10,24 +10,29 @@ public class Program extends Node {
 
     public Program(ArrayList<Decl> decls) {
         decl = decls;
-        decls.forEach ((d) -> addChildren(d));
+        decls.forEach((d) -> addChildren(d));
     }
 
     @Override
     public void print(ASTPrinter printer) throws Exception {
         printer.print("func", decl);
     }
-    
+
     @Override
-    public void resolveNames(Scope scope)
-    {
-        decl.forEach((decl) -> scope.add(((Decl)decl).getName(), decl));
+    public void resolveNames(Scope scope) {
+        decl.forEach((decl) -> scope.add(((Decl) decl).getName(), decl));
         decl.forEach((decl) -> decl.resolveNames(scope));
     }
+
     @Override
-    public Node checkTypes()
-    {
-        decl.forEach((decl) -> decl.checkTypes());
+    public Node checkTypes() throws Exception {
+        decl.forEach((decl) -> {
+            try {
+                decl.checkTypes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         return null;
     }
     

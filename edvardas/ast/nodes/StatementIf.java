@@ -13,32 +13,39 @@ public class StatementIf extends Statement {
     public StatementIf(Branch branch, ArrayList<Branch> elseif, StmtBody stmtElse) {
         this.branch = branch;
         this.elseif = elseif;
-        this.stmtElse = stmtElse;;
+        this.stmtElse = stmtElse;
+        ;
         addChildren(branch);
         for (Branch eif : elseif) {
             addChildren(eif);
         }
         addChildren(stmtElse);
     }
-    public void print(ASTPrinter printer) throws Exception
-    {
+
+    public void print(ASTPrinter printer) throws Exception {
         printer.print("branch", branch);
         printer.print("elseif", elseif);
         printer.print("else", stmtElse);
     }
+
     @Override
-    public void resolveNames(Scope scope)
-    {
+    public void resolveNames(Scope scope) {
         branch.resolveNames(scope);
-        elseif.forEach( (branch) -> ((Branch)branch).resolveNames(scope) );
-        if(stmtElse != null)
+        elseif.forEach((branch) -> ((Branch) branch).resolveNames(scope));
+        if (stmtElse != null)
             stmtElse.resolveNames(scope);
     }
+
     @Override
-    public Node checkTypes()
-    {
+    public Node checkTypes() throws Exception {
         branch.checkTypes();
-        elseif.forEach( (branch) -> ((Branch)branch).checkTypes() );
+        elseif.forEach((branch) -> {
+            try {
+                ((Branch) branch).checkTypes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         if(stmtElse != null)
             stmtElse.checkTypes();
         return null;
