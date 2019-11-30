@@ -20,7 +20,7 @@ public class Program extends Node {
 
     @Override
     public void resolveNames(Scope scope) {
-        decl.forEach((decl) -> scope.add(((Decl) decl).getName(), decl));
+        decl.forEach((decl) -> scope.add(((Decl) decl).getName(), decl.getType()));
         decl.forEach((decl) -> {
             try {
                 decl.resolveNames(scope);

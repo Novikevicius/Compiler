@@ -24,6 +24,6 @@ public class VarPrimaryDeclaration extends VarDeclaration {
     public Node checkTypes()
     {
         // do nothing
-        return null;
+        return type;
     }
 }

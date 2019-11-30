@@ -7,16 +7,15 @@ import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
 public class DeclFn extends Decl {
-    private Type returnType;
     private ArrayList<VarDeclaration> params;
     private StmtBody body;
 
     public DeclFn(Type retType, Token name, ArrayList<VarDeclaration> params, StmtBody body) {
-        this.returnType = retType;
+        this.type = retType;
         this.name = name;
         this.params = params;
         this.body = body;
-        addChildren(returnType);
+        addChildren(type);
         for (VarDeclaration param : params) {
             addChildren(param);
         }
@@ -27,7 +26,7 @@ public class DeclFn extends Decl {
     public void print(ASTPrinter printer) throws Exception {
         printer.print("name", name);
         printer.print("params", params);
-        printer.print("returnType", returnType);
+        printer.print("returnType", type);
         printer.print("body", body);
     }
 

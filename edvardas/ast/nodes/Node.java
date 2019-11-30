@@ -46,7 +46,7 @@ public abstract class Node {
     public static void semanticError(Token t, String msg) throws Exception
     {
         if(t == null)
-            Main.error(Main.filename + ":?:" + msg);
+            Main.error(Main.filename + ":" + msg);
         else 
             Main.error(Main.filename + ":"+ t.getLine() + ":" + msg);
     }
@@ -64,7 +64,9 @@ public abstract class Node {
             TypePrim p2 = (TypePrim)t2;
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(t, "Type mismatch: " + p1.getKind() + " and " + p2.getKind());
+                String line1 =  p1.getToken() == null ? "" : "(line " + p1.getToken().getLine() + ")";
+                String line2 =  p2.getToken() == null ? "" : "(line " + p2.getToken().getLine() + ")";
+                semanticError(t, "Type mismatch: " + p1.getKind() + line1 + " and " + p2.getKind() + line2);
             }
         } else {
             throw new Exception("Should not happen. Args: " + t1.getClass().getSimpleName() + ", " + t2.getClass().getSimpleName());

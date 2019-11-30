@@ -1,21 +1,13 @@
 int f(int a, int[2] b)
 {
     int a = b;
-    while(1)
-    {
-        continue;
-    }
     string s = "Hello World!";
     string text;
-    b[0] = 1;
-    read s;
-    write text;
-    a = 5;
-    if(-a+b)
+    if(true)
     {
         int x = f();
     }
-    else if(b)
+    else if(false)
     {
         b;
     }

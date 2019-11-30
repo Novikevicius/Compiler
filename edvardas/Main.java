@@ -73,6 +73,6 @@ public class Main
         if(errors == null)
             errors = new ArrayList<String>();
         errors.add(err);
-        throw new Exception(err);
+        //throw new Exception(err);
     }
 }

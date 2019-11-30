@@ -24,10 +24,18 @@ public class ExprLiteral extends Expression {
         switch(value.getType())
         {
             case TYPE_BOOL:
+            case LIT_TRUE:
+            case LIT_FALSE:
+                return new TypePrim(State.TYPE_BOOL);
             case TYPE_CHAR:
+            case CHAR_LITERAL:
+                return new TypePrim(State.CHAR_LITERAL);
             case TYPE_FLOAT:
+            case FLOAT_LITERAL:
+                return new TypePrim(State.FLOAT_LITERAL); // TODO check for float literal exp
             case TYPE_INT:
-                return new TypePrim(value.getType());
+            case INT_LITERAL:
+                return new TypePrim(State.INT_LITERAL);
             case TYPE_STRING:
             case STRING_LITERAL:
                 return new TypePrim(State.TYPE_STRING);
