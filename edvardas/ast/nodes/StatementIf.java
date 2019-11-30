@@ -34,4 +34,13 @@ public class StatementIf extends Statement {
         if(stmtElse != null)
             stmtElse.resolveNames(scope);
     }
+    @Override
+    public Node checkTypes()
+    {
+        branch.checkTypes();
+        elseif.forEach( (branch) -> ((Branch)branch).checkTypes() );
+        if(stmtElse != null)
+            stmtElse.checkTypes();
+        return null;
+    }
 }

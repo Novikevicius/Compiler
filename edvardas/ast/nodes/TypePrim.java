@@ -8,6 +8,9 @@ import edvardas.parser.Scope;
 public class TypePrim extends Type {
     private State kind;
     private Token token;
+    public TypePrim(State kind) {
+        this(kind, null);
+    }
     public TypePrim(State kind, Token t) {
         this.kind = kind;
         this.token = t;
