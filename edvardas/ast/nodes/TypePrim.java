@@ -1,13 +1,16 @@
 package edvardas.ast.nodes;
 
 import edvardas.State;
+import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
 public class TypePrim extends Type {
     private State kind;
-    public TypePrim(State kind) {
+    private Token token;
+    public TypePrim(State kind, Token t) {
         this.kind = kind;
+        this.token = t;
     }
     public void print(ASTPrinter printer) throws Exception
     {

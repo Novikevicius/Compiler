@@ -83,30 +83,32 @@ public class Parser {
     // <return_type>  ::= "void" | <type>
     private Type parse_return_type()
     {
+        Token t = curToken;
         if(accept(State.TYPE_VOID) == null )  {
             return parse_type();
         }
-        return new TypePrim(State.TYPE_VOID);
+        return new TypePrim(State.TYPE_VOID, t);
     }
     // <type> ::= "int" | "char" | "float" | "string" | "bool" 
     private TypePrim parse_type()
     {
+        Token t = curToken;
         switch (curToken.getType()) {
             case TYPE_INT:
                 expect(State.TYPE_INT);
-                return new TypePrim(State.TYPE_INT);
+                return new TypePrim(State.TYPE_INT, t);
             case TYPE_CHAR:
                 expect(State.TYPE_CHAR);
-                return new TypePrim(State.TYPE_CHAR);
+                return new TypePrim(State.TYPE_CHAR, t);
             case TYPE_FLOAT:
                 expect(State.TYPE_FLOAT);
-                return new TypePrim(State.TYPE_FLOAT);
+                return new TypePrim(State.TYPE_FLOAT, t);
             case TYPE_STRING:
                 expect(State.TYPE_STRING);
-                return new TypePrim(State.TYPE_STRING);
+                return new TypePrim(State.TYPE_STRING, t);
             case TYPE_BOOL:
                 expect(State.TYPE_BOOL);
-                return new TypePrim(State.TYPE_BOOL);
+                return new TypePrim(State.TYPE_BOOL, t);
             default:
                 error();
                 return null;
