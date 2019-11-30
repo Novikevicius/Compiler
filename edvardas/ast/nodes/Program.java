@@ -24,5 +24,10 @@ public class Program extends Node {
         decl.forEach((decl) -> scope.add(((Decl)decl).getName(), decl));
         decl.forEach((decl) -> decl.resolveNames(scope));
     }
+    @Override
+    public void checkTypes()
+    {
+        decl.forEach((decl) -> decl.checkTypes());
+    }
     
 }
