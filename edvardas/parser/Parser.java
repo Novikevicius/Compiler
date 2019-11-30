@@ -360,7 +360,7 @@ public class Parser {
         Expression result = parse_expr_and();
         while(accept(State.LOGIC_OP_OR) != null)
         {
-            result = new ExprBinary(BinaryOperator.OR, result, parse_expr_and());
+            result = new ExprBinLogic(BinaryOperator.OR, result, parse_expr_and());
         }
         return result;
     }
@@ -370,7 +370,7 @@ public class Parser {
         Expression result = parse_expr_comp_equal();
         while(accept(State.LOGIC_OP_AND) != null)
         {
-            result = new ExprBinary(BinaryOperator.AND, result, parse_expr_comp_equal());
+            result = new ExprBinLogic(BinaryOperator.AND, result, parse_expr_comp_equal());
         }
         return result;
     }
@@ -381,9 +381,9 @@ public class Parser {
         while(true)
         {
             if(accept(State.COMP_OP_EQ) != null) {
-                result = new ExprBinary(BinaryOperator.EQUAL, result, parse_expr_comp_op());
+                result = new ExprBinEquality(BinaryOperator.EQUAL, result, parse_expr_comp_op());
             } else if(accept(State.COMP_OP_NOT_EQ) != null) {
-                result = new ExprBinary(BinaryOperator.NOT_EQUAL, result, parse_expr_comp_op());
+                result = new ExprBinEquality(BinaryOperator.NOT_EQUAL, result, parse_expr_comp_op());
             } else {
                 break;
             }
@@ -397,13 +397,13 @@ public class Parser {
         while(true)
         {
             if(accept(State.COMP_OP_LESS) != null) {
-                result = new ExprBinary(BinaryOperator.LESS, result, parse_expr_sum());
+                result = new ExprBinComparison(BinaryOperator.LESS, result, parse_expr_sum());
             } else if(accept(State.COMP_OP_LESS_EQ) != null) {
-                result = new ExprBinary(BinaryOperator.LESS_EQUAL, result, parse_expr_sum());
+                result = new ExprBinComparison(BinaryOperator.LESS_EQUAL, result, parse_expr_sum());
             } else if(accept(State.COMP_OP_MORE) != null) {
-                result = new ExprBinary(BinaryOperator.MORE, result, parse_expr_sum());
+                result = new ExprBinComparison(BinaryOperator.MORE, result, parse_expr_sum());
             } else if(accept(State.COMP_OP_MORE_EQ) != null) {
-                result = new ExprBinary(BinaryOperator.MORE_EQUAL, result, parse_expr_sum());
+                result = new ExprBinComparison(BinaryOperator.MORE_EQUAL, result, parse_expr_sum());
             } else {
                 break;
             }
@@ -417,9 +417,9 @@ public class Parser {
         while(true)
         {
             if(accept(State.OP_PLUS) != null) {
-                result = new ExprBinary(BinaryOperator.ADD, result, parse_expr_mult());
+                result = new ExprBinArithm(BinaryOperator.ADD, result, parse_expr_mult());
             } else if(accept(State.OP_MINUS) != null) {
-                result = new ExprBinary(BinaryOperator.MINUS, result, parse_expr_mult());
+                result = new ExprBinArithm(BinaryOperator.MINUS, result, parse_expr_mult());
             } else {
                 break;
             }
@@ -433,9 +433,9 @@ public class Parser {
         while(true)
         {
             if(accept(State.OP_MULT) != null) {
-                result = new ExprBinary(BinaryOperator.MULTIPLICATION, result, parse_exponent());
+                result = new ExprBinArithm(BinaryOperator.MULTIPLICATION, result, parse_exponent());
             } else if(accept(State.OP_DIV) != null) {
-                result = new ExprBinary(BinaryOperator.DIVISION, result, parse_exponent());
+                result = new ExprBinArithm(BinaryOperator.DIVISION, result, parse_exponent());
             } else {
                 break;
             }
@@ -457,7 +457,7 @@ public class Parser {
         Expression result = parse_expr_negation();
         while(accept(State.OP_EXP) != null)
         {
-            result = new ExprBinary(BinaryOperator.EXPONENTIAL, result, parse_expr_negation());
+            result = new ExprBinArithm(BinaryOperator.EXPONENTIAL, result, parse_expr_negation());
         }
         return result;
     }
