@@ -22,4 +22,10 @@ public class StatementBreak extends Statement {
         if(ancestor != null) return;
         Main.error(Main.filename + ":" + keyword.getLine() + ": " + "break is not inside a loop statement");
     }
+    @Override
+    public Node checkTypes()
+    {
+        // do nothing
+        return null;
+    }
 }

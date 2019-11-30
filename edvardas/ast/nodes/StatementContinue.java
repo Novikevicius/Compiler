@@ -22,4 +22,10 @@ public class StatementContinue extends Statement {
         if(ancestor != null) return;
         Main.error(Main.filename + ":" + keyword.getLine() + ": " + "continue is not inside a loop statement");
     }
+    @Override
+    public Node checkTypes()
+    {
+        // do nothing
+        return null;
+    }
 }

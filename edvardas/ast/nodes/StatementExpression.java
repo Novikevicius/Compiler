@@ -18,4 +18,9 @@ public class StatementExpression extends Statement {
     {
         expr.resolveNames(scope);
     }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        return expr.checkTypes();
+    }
 }

@@ -19,4 +19,9 @@ public class StatementVarDecl extends Statement {
     {
         declaration.resolveNames(scope);
     }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        return declaration.checkTypes();
+    }
 }
