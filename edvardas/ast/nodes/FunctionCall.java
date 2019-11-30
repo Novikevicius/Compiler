@@ -32,4 +32,9 @@ public class FunctionCall extends Expression {
         target = scope.resolveName(name);
         args.forEach( (arg) -> ((Expression)arg).resolveNames(scope) );
     }
+    @Override
+    public Node checkTypes()
+    {
+        return target;
+    }
 }

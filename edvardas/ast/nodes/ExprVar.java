@@ -24,4 +24,9 @@ public class ExprVar extends Expression {
     {
         target = scope.resolveName(name);
     }
+    @Override
+    public Node checkTypes()
+    {
+        return target;
+    }
 }
