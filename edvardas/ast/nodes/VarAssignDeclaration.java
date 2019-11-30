@@ -26,4 +26,11 @@ public class VarAssignDeclaration extends VarDeclaration {
         parentScope.add(name, this);
         expr.resolveNames(parentScope);
     }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        Node tAssign = expr.checkTypes();
+        unifyTypes(tAssign, type);
+        return null;
+    }
 }

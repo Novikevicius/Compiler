@@ -17,4 +17,19 @@ public class ExprLiteral extends Expression {
     public void resolveNames(Scope s) {
         // do nothings
     }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        switch(value.getType())
+        {
+            case TYPE_BOOL:
+            case TYPE_CHAR:
+            case TYPE_FLOAT:
+            case TYPE_INT:
+            case TYPE_STRING:
+                return new TypePrim(value.getType());
+            default:
+                throw new Exception("Should not happen: type: " + value.getType().toString());
+        }
+    }
 }
