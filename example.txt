@@ -1,6 +1,6 @@
 int f(int a, int[2] b)
 {
-    int a = b;
+    int a = 1234.3;
     string s = "Hello World!";
     string text;
     if(true)

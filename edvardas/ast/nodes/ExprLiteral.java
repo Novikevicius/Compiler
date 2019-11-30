@@ -29,13 +29,13 @@ public class ExprLiteral extends Expression {
                 return new TypePrim(State.TYPE_BOOL);
             case TYPE_CHAR:
             case CHAR_LITERAL:
-                return new TypePrim(State.CHAR_LITERAL);
+                return new TypePrim(State.TYPE_CHAR);
             case TYPE_FLOAT:
             case FLOAT_LITERAL:
-                return new TypePrim(State.FLOAT_LITERAL); // TODO check for float literal exp
+                return new TypePrim(State.TYPE_FLOAT); // TODO check for float literal exp
             case TYPE_INT:
             case INT_LITERAL:
-                return new TypePrim(State.INT_LITERAL);
+                return new TypePrim(State.TYPE_INT);
             case TYPE_STRING:
             case STRING_LITERAL:
                 return new TypePrim(State.TYPE_STRING);
