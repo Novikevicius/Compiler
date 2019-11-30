@@ -21,7 +21,7 @@ public class VarAssignDeclaration extends VarDeclaration {
         printer.print("expr", expr);
     }
     @Override
-    public void resolveNames(Scope parentScope)
+    public void resolveNames(Scope parentScope) throws Exception
     {
         parentScope.add(name, this);
         expr.resolveNames(parentScope);

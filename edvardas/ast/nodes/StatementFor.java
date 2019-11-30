@@ -27,7 +27,7 @@ public class StatementFor extends Statement {
         printer.print("body", body);
     }
     @Override
-    public void resolveNames(Scope parentScope) 
+    public void resolveNames(Scope parentScope) throws Exception 
     {
         Scope scope = new Scope(parentScope);
         initialization.resolveNames(scope);

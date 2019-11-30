@@ -22,7 +22,13 @@ public class StmtBody extends Node {
     @Override
     public void resolveNames(Scope parentScope) {
         Scope scope = new Scope(parentScope);
-        stmts.forEach((stmt) -> ((Statement) stmt).resolveNames(scope));
+        stmts.forEach((stmt) -> {
+            try {
+                ((Statement) stmt).resolveNames(scope);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override

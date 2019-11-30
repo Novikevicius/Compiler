@@ -34,7 +34,13 @@ public class DeclFn extends Decl {
     @Override
     public void resolveNames(Scope parentScope) {
         Scope scope = new Scope(parentScope);
-        params.forEach((param) -> param.resolveNames(scope));
+        params.forEach((param) -> {
+            try {
+                param.resolveNames(scope);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         body.resolveNames(scope);
     }
 

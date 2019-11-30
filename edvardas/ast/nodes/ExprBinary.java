@@ -25,7 +25,7 @@ public class ExprBinary extends Expression {
        printer.print("right", right);
     }
     @Override
-    public void resolveNames(Scope scope)
+    public void resolveNames(Scope scope) throws Exception
     {
         left.resolveNames(scope);
         right.resolveNames(scope);

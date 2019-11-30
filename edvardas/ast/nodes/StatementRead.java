@@ -9,7 +9,7 @@ import edvardas.parser.Scope;
 public class StatementRead extends Statement {
     private Token keyword;
     private ArrayList<ReadArgument> args;
-    
+
     public StatementRead(Token keyword, ArrayList<ReadArgument> args) {
         this.keyword = keyword;
         this.args = args;
@@ -17,14 +17,20 @@ public class StatementRead extends Statement {
             addChildren(arg);
         }
     }
-    public void print(ASTPrinter printer) throws Exception
-    {
+
+    public void print(ASTPrinter printer) throws Exception {
         printer.print("keyword", keyword);
         printer.print("args", args);
     }
+
     @Override
-    public void resolveNames(Scope s) 
-    {
-        args.forEach((arg) -> ((ReadArgument)arg).resolveNames(s));
+    public void resolveNames(Scope s) {
+        args.forEach((arg) -> {
+            try {
+                ((ReadArgument) arg).resolveNames(s);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

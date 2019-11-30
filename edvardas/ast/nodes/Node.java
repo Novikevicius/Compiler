@@ -41,11 +41,14 @@ public abstract class Node {
         return null;
     }
 
-    public abstract void resolveNames(Scope scope);
+    public abstract void resolveNames(Scope scope) throws Exception;
     public Node checkTypes() throws Exception {Main.error("checkTypes not implemented for: " + this.getClass().getSimpleName()); return null;};
-    public static void semanticError(Token t, String msg)
+    public static void semanticError(Token t, String msg) throws Exception
     {
-        Main.error(Main.filename + ":"+ t.getLine() + ":" + msg);
+        if(t == null)
+            Main.error(Main.filename + ":?:" + msg);
+        else 
+            Main.error(Main.filename + ":"+ t.getLine() + ":" + msg);
     }
     public static void unifyTypes(Node t1, Node t2) throws Exception {
         unifyTypes(t1, t2, null);

@@ -18,7 +18,7 @@ public class ArrayElement extends Expression {
         printer.print("index", index);
     }
     @Override
-    public void resolveNames(Scope scope)
+    public void resolveNames(Scope scope) throws Exception
     {
         scope.resolveName(name);
         index.resolveNames(scope);

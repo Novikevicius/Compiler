@@ -17,7 +17,7 @@ public class ArrayTarget extends AssignmentTarget {
     }
 
     @Override
-    public void resolveNames(Scope scope) {
+    public void resolveNames(Scope scope) throws Exception {
         arrayElement.resolveNames(scope);
     }
     

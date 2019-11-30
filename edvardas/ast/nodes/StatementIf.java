@@ -29,9 +29,15 @@ public class StatementIf extends Statement {
     }
 
     @Override
-    public void resolveNames(Scope scope) {
+    public void resolveNames(Scope scope) throws Exception {
         branch.resolveNames(scope);
-        elseif.forEach((branch) -> ((Branch) branch).resolveNames(scope));
+        elseif.forEach((branch) -> {
+            try {
+                ((Branch) branch).resolveNames(scope);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         if (stmtElse != null)
             stmtElse.resolveNames(scope);
     }

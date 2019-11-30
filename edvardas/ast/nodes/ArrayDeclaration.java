@@ -24,12 +24,12 @@ public class ArrayDeclaration extends VarDeclaration {
     @Override
     public void resolveNames(Scope scope)
     {
-        scope.add(name, this);
+        scope.add(name, type);
     }
     @Override
     public Node checkTypes()
     {
         // do nothing
-        return null;
+        return type;
     }
 }

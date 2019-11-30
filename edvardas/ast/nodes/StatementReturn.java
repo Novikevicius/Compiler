@@ -19,7 +19,7 @@ public class StatementReturn extends Statement {
         printer.print("value", value);
     }
     @Override
-    public void resolveNames(Scope s) 
+    public void resolveNames(Scope s) throws Exception 
     {
         value.resolveNames(s);
     }

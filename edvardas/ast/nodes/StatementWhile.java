@@ -19,7 +19,7 @@ public class StatementWhile extends Statement {
         printer.print("body", body);
     }
     @Override
-    public void resolveNames(Scope s) 
+    public void resolveNames(Scope s) throws Exception 
     {
         condition.resolveNames(s);
         body.resolveNames(s);

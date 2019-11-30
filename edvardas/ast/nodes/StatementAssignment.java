@@ -24,7 +24,7 @@ public class StatementAssignment extends Statement {
         printer.print("value", value);
     }
     @Override
-    public void resolveNames(Scope scope)
+    public void resolveNames(Scope scope) throws Exception
     {
         target.resolveNames(scope);
         value.resolveNames(scope);

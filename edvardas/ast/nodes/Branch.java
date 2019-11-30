@@ -20,7 +20,7 @@ public class Branch extends Node {
         printer.print("body", body);
     }
     @Override
-    public void resolveNames(Scope parentScope)
+    public void resolveNames(Scope parentScope) throws Exception
     {
         condition.resolveNames(parentScope);
         body.resolveNames(parentScope);

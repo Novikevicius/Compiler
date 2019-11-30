@@ -31,7 +31,13 @@ public class FunctionCall extends Expression {
     @Override
     public void resolveNames(Scope scope) {
         target = scope.resolveName(name);
-        args.forEach((arg) -> ((Expression) arg).resolveNames(scope));
+        args.forEach((arg) -> {
+            try {
+                ((Expression) arg).resolveNames(scope);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override

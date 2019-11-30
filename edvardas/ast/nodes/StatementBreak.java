@@ -15,7 +15,7 @@ public class StatementBreak extends Statement {
         printer.print("stmtBreak", keyword);
     }
     @Override
-    public void resolveNames(Scope s) {
+    public void resolveNames(Scope s) throws Exception {
         Node ancestor = findAncestor(StatementWhile.class);
         if(ancestor != null) return;
         ancestor = findAncestor(StatementFor.class);

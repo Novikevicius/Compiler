@@ -20,7 +20,7 @@ public class ArrayReadArgument extends ReadArgument {
     }
 
     @Override
-    public void resolveNames(Scope scope) {
+    public void resolveNames(Scope scope) throws Exception {
         scope.resolveName(name);
         index.resolveNames(scope);
     }

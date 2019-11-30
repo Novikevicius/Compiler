@@ -21,7 +21,13 @@ public class Program extends Node {
     @Override
     public void resolveNames(Scope scope) {
         decl.forEach((decl) -> scope.add(((Decl) decl).getName(), decl));
-        decl.forEach((decl) -> decl.resolveNames(scope));
+        decl.forEach((decl) -> {
+            try {
+                decl.resolveNames(scope);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override

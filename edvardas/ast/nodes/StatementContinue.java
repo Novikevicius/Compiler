@@ -15,7 +15,7 @@ public class StatementContinue extends Statement {
         printer.print("stmtContinue", keyword);
     }
     @Override
-    public void resolveNames(Scope s) {
+    public void resolveNames(Scope s) throws Exception {
         Node ancestor = findAncestor(StatementWhile.class);
         if(ancestor != null) return;
         ancestor = findAncestor(StatementFor.class);

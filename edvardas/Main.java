@@ -48,7 +48,7 @@ public class Main
             root.resolveNames(scope);
             root.checkTypes();
             ASTPrinter astPrinter = new ASTPrinter();
-            astPrinter.print("", root);
+            //astPrinter.print("", root);
             if(errors != null)
             {
                 for (String err : errors) {
@@ -68,10 +68,11 @@ public class Main
             e.printStackTrace();
         }
     }
-    public static void error(String err)
+    public static void error(String err) throws Exception
     {
         if(errors == null)
             errors = new ArrayList<String>();
         errors.add(err);
+        throw new Exception(err);
     }
 }

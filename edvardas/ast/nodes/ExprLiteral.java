@@ -1,5 +1,6 @@
 package edvardas.ast.nodes;
 
+import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
@@ -26,8 +27,10 @@ public class ExprLiteral extends Expression {
             case TYPE_CHAR:
             case TYPE_FLOAT:
             case TYPE_INT:
-            case TYPE_STRING:
                 return new TypePrim(value.getType());
+            case TYPE_STRING:
+            case STRING_LITERAL:
+                return new TypePrim(State.TYPE_STRING);
             default:
                 throw new Exception("Should not happen: type: " + value.getType().toString());
         }

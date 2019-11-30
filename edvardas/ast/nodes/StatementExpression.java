@@ -14,7 +14,7 @@ public class StatementExpression extends Statement {
         printer.print("expr", expr);
     }
     @Override
-    public void resolveNames(Scope scope)
+    public void resolveNames(Scope scope) throws Exception
     {
         expr.resolveNames(scope);
     }
