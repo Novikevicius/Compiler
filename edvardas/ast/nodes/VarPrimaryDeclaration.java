@@ -21,8 +21,9 @@ public class VarPrimaryDeclaration extends VarDeclaration {
         parentScope.add(name, this);
     }
     @Override
-    public void checkTypes()
+    public Node checkTypes()
     {
         // do nothing
+        return null;
     }
 }

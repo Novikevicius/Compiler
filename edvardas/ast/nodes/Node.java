@@ -42,7 +42,7 @@ public abstract class Node {
     }
 
     public abstract void resolveNames(Scope scope);
-    public void checkTypes() {Main.error("checkTypes not implemented for: " + this.getClass().getSimpleName());};
+    public Node checkTypes() {Main.error("checkTypes not implemented for: " + this.getClass().getSimpleName()); return null;};
     public static void semanticError(Token t, String msg)
     {
         Main.error(Main.filename + ":"+ t.getLine() + ":" + msg);

@@ -27,8 +27,9 @@ public class ArrayDeclaration extends VarDeclaration {
         scope.add(name, this);
     }
     @Override
-    public void checkTypes()
+    public Node checkTypes()
     {
         // do nothing
+        return null;
     }
 }

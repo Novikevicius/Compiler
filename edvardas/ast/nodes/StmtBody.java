@@ -24,8 +24,9 @@ public class StmtBody extends Node {
         stmts.forEach( (stmt) -> ((Statement) stmt).resolveNames(scope));
     }
     @Override
-    public void checkTypes()
+    public Node checkTypes()
     {
         stmts.forEach( (stmt) -> ((Statement) stmt).checkTypes() );
+        return null;
     }
 }

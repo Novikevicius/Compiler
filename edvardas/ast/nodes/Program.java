@@ -25,9 +25,10 @@ public class Program extends Node {
         decl.forEach((decl) -> decl.resolveNames(scope));
     }
     @Override
-    public void checkTypes()
+    public Node checkTypes()
     {
         decl.forEach((decl) -> decl.checkTypes());
+        return null;
     }
     
 }
