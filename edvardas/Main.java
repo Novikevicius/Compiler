@@ -46,6 +46,7 @@ public class Main
             Node root = parser.parse();
             Scope scope = new Scope(null);
             root.resolveNames(scope);
+            root.checkTypes();
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
             if(errors != null)
