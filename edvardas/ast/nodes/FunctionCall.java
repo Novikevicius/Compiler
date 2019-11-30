@@ -9,12 +9,17 @@ import edvardas.parser.Scope;
 public class FunctionCall extends Expression {
     private Token name;
     private ArrayList<Expression> args;
+    private Node target;
     public FunctionCall(Token name, ArrayList<Expression> args) {
         this.name = name;
         this.args = args;
         for (Expression arg : args) {
             addChildren(arg);
         }
+    }
+    public Node getTarget()
+    {
+        return target;
     }
     public void print(ASTPrinter printer) throws Exception
     {
@@ -24,7 +29,7 @@ public class FunctionCall extends Expression {
     @Override
     public void resolveNames(Scope scope)
     {
-        scope.resolveName(name);
+        target = scope.resolveName(name);
         args.forEach( (arg) -> ((Expression)arg).resolveNames(scope) );
     }
 }

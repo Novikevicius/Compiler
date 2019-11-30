@@ -6,8 +6,14 @@ import edvardas.parser.Scope;
 
 public class ExprVar extends Expression {
     private Token name;
+    private Node target;
+
     public ExprVar(Token name) {
         this.name = name;
+    }
+    public Node getTarget()
+    {
+        return target;
     }
     public void print(ASTPrinter printer) throws Exception
     {
@@ -16,6 +22,6 @@ public class ExprVar extends Expression {
     @Override
     public void resolveNames(Scope scope)
     {
-        scope.resolveName(name);
+        target = scope.resolveName(name);
     }
 }
