@@ -10,6 +10,7 @@ public class FunctionCall extends Expression {
     private Token name;
     private ArrayList<Expression> args;
     private Node target;
+
     public FunctionCall(Token name, ArrayList<Expression> args) {
         this.name = name;
         this.args = args;
@@ -17,24 +18,31 @@ public class FunctionCall extends Expression {
             addChildren(arg);
         }
     }
-    public Node getTarget()
-    {
+
+    public Node getTarget() {
         return target;
     }
-    public void print(ASTPrinter printer) throws Exception
-    {
+
+    public void print(ASTPrinter printer) throws Exception {
         printer.print("name", name);
         printer.print("args", args);
     }
+
     @Override
-    public void resolveNames(Scope scope)
-    {
+    public void resolveNames(Scope scope) {
         target = scope.resolveName(name);
-        args.forEach( (arg) -> ((Expression)arg).resolveNames(scope) );
+        args.forEach((arg) -> ((Expression) arg).resolveNames(scope));
     }
+
     @Override
-    public Node checkTypes()
-    {
+    public Node checkTypes() {
+        args.forEach((arg) -> {
+            try {
+                ((Expression) arg).checkTypes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         return target;
     }
 }
