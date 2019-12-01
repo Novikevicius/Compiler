@@ -33,4 +33,15 @@ public class StatementWrite extends Statement {
             }
         });
     }
+    @Override
+    public Node checkTypes() throws Exception {
+        args.forEach((arg) -> {
+            try {
+                ((Expression) arg).checkTypes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        return null;
+    }
 }

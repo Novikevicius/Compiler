@@ -29,6 +29,6 @@ public class ArrayDeclaration extends VarDeclaration {
     public Node checkTypes()
     {
         // do nothing
-        return type;
+        return this;
     }
 }

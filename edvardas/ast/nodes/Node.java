@@ -67,7 +67,17 @@ public abstract class Node {
             {
                 semanticError(t, "Type mismatch: " + p1.getKind() + " and " + p2.getKind());
             }
-        } else {
+        } else if(t1 instanceof ArrayDeclaration && t2 instanceof ArrayDeclaration) {
+            ArrayDeclaration a1 = (ArrayDeclaration)t1;
+            ArrayDeclaration a2 = (ArrayDeclaration)t2;
+            TypePrim p1 = (TypePrim)a1.getType();
+            TypePrim p2 = (TypePrim)a2.getType();
+            if(p1.getKind() != p2.getKind())
+            {
+                semanticError(t, "Array type mismatch: " + p1.getKind() + " and " + p2.getKind());
+            }
+        }
+        else {
             throw new Exception("Should not happen. Args: " + t1.getClass().getSimpleName() + ", " + t2.getClass().getSimpleName());
         }
     }

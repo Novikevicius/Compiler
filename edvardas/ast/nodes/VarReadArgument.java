@@ -19,4 +19,9 @@ public class VarReadArgument extends ReadArgument {
     {
         s.resolveName(name);
     }
+    @Override
+    public Node checkTypes() throws Exception {
+        // do nothing
+        return null;
+    }
 }

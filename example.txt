@@ -1,12 +1,14 @@
-int f(int a, int[2] b)
+int f(char a, int[2] b)
 {
     int a = 1234;
     a = 123 + b[4];
+    read a;
+    write b;
     string s = "Hello World!";
     string text;
     if(true)
     {
-        int x = f();
+        int x = f('c', b);
     }
     else if(false)
     {

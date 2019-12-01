@@ -24,5 +24,10 @@ public class ArrayReadArgument extends ReadArgument {
         scope.resolveName(name);
         index.resolveNames(scope);
     }
+    @Override
+    public Node checkTypes() throws Exception {
+        index.checkTypes();
+        return null;
+    }
 
 }

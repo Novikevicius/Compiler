@@ -41,14 +41,21 @@ public class FunctionCall extends Expression {
     }
 
     @Override
-    public Node checkTypes() {
-        args.forEach((arg) -> {
-            try {
-                ((Expression) arg).checkTypes();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        return target;
+    public Node checkTypes() throws Exception{
+
+        DeclFn func = (DeclFn)target;
+        ArrayList<VarDeclaration> params = func.getParams();
+        if(args.size() != params.size())
+        {
+            semanticError(name, "Number of arguments does not match number of function's parameters");
+            return null;
+        }
+        for( int i = 0; i < args.size(); i++)
+        {
+            Node tArg = ((Expression) args.get(i)).checkTypes();
+            Node tParam = params.get(i).checkTypes();
+            unifyTypes(tArg, tParam);
+        }
+        return func.getType();
     }
 }

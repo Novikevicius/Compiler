@@ -21,7 +21,10 @@ public class DeclFn extends Decl {
         }
         addChildren(body);
     }
-
+    public ArrayList<VarDeclaration> getParams()
+    {
+        return params;
+    }
     @Override
     public void print(ASTPrinter printer) throws Exception {
         printer.print("name", name);

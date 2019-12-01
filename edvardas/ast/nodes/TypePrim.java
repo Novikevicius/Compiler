@@ -26,4 +26,8 @@ public class TypePrim extends Type {
     }
     public State getKind() { return kind;}
     public Token getToken() { return token;}
+    @Override
+    public Node checkTypes() {
+        return this;
+    }
 }

@@ -21,7 +21,7 @@ public class ArrayElement extends Expression {
     @Override
     public void resolveNames(Scope scope) throws Exception
     {
-        type = scope.resolveName(name);
+        type = ((ArrayDeclaration) scope.resolveName(name)).getType();
         index.resolveNames(scope);
     }
     @Override

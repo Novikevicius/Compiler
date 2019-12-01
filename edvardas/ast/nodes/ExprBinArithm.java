@@ -14,6 +14,6 @@ public class ExprBinArithm extends ExprBinary {
         Node t1 = left.checkTypes();
         Node t2 = right.checkTypes();
         unifyTypes(t1, t2);
-        return null;
+        return t1;
     }
 }
