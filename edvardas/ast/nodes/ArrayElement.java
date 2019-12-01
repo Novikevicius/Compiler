@@ -5,6 +5,7 @@ import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
 public class ArrayElement extends Expression {
+    private Node type;
     private Token name;
     private Expression index;
     public ArrayElement(Token name, Expression index) {
@@ -20,7 +21,13 @@ public class ArrayElement extends Expression {
     @Override
     public void resolveNames(Scope scope) throws Exception
     {
-        scope.resolveName(name);
+        type = scope.resolveName(name);
         index.resolveNames(scope);
+    }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        index.checkTypes();
+        return type;
     }
 }

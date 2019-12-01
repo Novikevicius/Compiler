@@ -20,5 +20,9 @@ public class ArrayTarget extends AssignmentTarget {
     public void resolveNames(Scope scope) throws Exception {
         arrayElement.resolveNames(scope);
     }
+    @Override
+    public Node checkTypes() throws Exception {
+        return arrayElement.checkTypes();
+    }
     
 }

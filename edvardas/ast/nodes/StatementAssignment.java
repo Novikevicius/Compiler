@@ -29,4 +29,12 @@ public class StatementAssignment extends Statement {
         target.resolveNames(scope);
         value.resolveNames(scope);
     }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        Node t1 = target.checkTypes();
+        Node t2 = value.checkTypes();
+        unifyTypes(t1, t2);
+        return null;
+    }
 }

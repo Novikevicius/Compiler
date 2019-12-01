@@ -23,7 +23,7 @@ public class VarAssignDeclaration extends VarDeclaration {
     @Override
     public void resolveNames(Scope parentScope) throws Exception
     {
-        parentScope.add(name, this);
+        parentScope.add(name, type);
         expr.resolveNames(parentScope);
     }
     @Override

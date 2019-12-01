@@ -21,4 +21,8 @@ public class VarTarget extends AssignmentTarget {
         var.resolveNames(scope);
     }
     
+    @Override
+    public Node checkTypes() throws Exception{
+        return var.checkTypes();
+    }
 }
