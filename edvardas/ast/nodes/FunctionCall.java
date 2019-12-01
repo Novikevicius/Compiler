@@ -29,8 +29,13 @@ public class FunctionCall extends Expression {
     }
 
     @Override
-    public void resolveNames(Scope scope) {
+    public void resolveNames(Scope scope) throws Exception {
         target = scope.resolveName(name);
+        if (!(target instanceof DeclFn))
+        {
+            semanticError(name, name.getIdentifier() + " is not a function");
+            target = null;
+        }
         args.forEach((arg) -> {
             try {
                 ((Expression) arg).resolveNames(scope);
@@ -42,7 +47,7 @@ public class FunctionCall extends Expression {
 
     @Override
     public Node checkTypes() throws Exception{
-
+        if(target == null) return null;
         DeclFn func = (DeclFn)target;
         ArrayList<VarDeclaration> params = func.getParams();
         if(args.size() != params.size())
