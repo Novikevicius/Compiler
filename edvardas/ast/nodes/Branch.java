@@ -30,7 +30,7 @@ public class Branch extends Node {
     {
         TypePrim tBool = new TypePrim(State.TYPE_BOOL);
         Node tCond = condition.checkTypes();
-        unifyTypes(tCond, tBool);
+        unifyTypes(tCond, tBool, this.getLine());
         body.checkTypes();
         return null;
     }

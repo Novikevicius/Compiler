@@ -42,7 +42,7 @@ public class StatementFor extends Statement {
         initialization.checkTypes();
         Node tBool = new TypePrim(State.TYPE_BOOL);
         Node tCondition = condition.checkTypes();
-        unifyTypes(tCondition, tBool);
+        unifyTypes(tCondition, tBool, tCondition.getLine());
         afterthought.checkTypes();
         body.checkTypes();
         return null;

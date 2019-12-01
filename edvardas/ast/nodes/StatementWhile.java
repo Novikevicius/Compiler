@@ -30,7 +30,7 @@ public class StatementWhile extends Statement {
     {
         Node tBool = new TypePrim(State.TYPE_BOOL);
         Node tCondition = condition.checkTypes();
-        unifyTypes(tCondition, tBool);
+        unifyTypes(tCondition, tBool, this.getLine());
         body.checkTypes();
         return null;
     }

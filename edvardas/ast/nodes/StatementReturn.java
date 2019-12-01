@@ -32,7 +32,7 @@ public class StatementReturn extends Statement {
         {
             semanticError(keyword, "function's return type should be " + func.getKind());
         }
-        unifyTypes(func, value.checkTypes());
+        unifyTypes(func, value.checkTypes(), this.getLine());
         return null;
     }
     @Override

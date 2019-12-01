@@ -30,7 +30,7 @@ public class VarAssignDeclaration extends VarDeclaration {
     public Node checkTypes() throws Exception
     {
         Node tAssign = expr.checkTypes();
-        unifyTypes(tAssign, type);
+        unifyTypes(tAssign, type, this.getLine());
         return null;
     }
     @Override

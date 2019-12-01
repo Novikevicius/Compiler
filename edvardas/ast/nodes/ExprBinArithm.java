@@ -13,7 +13,7 @@ public class ExprBinArithm extends ExprBinary {
     {
         Node t1 = left.checkTypes();
         Node t2 = right.checkTypes();
-        unifyTypes(t1, t2);
+        unifyTypes(t1, t2, this.getLine());
         return t1;
     }
 }

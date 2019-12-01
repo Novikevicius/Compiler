@@ -59,7 +59,7 @@ public class FunctionCall extends Expression {
         {
             Node tArg = ((Expression) args.get(i)).checkTypes();
             Node tParam = params.get(i).checkTypes();
-            unifyTypes(tArg, tParam);
+            unifyTypes(tArg, tParam, this.getLine());
         }
         return func.getType();
     }

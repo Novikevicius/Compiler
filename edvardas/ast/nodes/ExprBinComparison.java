@@ -26,7 +26,7 @@ public class ExprBinComparison extends ExprBinary {
             semanticError(null, comparable.getKind() + " is not comparable");
             return null;
         }
-        unifyTypes(t1, t2);
+        unifyTypes(t1, t2, this.getLine());
         return new TypePrim(State.TYPE_BOOL);
     }
 }

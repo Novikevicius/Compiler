@@ -34,7 +34,7 @@ public class StatementAssignment extends Statement {
     {
         Node t1 = target.checkTypes();
         Node t2 = value.checkTypes();
-        unifyTypes(t1, t2);
+        unifyTypes(t1, t2, this.getLine());
         return null;
     }
     @Override
