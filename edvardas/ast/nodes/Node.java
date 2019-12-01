@@ -50,23 +50,26 @@ public abstract class Node {
         else 
             Main.error(Main.filename + ":"+ t.getLine() + ":" + msg);
     }
-    public static void unifyTypes(Node t1, Node t2) throws Exception {
-        unifyTypes(t1, t2, null);
+    public static boolean unifyTypes(Node t1, Node t2) throws Exception {
+        return unifyTypes(t1, t2, null);
     }
-    public static void unifyTypes(Node t1, Node t2, Token t) throws Exception
+    public static boolean unifyTypes(Node t1, Node t2, Token t) throws Exception
     {
         if(t1 == null || t2 == null) {
-            return;
+            return true;
         } 
         if(t1.getClass() != t2.getClass()){
             semanticError(t, "Type mismatch: " + t1.getClass().getSimpleName() + " and " + t2.getClass().getSimpleName());
+            return false;
         } else if(t1 instanceof TypePrim && t2 instanceof TypePrim) {
             TypePrim p1 = (TypePrim)t1;
             TypePrim p2 = (TypePrim)t2;
             if(p1.getKind() != p2.getKind())
             {
                 semanticError(t, "Type mismatch: " + p1.getKind() + " and " + p2.getKind());
+                return false;
             }
+            return true;
         } else if(t1 instanceof ArrayDeclaration && t2 instanceof ArrayDeclaration) {
             ArrayDeclaration a1 = (ArrayDeclaration)t1;
             ArrayDeclaration a2 = (ArrayDeclaration)t2;
@@ -75,7 +78,9 @@ public abstract class Node {
             if(p1.getKind() != p2.getKind())
             {
                 semanticError(t, "Array type mismatch: " + p1.getKind() + " and " + p2.getKind());
+                return false;
             }
+            return true;
         }
         else {
             throw new Exception("Should not happen. Args: " + t1.getClass().getSimpleName() + ", " + t2.getClass().getSimpleName());
