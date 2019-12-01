@@ -48,7 +48,7 @@ public class Main
             root.resolveNames(scope);
             root.checkTypes();
             ASTPrinter astPrinter = new ASTPrinter();
-            //astPrinter.print("", root);
+            astPrinter.print("", root);
             if(errors != null)
             {
                 for (String err : errors) {

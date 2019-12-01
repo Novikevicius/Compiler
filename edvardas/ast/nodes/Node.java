@@ -56,17 +56,16 @@ public abstract class Node {
     public static void unifyTypes(Node t1, Node t2, Token t) throws Exception
     {
         if(t1 == null || t2 == null) {
-            // do nothing
-        } else if(t1.getClass() != t2.getClass()){
+            return;
+        } 
+        if(t1.getClass() != t2.getClass()){
             semanticError(t, "Type mismatch: " + t1.getClass().getSimpleName() + " and " + t2.getClass().getSimpleName());
-        } else if(t1.getClass() == TypePrim.class) {
+        } else if(t1 instanceof TypePrim && t2 instanceof TypePrim) {
             TypePrim p1 = (TypePrim)t1;
             TypePrim p2 = (TypePrim)t2;
             if(p1.getKind() != p2.getKind())
             {
-                String line1 =  p1.getToken() == null ? "" : "(line " + p1.getToken().getLine() + ")";
-                String line2 =  p2.getToken() == null ? "" : "(line " + p2.getToken().getLine() + ")";
-                semanticError(t, "Type mismatch: " + p1.getKind() + line1 + " and " + p2.getKind() + line2);
+                semanticError(t, "Type mismatch: " + p1.getKind() + " and " + p2.getKind());
             }
         } else {
             throw new Exception("Should not happen. Args: " + t1.getClass().getSimpleName() + ", " + t2.getClass().getSimpleName());

@@ -5,7 +5,6 @@ import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
 public class ArrayDeclaration extends VarDeclaration {
-    private Type type;
     private Token name;
     private Token size;
 
@@ -24,7 +23,7 @@ public class ArrayDeclaration extends VarDeclaration {
     @Override
     public void resolveNames(Scope scope)
     {
-        scope.add(name, type);
+        scope.add(name, this);
     }
     @Override
     public Node checkTypes()

@@ -28,6 +28,6 @@ public class ArrayElement extends Expression {
     public Node checkTypes() throws Exception
     {
         index.checkTypes();
-        return type;
+        return type.checkTypes();
     }
 }

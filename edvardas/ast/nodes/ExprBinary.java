@@ -6,9 +6,9 @@ import edvardas.ast.nodes.Expression;
 import edvardas.parser.Scope;
 
 public class ExprBinary extends Expression {
-    private Expression left;
-    private BinaryOperator operator;
-    private Expression right;
+    protected Expression left;
+    protected BinaryOperator operator;
+    protected Expression right;
     
     public ExprBinary(BinaryOperator operator, Expression left, Expression right) {
         this.operator = operator;
