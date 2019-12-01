@@ -2,7 +2,6 @@ package edvardas.ast.nodes;
 
 import java.util.ArrayList;
 
-import edvardas.Main;
 import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;

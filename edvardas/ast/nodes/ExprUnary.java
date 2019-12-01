@@ -37,9 +37,21 @@ public class ExprUnary extends Expression {
     @Override
     public Node checkTypes() throws Exception
     { 
+        if(operator == UnaryOperator.NEGATION && expr instanceof ExprLiteral)
+        {
+            TypePrim t = (TypePrim) (expr.checkTypes());
+            switch(t.getKind())
+            {
+                case TYPE_INT:
+                case TYPE_FLOAT:
+                    return t;
+                default:
+                    break;
+            }
+        }
         if(expr instanceof ExprVar || expr instanceof ArrayElement)
         {
-            return expr;
+            return expr.checkTypes();
         }
         semanticError(null, "Unary operation is not allowed for type: " + expr.getClass().getSimpleName());
         return null;

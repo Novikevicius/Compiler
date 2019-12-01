@@ -1,6 +1,5 @@
 package edvardas.ast.nodes;
 
-import edvardas.Main;
 import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
