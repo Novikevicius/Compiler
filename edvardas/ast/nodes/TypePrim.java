@@ -30,4 +30,16 @@ public class TypePrim extends Type {
     public Node checkTypes() {
         return this;
     }
+
+    @Override
+    public boolean isComparable() {        
+        switch(kind)
+        {
+            case TYPE_INT:
+            case TYPE_FLOAT:
+                return true;
+            default:
+                return false;
+        }
+    }
 }

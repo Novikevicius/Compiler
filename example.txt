@@ -6,7 +6,7 @@ int f(char a, int[2] b)
     write b;
     string s = "Hello World!";
     string text;
-    if(true)
+    if(a != 'c' && b[0] > 0 || c^2 == 4)
     {
         int x = f('c', b);
     }
