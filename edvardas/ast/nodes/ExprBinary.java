@@ -5,7 +5,7 @@ import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Expression;
 import edvardas.parser.Scope;
 
-public class ExprBinary extends Expression {
+public abstract class ExprBinary extends Expression {
     protected Expression left;
     protected BinaryOperator operator;
     protected Expression right;
