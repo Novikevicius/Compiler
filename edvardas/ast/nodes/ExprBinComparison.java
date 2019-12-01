@@ -17,13 +17,13 @@ public class ExprBinComparison extends ExprBinary {
         Node t2 = right.checkTypes();
         if( !(t1 instanceof IComparable) )
         {
-            semanticError(null, t1.getClass().getSimpleName() + " is not comparable");
+            semanticError(this.getLine(), t1.getClass().getSimpleName() + " is not comparable");
             return null;
         }
         IComparable comparable = (IComparable) t1;
         if( !comparable.isComparable() )
         {
-            semanticError(null, comparable.getKind() + " is not comparable");
+            semanticError(this.getLine(), comparable.getKind() + " is not comparable");
             return null;
         }
         unifyTypes(t1, t2, this.getLine());

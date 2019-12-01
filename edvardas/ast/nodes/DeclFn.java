@@ -59,7 +59,7 @@ public class DeclFn extends Decl {
         body.checkTypes();
         if(getType().getKind() != State.TYPE_VOID){
             if( !body.checkReturn() ){
-                semanticError(name, "Function '" + name.getIdentifier() + "' does not have a return statement");
+                semanticError(name.getLine(), "Function '" + name.getIdentifier() + "' does not have a return statement");
             }
         }
         return null;

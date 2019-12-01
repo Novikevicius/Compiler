@@ -46,7 +46,7 @@ public class Program extends Node {
         Node main = scope.getMember("main");
         if(main == null)
         {
-            semanticError(null, "main function does not exist");
+            semanticError(this.getLine(), "main function does not exist");
         }
     }
     

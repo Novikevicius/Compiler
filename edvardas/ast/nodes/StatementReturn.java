@@ -30,7 +30,7 @@ public class StatementReturn extends Statement {
         Type func = ((DeclFn)findAncestor(DeclFn.class)).getType();
         if(value == null && func.getKind() != State.TYPE_VOID)
         {
-            semanticError(keyword, "function's return type should be " + func.getKind());
+            semanticError(this.getLine(), "function's return type should be " + func.getKind());
         }
         unifyTypes(func, value.checkTypes(), this.getLine());
         return null;

@@ -33,7 +33,7 @@ public class FunctionCall extends Expression {
         target = scope.resolveName(name);
         if (!(target instanceof DeclFn))
         {
-            semanticError(name, name.getIdentifier() + " is not a function");
+            semanticError(name.getLine(), name.getIdentifier() + " is not a function");
             target = null;
         }
         args.forEach((arg) -> {
@@ -52,7 +52,7 @@ public class FunctionCall extends Expression {
         ArrayList<VarDeclaration> params = func.getParams();
         if(args.size() != params.size())
         {
-            semanticError(name, "Number of arguments does not match number of function's parameters");
+            semanticError(this.getLine(), "Number of arguments does not match number of function's parameters");
             return null;
         }
         for( int i = 0; i < args.size(); i++)
