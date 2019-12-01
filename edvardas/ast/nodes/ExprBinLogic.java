@@ -15,8 +15,8 @@ public class ExprBinLogic extends ExprBinary {
         Node tBool = new TypePrim(State.TYPE_BOOL);
         Node t1 = left.checkTypes();
         Node t2 = right.checkTypes();
-        unifyTypes(t1, tBool, t1.getLine());
-        unifyTypes(t2, tBool, t2.getLine());
+        unifyTypes(t1, tBool, left.getLine());
+        unifyTypes(t2, tBool, right.getLine());
         return tBool;
     }
 }
