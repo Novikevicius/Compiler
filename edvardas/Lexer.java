@@ -800,6 +800,12 @@ public class Lexer
         curState = State.START;
         String[] array = fileName.split("/"); // get file name
         String errorMsg = "LexerError: " + array[array.length - 1] + ":" + lineNumber + ":" + columnNumber + ": " + msg + " '" + (curChar == 13 ? "\\n": curChar) + "'(" + (int)curChar + ")";
-        System.out.println(errorMsg);
+        try {
+            Main.error(errorMsg);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

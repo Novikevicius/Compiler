@@ -19,4 +19,10 @@ public class StatementElse extends Statement {
     {
         body.resolveNames(s);
     }
+    @Override
+    public Node checkTypes() throws Exception 
+    {
+        body.checkTypes();
+        return null;
+    }
 }

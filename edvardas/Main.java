@@ -49,12 +49,6 @@ public class Main
             root.checkTypes();
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
-            if(errors != null)
-            {
-                for (String err : errors) {
-                    System.err.println(err);
-                }
-            }
         }
         catch(Error e)
         {
@@ -66,6 +60,15 @@ public class Main
         catch(Exception e)
         {
             e.printStackTrace();
+        }
+        finally
+        {
+            if(errors != null)
+            {
+                for (String err : errors) {
+                    System.err.println(err);
+                }
+            }
         }
     }
     public static void error(String err) throws Exception

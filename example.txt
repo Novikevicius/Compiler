@@ -15,5 +15,12 @@ int f(char a, int[2] b)
         c++;
     }
     else {d();}
+    for(int i = 0; i < 10; i += 1)
+    {
+        while(c > 0)
+        {
+
+        }
+    }
 }
 void d(){}

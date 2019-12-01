@@ -1,5 +1,6 @@
 package edvardas.ast.nodes;
 
+import edvardas.State;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
@@ -34,5 +35,16 @@ public class StatementFor extends Statement {
         condition.resolveNames(scope);
         afterthought.resolveNames(scope);
         body.resolveNames(scope);
+    }
+    @Override
+    public Node checkTypes() throws Exception
+    {
+        initialization.checkTypes();
+        Node tBool = new TypePrim(State.TYPE_BOOL);
+        Node tCondition = condition.checkTypes();
+        unifyTypes(tCondition, tBool);
+        afterthought.checkTypes();
+        body.checkTypes();
+        return null;
     }
 }
