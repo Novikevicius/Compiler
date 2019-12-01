@@ -4,6 +4,7 @@ import java.util.*;
 
 import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Node;
+import edvardas.ast.nodes.Program;
 import edvardas.parser.*;
 
 public class Main 
@@ -47,6 +48,7 @@ public class Main
             Scope scope = new Scope(null);
             root.resolveNames(scope);
             root.checkTypes();
+            ((Program)root).checkMain(scope);
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
         }

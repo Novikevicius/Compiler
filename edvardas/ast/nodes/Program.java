@@ -41,5 +41,13 @@ public class Program extends Node {
         });
         return null;
     }
+    public void checkMain(Scope scope) throws Exception
+    {
+        Node main = scope.getMember("main");
+        if(main == null)
+        {
+            semanticError(null, "main function does not exist");
+        }
+    }
     
 }

@@ -18,7 +18,10 @@ public class Scope {
     public Scope getParent() {
         return parentScope;
     }
-
+    public Node getMember(String name)
+    {
+        return members.get(name);
+    }
     public void add(Token name_token, Node node) {
         String name = name_token.getIdentifier();
         if (members.containsKey(name)) {
