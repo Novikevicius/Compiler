@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
-public class StmtBody extends Node {
+public class StmtBody extends Statement {
     private ArrayList<Statement> stmts;
 
     public StmtBody(ArrayList<Statement> s) {
@@ -29,6 +29,20 @@ public class StmtBody extends Node {
                 e.printStackTrace();
             }
         });
+    }
+    public boolean checkReturn()
+    {
+        for( int i = 0; i < stmts.size(); i++)
+        {
+            Statement stmt = stmts.get(i);
+            if(stmt instanceof StatementIf || stmt instanceof StmtBody)
+            {
+                if( stmt.checkReturn() )
+                    return true;
+            }
+            if(stmt instanceof StatementReturn) return true;
+        }
+        return false;
     }
 
     @Override

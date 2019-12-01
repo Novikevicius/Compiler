@@ -34,4 +34,9 @@ public class Branch extends Node {
         body.checkTypes();
         return null;
     }
+    @Override
+    public boolean checkReturn()
+    {
+        return body.checkReturn();
+    }
 }

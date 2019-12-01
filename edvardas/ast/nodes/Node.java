@@ -11,29 +11,25 @@ public abstract class Node {
     public abstract void print(ASTPrinter printer) throws Exception;
 
     protected Node parent;
-    public void addChildren(ArrayList<Node> children)
-    {
+
+    public void addChildren(ArrayList<Node> children) {
         children.forEach((child) -> {
-            if(child != null)
-            {
+            if (child != null) {
                 addChildren(child);
             }
         });
     }
-    public void addChildren(Node child)
-    {
-        if(child != null)
-        {
+
+    public void addChildren(Node child) {
+        if (child != null) {
             child.parent = this;
         }
     }
-    public Node findAncestor(Class<?> cls)
-    {
+
+    public Node findAncestor(Class<?> cls) {
         Node curNode = parent;
-        while(curNode != null)
-        {
-            if(curNode.getClass() == cls)
-            {
+        while (curNode != null) {
+            if (curNode.getClass() == cls) {
                 return curNode;
             }
             curNode = curNode.parent;
@@ -41,6 +37,14 @@ public abstract class Node {
         return null;
     }
 
+    public boolean checkReturn() {
+        try {
+            Main.error("checkReturn not implemented for " + this.getClass().getSimpleName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     public abstract void resolveNames(Scope scope) throws Exception;
     public abstract Node checkTypes() throws Exception;
     public static void semanticError(Token t, String msg) throws Exception

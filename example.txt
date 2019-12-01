@@ -22,5 +22,14 @@ int f(char a, int[2] b)
             return c;
         }
     }
+    if(6 > 0){
+        return 5;
+    } else if(false)
+    {
+        return 1;
+    }
+    else {
+        return 5;
+    }
 }
 void d(){}
