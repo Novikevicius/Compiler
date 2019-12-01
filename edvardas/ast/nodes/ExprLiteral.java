@@ -43,4 +43,9 @@ public class ExprLiteral extends Expression {
                 throw new Exception("Should not happen: type: " + value.getType().toString());
         }
     }
+    @Override
+    public int getLine()
+    {
+        return value.getLine();
+    }
 }

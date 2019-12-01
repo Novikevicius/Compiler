@@ -67,4 +67,9 @@ public class StatementIf extends Statement {
         }
         return true;
     }
+    @Override
+    public int getLine()
+    {
+        return branch.getLine();
+    }
 }

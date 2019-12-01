@@ -33,4 +33,9 @@ public class VarAssignDeclaration extends VarDeclaration {
         unifyTypes(tAssign, type);
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

@@ -56,4 +56,9 @@ public class ExprUnary extends Expression {
         semanticError(null, "Unary operation is not allowed for type: " + expr.getClass().getSimpleName());
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return expr.getLine();
+    }
 }

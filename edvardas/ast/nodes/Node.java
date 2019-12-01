@@ -45,6 +45,14 @@ public abstract class Node {
         }
         return false;
     }
+    public int getLine() {
+        try {
+            Main.error("getLine not implemented for " + this.getClass().getSimpleName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
     public abstract void resolveNames(Scope scope) throws Exception;
     public abstract Node checkTypes() throws Exception;
     public static void semanticError(Token t, String msg) throws Exception

@@ -24,4 +24,9 @@ public class StatementVarDecl extends Statement {
     {
         return declaration.checkTypes();
     }
+    @Override
+    public int getLine()
+    {
+        return declaration.getLine();
+    }
 }

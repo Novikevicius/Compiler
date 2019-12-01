@@ -16,4 +16,9 @@ public abstract class Decl extends Node {
     {
         return type;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

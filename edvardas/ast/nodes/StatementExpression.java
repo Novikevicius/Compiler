@@ -23,4 +23,9 @@ public class StatementExpression extends Statement {
     {
         return expr.checkTypes();
     }
+    @Override
+    public int getLine()
+    {
+        return expr.getLine();
+    }
 }

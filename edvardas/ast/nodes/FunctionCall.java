@@ -63,4 +63,9 @@ public class FunctionCall extends Expression {
         }
         return func.getType();
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

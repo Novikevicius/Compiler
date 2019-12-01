@@ -37,4 +37,9 @@ public class StatementAssignment extends Statement {
         unifyTypes(t1, t2);
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return target.getLine();
+    }
 }

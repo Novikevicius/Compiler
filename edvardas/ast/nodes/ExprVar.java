@@ -29,4 +29,9 @@ public class ExprVar extends Expression {
     {
         return target;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

@@ -24,4 +24,9 @@ public class VarReadArgument extends ReadArgument {
         // do nothing
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

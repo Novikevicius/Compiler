@@ -28,4 +28,9 @@ public class StatementBreak extends Statement {
         // do nothing
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return keyword.getLine();
+    }
 }

@@ -35,4 +35,9 @@ public class StatementReturn extends Statement {
         unifyTypes(func, value.checkTypes());
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return keyword.getLine();
+    }
 }

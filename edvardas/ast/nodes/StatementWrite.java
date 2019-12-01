@@ -44,4 +44,9 @@ public class StatementWrite extends Statement {
         });
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return keyword.getLine();
+    }
 }

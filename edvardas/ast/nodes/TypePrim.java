@@ -42,4 +42,9 @@ public class TypePrim extends Type {
                 return false;
         }
     }
+    @Override
+    public int getLine()
+    {
+        return token.getLine();
+    }
 }

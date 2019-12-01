@@ -31,4 +31,10 @@ public class ArrayDeclaration extends VarDeclaration {
         // do nothing
         return this;
     }
+    
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

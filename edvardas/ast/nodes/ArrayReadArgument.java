@@ -29,5 +29,9 @@ public class ArrayReadArgument extends ReadArgument {
         index.checkTypes();
         return null;
     }
-
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

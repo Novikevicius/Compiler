@@ -56,4 +56,11 @@ public class StmtBody extends Statement {
         });
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        if(stmts.size() > 0)
+            return stmts.get(0).getLine();
+        return 0;
+    }
 }

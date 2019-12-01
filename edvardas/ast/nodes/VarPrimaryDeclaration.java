@@ -26,4 +26,9 @@ public class VarPrimaryDeclaration extends VarDeclaration {
         // do nothing
         return type;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

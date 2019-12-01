@@ -30,4 +30,9 @@ public class ArrayElement extends Expression {
         index.checkTypes();
         return type.checkTypes();
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

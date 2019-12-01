@@ -39,4 +39,9 @@ public class Branch extends Node {
     {
         return body.checkReturn();
     }
+    @Override
+    public int getLine()
+    {
+        return condition.getLine();
+    }
 }

@@ -25,4 +25,9 @@ public class StatementElse extends Statement {
         body.checkTypes();
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return body.getLine();
+    }
 }

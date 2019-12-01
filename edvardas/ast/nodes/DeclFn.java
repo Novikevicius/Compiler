@@ -64,4 +64,9 @@ public class DeclFn extends Decl {
         }
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

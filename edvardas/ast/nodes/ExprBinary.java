@@ -30,4 +30,9 @@ public abstract class ExprBinary extends Expression {
         left.resolveNames(scope);
         right.resolveNames(scope);
     }
+    @Override
+    public int getLine()
+    {
+        return left.getLine();
+    }
 }

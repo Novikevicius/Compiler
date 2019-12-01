@@ -9,4 +9,9 @@ public abstract class VarDeclaration extends Decl {
     {
         return type;
     }
+    @Override
+    public int getLine()
+    {
+        return name.getLine();
+    }
 }

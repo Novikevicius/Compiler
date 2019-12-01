@@ -25,4 +25,9 @@ public class VarTarget extends AssignmentTarget {
     public Node checkTypes() throws Exception{
         return var.checkTypes();
     }
+    @Override
+    public int getLine()
+    {
+        return var.getLine();
+    }
 }

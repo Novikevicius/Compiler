@@ -24,5 +24,9 @@ public class ArrayTarget extends AssignmentTarget {
     public Node checkTypes() throws Exception {
         return arrayElement.checkTypes();
     }
-    
+    @Override
+    public int getLine()
+    {
+        return arrayElement.getLine();
+    }
 }

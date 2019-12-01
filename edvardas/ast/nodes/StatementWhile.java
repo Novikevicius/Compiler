@@ -34,4 +34,9 @@ public class StatementWhile extends Statement {
         body.checkTypes();
         return null;
     }
+    @Override
+    public int getLine()
+    {
+        return condition.getLine();
+    }
 }
