@@ -495,6 +495,7 @@ public class Lexer
             curState = State.FLOAT_LITERAL;
             if(isFloatWithNegativeExp) intValue *= -1;
             endToken();
+            readNext = false;
         }
         else
         {
