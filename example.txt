@@ -12,7 +12,7 @@ int f(char a, int[2] b)
     }
     else if(false)
     {
-        b;
+        c++;
     }
     else {d();}
 }

@@ -34,5 +34,14 @@ public class ExprUnary extends Expression {
     {
         expr.resolveNames(scope);
     }
-    
+    @Override
+    public Node checkTypes() throws Exception
+    { 
+        if(expr instanceof ExprVar || expr instanceof ArrayElement)
+        {
+            return expr;
+        }
+        semanticError(null, "Unary operation is not allowed for type: " + expr.getClass().getSimpleName());
+        return null;
+    }
 }
