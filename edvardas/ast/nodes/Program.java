@@ -46,8 +46,10 @@ public class Program extends Node {
         Node main = scope.getMember("main");
         if(main == null)
         {
+            int line = 0;
             if(decl.size() > 0)
-            semanticError(decl.get(0).getLine(), "main function does not exist");
+                line = decl.get(0).getLine();
+            semanticError(line, "main function does not exist");
             return;
         }
         DeclFn mainFn = (DeclFn) main;
