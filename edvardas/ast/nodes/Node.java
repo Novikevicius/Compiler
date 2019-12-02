@@ -63,7 +63,12 @@ public abstract class Node {
     {
         if(t1 == null || t2 == null) {
             return true;
-        } 
+        }  
+        if(t1 instanceof DeclFn ||  t2 instanceof DeclFn)
+        {
+            semanticError(line, "Function name cannot be used as a variable");
+            return false;
+        }
         if(t1.getClass() != t2.getClass()){
             semanticError(line, "Type mismatch: got " + t1.getClass().getSimpleName() + ", expected " + t2.getClass().getSimpleName());
             return false;
