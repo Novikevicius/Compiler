@@ -3,7 +3,6 @@ package edvardas.ast.nodes;
 import java.util.ArrayList;
 
 import edvardas.Main;
-import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
@@ -61,23 +60,30 @@ public abstract class Node {
     }
     public static boolean unifyTypes(Node t1, Node t2, int line) throws Exception
     {
+        return unifyTypes(t1, t2, line, true);
+    }
+    public static boolean unifyTypes(Node t1, Node t2, int line, boolean printError) throws Exception
+    {
         if(t1 == null || t2 == null) {
             return true;
         }  
         if(t1 instanceof DeclFn ||  t2 instanceof DeclFn)
         {
-            semanticError(line, "Function name cannot be used as a variable");
+            if(printError)
+                semanticError(line, "Function name cannot be used as a variable");
             return false;
         }
         if(t1.getClass() != t2.getClass()){
-            semanticError(line, "Type mismatch: got " + t1.getClass().getSimpleName() + ", expected " + t2.getClass().getSimpleName());
+            if(printError)
+                semanticError(line, "Type mismatch: got: '" + t1.getClass().getSimpleName() + "', expected: '" + t2.getClass().getSimpleName() + "'");
             return false;
         } else if(t1 instanceof TypePrim && t2 instanceof TypePrim) {
             TypePrim p1 = (TypePrim)t1;
             TypePrim p2 = (TypePrim)t2;
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(line, "Type mismatch: got " + p1.getKind().getName() + " expected " + p2.getKind().getName());
+                if(printError)
+                    semanticError(line, "Type mismatch: got: '" + p1.getKind().getName() + "', expected: " + p2.getKind().getName() + "'");
                 return false;
             }
             return true;
@@ -88,7 +94,8 @@ public abstract class Node {
             TypePrim p2 = (TypePrim)a2.getType();
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(line, "Array type mismatch: " + p1.getKind().getName() + " expected " + p2.getKind().getName());
+                if(printError)
+                    semanticError(line, "Array type mismatch: got: '" + p1.getKind().getName() + "', expected: '" + p2.getKind().getName() + "'");
                 return false;
             }
             return true;

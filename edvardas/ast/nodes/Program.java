@@ -47,7 +47,7 @@ public class Program extends Node {
         Node main = scope.getMember("main");
         if(main == null)
         {
-            int line = 0;
+            int line = 1;
             if(decl.size() > 0)
                 line = decl.get(0).getLine();
             semanticError(line, "main function is not found");

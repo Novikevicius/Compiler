@@ -32,7 +32,11 @@ public class StatementReturn extends Statement {
         {
             semanticError(this.getLine(), "function's return type should be " + func.getKind().getName());
         }
-        unifyTypes(func, value.checkTypes(), this.getLine());
+        if(unifyTypes(func, value.checkTypes(), this.getLine()) )
+        {
+           // semanticError(this.getLine(), "Return type does not match functions type: got" + );
+        }
+
         return null;
     }
     @Override
