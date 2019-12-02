@@ -57,7 +57,7 @@ public abstract class Node {
     public abstract Node checkTypes() throws Exception;
     public static void semanticError(int line, String msg) throws Exception
     {
-        Main.error(Main.filename + ":"+ line + ":" + msg);
+        Main.error(Main.filename + ":SemanticError:"+ line + ":" + msg);
     }
     public static boolean unifyTypes(Node t1, Node t2, int line) throws Exception
     {
