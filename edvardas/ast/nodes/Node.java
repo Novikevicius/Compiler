@@ -72,7 +72,7 @@ public abstract class Node {
             TypePrim p2 = (TypePrim)t2;
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(line, "Type mismatch: " + p1.getKind() + " and " + p2.getKind());
+                semanticError(line, "Type mismatch: " + p1.getKind().getName() + " and " + p2.getKind().getName());
                 return false;
             }
             return true;
@@ -83,7 +83,7 @@ public abstract class Node {
             TypePrim p2 = (TypePrim)a2.getType();
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(line, "Array type mismatch: " + p1.getKind() + " and " + p2.getKind());
+                semanticError(line, "Array type mismatch: " + p1.getKind().getName() + " and " + p2.getKind().getName());
                 return false;
             }
             return true;
