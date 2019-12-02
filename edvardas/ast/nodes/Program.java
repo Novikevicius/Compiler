@@ -2,6 +2,7 @@ package edvardas.ast.nodes;
 
 import java.util.ArrayList;
 
+import edvardas.State;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 
@@ -57,6 +58,12 @@ public class Program extends Node {
         if(mainFn.getParams().size() > 0)
         {
             semanticError(main.getLine(), "main should not have any parameters");
+            return;
+        }
+        if(mainFn.getType().getKind() != State.TYPE_INT)
+        {
+            semanticError(main.getLine(), "main function's return type should be int");
+            return;
         }
     }
     
