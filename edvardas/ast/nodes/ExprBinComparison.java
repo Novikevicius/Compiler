@@ -23,7 +23,7 @@ public class ExprBinComparison extends ExprBinary {
         IComparable comparable = (IComparable) t1;
         if( !comparable.isComparable() )
         {
-            semanticError(this.getLine(), comparable.getKind() + " is not comparable");
+            semanticError(this.getLine(), comparable.getKind().getName() + " is not comparable");
             return null;
         }
         unifyTypes(t1, t2, this.getLine());
