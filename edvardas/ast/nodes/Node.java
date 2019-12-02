@@ -83,7 +83,7 @@ public abstract class Node {
             if(p1.getKind() != p2.getKind())
             {
                 if(printError)
-                    semanticError(line, "Type mismatch: got: '" + p1.getKind().getName() + "', expected: " + p2.getKind().getName() + "'");
+                    semanticError(line, "Type mismatch: got: '" + p1.getKind().getName() + "', expected: '" + p2.getKind().getName() + "'");
                 return false;
             }
             return true;
