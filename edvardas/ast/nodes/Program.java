@@ -49,7 +49,7 @@ public class Program extends Node {
             int line = 0;
             if(decl.size() > 0)
                 line = decl.get(0).getLine();
-            semanticError(line, "main function does not exist");
+            semanticError(line, "main function not found");
             return;
         }
         DeclFn mainFn = (DeclFn) main;

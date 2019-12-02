@@ -57,7 +57,7 @@ public abstract class Node {
     public abstract Node checkTypes() throws Exception;
     public static void semanticError(int line, String msg) throws Exception
     {
-        Main.error(Main.filename + ":SemanticError:"+ line + ":" + msg);
+        Main.error(Main.filename + ":" + line + ":SemanticError: " + msg);
     }
     public static boolean unifyTypes(Node t1, Node t2, int line) throws Exception
     {
@@ -65,14 +65,14 @@ public abstract class Node {
             return true;
         } 
         if(t1.getClass() != t2.getClass()){
-            semanticError(line, "Type mismatch: " + t1.getClass().getSimpleName() + " and " + t2.getClass().getSimpleName());
+            semanticError(line, "Type mismatch: got " + t1.getClass().getSimpleName() + ", expected " + t2.getClass().getSimpleName());
             return false;
         } else if(t1 instanceof TypePrim && t2 instanceof TypePrim) {
             TypePrim p1 = (TypePrim)t1;
             TypePrim p2 = (TypePrim)t2;
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(line, "Type mismatch: " + p1.getKind().getName() + " and " + p2.getKind().getName());
+                semanticError(line, "Type mismatch: got " + p1.getKind().getName() + " expected " + p2.getKind().getName());
                 return false;
             }
             return true;
@@ -83,7 +83,7 @@ public abstract class Node {
             TypePrim p2 = (TypePrim)a2.getType();
             if(p1.getKind() != p2.getKind())
             {
-                semanticError(line, "Array type mismatch: " + p1.getKind().getName() + " and " + p2.getKind().getName());
+                semanticError(line, "Array type mismatch: " + p1.getKind().getName() + " expected " + p2.getKind().getName());
                 return false;
             }
             return true;
