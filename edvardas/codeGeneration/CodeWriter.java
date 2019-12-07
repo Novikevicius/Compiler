@@ -29,6 +29,9 @@ public class CodeWriter
     public void completeLabel(Label l, int value)
     {
         l.setValue(value);
+        for (int i : l.getOffsets()) {
+            code.set(i, value);
+        }
     }
     public void placeLabel(Label l)
     {
