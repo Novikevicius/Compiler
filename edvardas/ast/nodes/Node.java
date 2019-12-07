@@ -54,6 +54,13 @@ public abstract class Node {
     }
     public abstract void resolveNames(Scope scope) throws Exception;
     public abstract Node checkTypes() throws Exception;
+    public void genCode() {
+        try { 
+            Main.error("genCode not implemented for " + this.getClass().getSimpleName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void semanticError(int line, String msg) throws Exception
     {
         Main.error(Main.filename + ":" + line + ":semantic error: " + msg);
