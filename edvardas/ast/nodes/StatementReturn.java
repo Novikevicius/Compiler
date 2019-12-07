@@ -49,7 +49,13 @@ public class StatementReturn extends Statement {
     @Override
     public void genCode(CodeWriter writer) {
         try {
-            writer.write(Instruction.RET, ((TypePrim) checkTypes()).getKind());
+            if(value != null)
+            {
+                value.genCode(writer);
+                writer.write(Instruction.RET_V, ((TypePrim) checkTypes()).getKind());    
+            }
+            else
+                writer.write(Instruction.RET, ((TypePrim) checkTypes()).getKind());            
         } catch (Exception e) {
             e.printStackTrace();
         }
