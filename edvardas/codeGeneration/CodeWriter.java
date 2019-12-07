@@ -105,7 +105,7 @@ public class CodeWriter
         {
             int opcode = code.get(offset++);
             Instruction instr = Instruction.instrByOpcode.get(opcode);
-            System.out.printf("%2d: %-16s ", offset, instr.toString());
+            System.out.printf("%2d: %-16s ", offset-1, instr.toString());
             int type = -1;
             type = code.get(offset++);
             for(int i = 0; i < instr.getOpCount(); i++)
