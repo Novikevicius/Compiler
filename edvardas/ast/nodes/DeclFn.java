@@ -82,7 +82,7 @@ public class DeclFn extends Decl {
     public void genCode(CodeWriter writer) {
         writer.placeLabel(startLabel);
         body.genCode(writer);
-        if(type.getKind() == State.TYPE_VOID)
+        if(type.getKind() == State.TYPE_VOID && !body.checkReturn())
         {
             writer.write(Instruction.RET, type.getKind());
         }
