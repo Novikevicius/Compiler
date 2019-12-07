@@ -51,6 +51,11 @@ public class Main
             ((Program)root).checkMain(scope);
             ASTPrinter astPrinter = new ASTPrinter();
             astPrinter.print("", root);
+            if(errors != null && errors.size() > 0)
+            {
+                return;
+            }
+            root.genCode();
         }
         catch(Error e)
         {
