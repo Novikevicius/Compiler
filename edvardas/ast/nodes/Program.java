@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.Scope;
 
 public class Program extends Node {
@@ -64,6 +65,14 @@ public class Program extends Node {
         {
             semanticError(main.getLine(), "main function's return type should be int");
             return;
+        }
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        for(Decl d: decl)
+        {
+            d.genCode(writer);
         }
     }
     
