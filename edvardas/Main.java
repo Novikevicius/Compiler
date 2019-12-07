@@ -5,6 +5,7 @@ import java.util.*;
 import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Node;
 import edvardas.ast.nodes.Program;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.*;
 
 public class Main 
@@ -55,7 +56,8 @@ public class Main
             {
                 return;
             }
-            root.genCode();
+            CodeWriter codeWriter = new CodeWriter();
+            root.genCode(codeWriter);
         }
         catch(Error e)
         {
