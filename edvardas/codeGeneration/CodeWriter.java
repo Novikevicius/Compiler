@@ -71,6 +71,9 @@ public class CodeWriter
                     break;
                 case TYPE_STRING:
                     code.add(4);
+                    break;     
+                case TYPE_VOID:
+                    code.add(5);
                     break;                    
                 default:
                     System.out.println("Not implemented: " + type.toString());
