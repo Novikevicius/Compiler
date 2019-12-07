@@ -34,19 +34,23 @@ public class StatementFor extends Statement {
     public void resolveNames(Scope parentScope) throws Exception 
     {
         Scope scope = new Scope(parentScope);
-        initialization.resolveNames(scope);
+        if(initialization != null)
+            initialization.resolveNames(scope);
         condition.resolveNames(scope);
-        afterthought.resolveNames(scope);
+        if(afterthought != null)
+            afterthought.resolveNames(scope);
         body.resolveNames(scope);
     }
     @Override
     public Node checkTypes() throws Exception
     {
-        initialization.checkTypes();
+        if(initialization != null)
+            initialization.checkTypes();
         Node tBool = new TypePrim(State.TYPE_BOOL);
         Node tCondition = condition.checkTypes();
         unifyTypes(tCondition, tBool, condition.getLine());
-        afterthought.checkTypes();
+        if(afterthought != null)
+            afterthought.checkTypes();
         body.checkTypes();
         return null;
     }
@@ -58,14 +62,16 @@ public class StatementFor extends Statement {
     @Override
     public void genCode(CodeWriter writer)
     {
-        initialization.genCode(writer);
+        if(initialization != null)
+            initialization.genCode(writer);
         Label start = new Label();
         Label end = new Label();
         writer.placeLabel(start);
         condition.genCode(writer);
         writer.write(Instruction.JZ, end, State.TYPE_INT);
         body.genCode(writer);
-        afterthought.genCode(writer);
+        if(afterthought != null)
+            afterthought.genCode(writer);
         writer.write(Instruction.JMP, start, State.TYPE_INT);
         writer.placeLabel(end);
     }
