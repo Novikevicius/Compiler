@@ -31,6 +31,9 @@ public class DeclFn extends Decl {
     {
         return params;
     }
+    public Label getStartLabel(){
+        return startLabel;
+    }
     @Override
     public void print(ASTPrinter printer) throws Exception {
         printer.print("name", name);
