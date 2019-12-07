@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import edvardas.Main;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.Scope;
 
 public abstract class Node {
@@ -54,7 +55,7 @@ public abstract class Node {
     }
     public abstract void resolveNames(Scope scope) throws Exception;
     public abstract Node checkTypes() throws Exception;
-    public void genCode() {
+    public void genCode(CodeWriter writer) {
         try { 
             Main.error("genCode not implemented for " + this.getClass().getSimpleName());
         } catch (Exception e) {
