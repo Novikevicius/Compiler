@@ -133,7 +133,7 @@ public class CodeWriter
                     // TODO: implement TYPE_STRING
                         break;
                     case 5:
-                        offset += 1;
+                        System.out.printf("%d ", code.get(offset++));
                         break;
                 
                     default:
