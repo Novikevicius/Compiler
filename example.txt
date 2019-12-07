@@ -1,5 +1,23 @@
-int main()
+int f(int a, int[2] b)
 {
-    int a = 'a';
-    return 0;
+    while(1)
+    {
+        continue;
+    }
+    string s = "Hello World!";
+    string text;
+    b[0] = 1;
+    read s;
+    write text;
+    a = 5;
+    if(-a+b)
+    {
+        int x = f();
+    }
+    else if(b)
+    {
+        b;
+    }
+    else {c();}
 }
+void c(){}
