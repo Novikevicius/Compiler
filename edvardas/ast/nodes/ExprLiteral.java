@@ -3,6 +3,8 @@ package edvardas.ast.nodes;
 import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class ExprLiteral extends Expression {
@@ -32,7 +34,7 @@ public class ExprLiteral extends Expression {
                 return new TypePrim(State.TYPE_CHAR);
             case TYPE_FLOAT:
             case FLOAT_LITERAL:
-                return new TypePrim(State.TYPE_FLOAT); // TODO check for float literal exp
+                return new TypePrim(State.TYPE_FLOAT);
             case TYPE_INT:
             case INT_LITERAL:
                 return new TypePrim(State.TYPE_INT);
@@ -47,5 +49,17 @@ public class ExprLiteral extends Expression {
     public int getLine()
     {
         return value.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        try
+        {
+            writer.write(Instruction.PUSH, value.getValue(), ((TypePrim)checkTypes()).getKind());
+        }
+        catch(Exception exception)
+        {
+            exception.printStackTrace();
+        }
     }
 }

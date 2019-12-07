@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
+import edvardas.State;
+
 public class CodeWriter
 {
     private ArrayList<Integer> code;
@@ -33,9 +35,14 @@ public class CodeWriter
         completeLabel(l, code.size());
     }
 	public void write(Instruction instr) {
-        write(instr, null);
+        write(instr, null, null);
     }
-	public void write(Instruction instr, ArrayList<Object> ops) {
+	public void write(Instruction instr, Object o, State type) {
+        ArrayList<Object> ops = new ArrayList<Object>(1);
+        ops.add(o);
+        write(instr, ops, type);
+    }
+	public void write(Instruction instr, ArrayList<Object> ops, State type) {
         if(instr.getOpCount() > 0)
         {
             if(ops == null)
@@ -44,23 +51,46 @@ public class CodeWriter
                 throw new Error("OpCount is " + instr.getOpCount() + " but got " + ops.size() + " operands");
         }
         code.add(instr.getOpcode());
-        for(Object op: ops)
+        if(ops != null)
         {
-            if(!(op instanceof Label))
+            for(Object op: ops)
             {
-                code.add(objToInt(op));
-            }
-            else
-            {
-                Label l = (Label) op;
-                if(l.getValue() == -1)
+                if(!(op instanceof Label))
                 {
-                    l.getOffsets().add(code.size());
-                    code.add(0);
+                    switch (type) {
+                        case TYPE_INT:
+                            code.add(0);
+                            break;
+                        case TYPE_FLOAT:
+                            code.add(1);
+                            break;
+                        case TYPE_CHAR:
+                            code.add(2);
+                            break;
+                        case TYPE_BOOL:
+                            code.add(3);
+                            break;
+                        case TYPE_STRING:
+                            code.add(4);
+                            break;                    
+                        default:
+                            System.out.println("Not implemented: " + type.toString());
+                            break;
+                    }
+                    code.add(objToInt(op));
                 }
                 else
                 {
-                    code.add(l.getValue());
+                    Label l = (Label) op;
+                    if(l.getValue() == -1)
+                    {
+                        l.getOffsets().add(code.size());
+                        code.add(0);
+                    }
+                    else
+                    {
+                        code.add(l.getValue());
+                    }
                 }
             }
         }
@@ -72,7 +102,31 @@ public class CodeWriter
         {
             int opcode = code.get(offset++);
             Instruction instr = Instruction.instrByOpcode.get(opcode);
-            System.out.printf("%2i: %-16s " );
+            System.out.printf("%2d: %-16s ", offset, instr.toString());
+            int type = -1;
+            if(instr.getOpCount() > 0)
+                type = code.get(offset++);
+            for(int i = 0; i < instr.getOpCount(); i++)
+            {
+                switch (type) {
+                    case 0:
+                        System.out.print((int)code.get(offset++));
+                        break;
+                    case 1:
+                        System.out.print((float)code.get(offset++));
+                        break;
+                    case 2:
+                        System.out.print((char)code.get(offset++).intValue());
+                        break;
+                    case 3:
+                        System.out.print(code.get(offset++) > 0);
+                        break;
+                
+                    default:
+                        break;
+                }
+            }
+            System.out.print("\n");
         }
     }
     private static int objToInt(Object o)

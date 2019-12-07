@@ -3,6 +3,8 @@ package edvardas.ast.nodes;
 import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class StatementReturn extends Statement {
@@ -43,5 +45,10 @@ public class StatementReturn extends Statement {
     public int getLine()
     {
         return keyword.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        writer.write(Instruction.RET);
     }
 }
