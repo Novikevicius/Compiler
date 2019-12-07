@@ -9,6 +9,9 @@ public enum Instruction {
     MUL(0x0002, 0),
     DIV(0x0003, 0),
     EXP(0x0004, 0),
+    NEG(0x0005, 0),
+    INC(0x0006, 0),
+    DEC(0x0007, 0),
     // Comparison instructions
     LESS(0x0010, 0),
     MORE(0x0011, 0),
@@ -18,8 +21,9 @@ public enum Instruction {
     NEQ (0x0015, 0),
     // Stack instructions
     PUSH (0x0020, 1),
-    GET_L (0x0021, 1),
-    SET_L (0x0022, 1),
+    POP  (0x0021, 0),
+    GET_L (0x0022, 1),
+    SET_L (0x0023, 1),
     // Control instructions
     RET (0xF030, 0),
     RET_V (0x0030, 0),
