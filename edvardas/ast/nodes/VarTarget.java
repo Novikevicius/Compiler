@@ -1,6 +1,8 @@
 package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class VarTarget extends AssignmentTarget {
@@ -29,5 +31,10 @@ public class VarTarget extends AssignmentTarget {
     public int getLine()
     {
         return var.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        writer.write(Instruction.SET_L, ( (VarDeclaration) (((ExprVar)var).getTarget().parent)).stack_slot, ((TypePrim)var.checkTypes()).getKind());
     }
 }
