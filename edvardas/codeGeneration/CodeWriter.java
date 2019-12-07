@@ -129,6 +129,12 @@ public class CodeWriter
                     case 3:
                         System.out.print(code.get(offset++) > 0);
                         break;
+                    case 4:
+                    // TODO: implement TYPE_STRING
+                        break;
+                    case 5:
+                        offset += 1;
+                        break;
                 
                     default:
                         break;
