@@ -13,6 +13,10 @@ public class VarTarget extends AssignmentTarget {
         this.var = var;
         addChildren(var);
     }
+    public ExprVar getVar()
+    {
+        return var;
+    }
     @Override
     public void print(ASTPrinter printer) throws Exception {
         printer.print("var", var);
