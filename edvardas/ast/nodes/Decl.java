@@ -6,6 +6,8 @@ import edvardas.ast.ASTPrinter;
 public abstract class Decl extends Node {
     protected Token name;
     protected Type type;
+    protected static int stack_slot_index;
+    public int stack_slot;
 
     public abstract void print(ASTPrinter printer) throws Exception;
     public Token getName()
