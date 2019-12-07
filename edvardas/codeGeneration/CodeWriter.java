@@ -112,13 +112,13 @@ public class CodeWriter
             {
                 switch (type) {
                     case 0:
-                        System.out.printf("%d", code.get(offset++));
+                        System.out.printf("%d ", code.get(offset++));
                         break;
                     case 1:
-                        System.out.printf("%f", Float.intBitsToFloat(code.get(offset++)));
+                        System.out.printf("%f ", Float.intBitsToFloat(code.get(offset++)));
                         break;
                     case 2:
-                        System.out.printf("%c", code.get(offset++).intValue());
+                        System.out.printf("%c ", code.get(offset++).intValue());
                         break;
                     case 3:
                         System.out.print(code.get(offset++) > 0);
@@ -130,6 +130,11 @@ public class CodeWriter
             }
             System.out.print("\n");
         }
+        System.out.println("Raw code:");
+        for (int i = 0; i < code.size(); i++) {
+            System.out.printf("%d ", code.get(i));
+        }
+        System.out.print("\n");
     }
     private static int objToInt(Object o)
     {
