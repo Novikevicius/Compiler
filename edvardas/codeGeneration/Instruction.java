@@ -39,16 +39,19 @@ public enum Instruction {
     BOOL_PUSH (0x4020, 1),
     GET_L (0x0021, 0),
     // Control instructions
+    RET (0xF030, 0),
     INT_RET (0x0030, 0),
     FLOAT_RET (0x1030, 0),
     CHAR_RET (0x2030, 0),
     STRING_RET (0x3030, 0),
-    BOOL_RET (0x4030, 0);
+    BOOL_RET (0x4030, 0),
+    CALL_BEGIN (0x0031, 0),
+    CALL (0x0032, 0);
 
     private int opcode;
     private int opCount;
 
-    private static HashMap<Integer, Instruction> instrByOpcode;
+    public static HashMap<Integer, Instruction> instrByOpcode;
 
     private Instruction(int opcode, int opCount) {
         this.opcode = opcode;
