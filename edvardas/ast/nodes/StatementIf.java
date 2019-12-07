@@ -60,7 +60,7 @@ public class StatementIf extends Statement {
     public boolean checkReturn()
     {
         if( !branch.checkReturn() ) return false;
-        if( stmtElse != null && !stmtElse.checkReturn() ) return false;
+        if( stmtElse == null || !stmtElse.checkReturn() ) return false;
         for(int i = 0; i < elseif.size(); i++)
         {
             if( !elseif.get(i).checkReturn() ) return false;
