@@ -4,6 +4,7 @@ import edvardas.State;
 import edvardas.ast.ASTPrinter;
 import edvardas.parser.Scope;
 import edvardas.ast.nodes.AssignmentTarget;
+import edvardas.codeGeneration.CodeWriter;
 
 public class StatementAssignment extends Statement {
     private AssignmentTarget target;
@@ -41,5 +42,11 @@ public class StatementAssignment extends Statement {
     public int getLine()
     {
         return target.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        value.genCode(writer);
+        target.genCode(writer);
     }
 }
