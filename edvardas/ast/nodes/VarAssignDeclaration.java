@@ -2,6 +2,8 @@ package edvardas.ast.nodes;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class VarAssignDeclaration extends VarDeclaration {
@@ -24,6 +26,8 @@ public class VarAssignDeclaration extends VarDeclaration {
     public void resolveNames(Scope parentScope) throws Exception
     {
         parentScope.add(name, type);
+        stack_slot = stack_slot_index;
+        stack_slot_index += 1;
         expr.resolveNames(parentScope);
     }
     @Override
@@ -37,5 +41,11 @@ public class VarAssignDeclaration extends VarDeclaration {
     public int getLine()
     {
         return name.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        expr.genCode(writer);
+        writer.write(Instruction.SET_L, stack_slot, type.getKind());
     }
 }
