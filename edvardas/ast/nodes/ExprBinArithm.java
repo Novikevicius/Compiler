@@ -1,75 +1,80 @@
 package edvardas.ast.nodes;
 
 import edvardas.BinaryOperator;
+import edvardas.State;
 import edvardas.ast.nodes.Expression;
 import edvardas.codeGeneration.CodeWriter;
 import edvardas.codeGeneration.Instruction;
 
 public class ExprBinArithm extends ExprBinary {
-    
+
     public ExprBinArithm(BinaryOperator operator, Expression left, Expression right) {
         super(operator, left, right);
     }
+
     @Override
-    public Node checkTypes() throws Exception
-    {
+    public Node checkTypes() throws Exception {
         Node t1 = left.checkTypes();
         Node t2 = right.checkTypes();
-        if(t1 instanceof TypePrim && t2 instanceof TypePrim)
-        {
-            TypePrim t = (TypePrim)t1;
-            switch(t.getKind())
-            {
-                case TYPE_INT:
-                case TYPE_FLOAT:
-                case TYPE_STRING:
-                    break;
-                default:
-                    semanticError(this.getLine(), "Binary operation is not allowed for " + t.getKind().getName());
-                    return null;
+        if (t1 instanceof TypePrim && t2 instanceof TypePrim) {
+            TypePrim t = (TypePrim) t1;
+            switch (t.getKind()) {
+            case TYPE_INT:
+            case TYPE_FLOAT:
+            case TYPE_STRING:
+                break;
+            default:
+                semanticError(this.getLine(), "Binary operation is not allowed for " + t.getKind().getName());
+                return null;
             }
         }
         unifyTypes(t1, t2, this.getLine());
         return t1;
     }
+
     @Override
-    public void genCode(CodeWriter writer)
-    {
+    public void genCode(CodeWriter writer) {
         left.genCode(writer);
         right.genCode(writer);
+        State type = null;
+        try {
+            type = ((TypePrim) left.checkTypes()).getKind();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         switch (operator) {
             case ADD:
-                writer.write(Instruction.ADD);
+                writer.write(Instruction.ADD, type);
                 break;
             case MULTIPLICATION:
-                writer.write(Instruction.MUL);
+                writer.write(Instruction.MUL, type);
                 break;
             case DIVISION:
-                writer.write(Instruction.DIV);
+                writer.write(Instruction.DIV, type);
                 break;
             case MINUS:
-                writer.write(Instruction.SUB);
+                writer.write(Instruction.SUB, type);
                 break;
             case EQUAL:
-                writer.write(Instruction.EQ);
+                writer.write(Instruction.EQ, type);
                 break;
             case NOT_EQUAL:
-                writer.write(Instruction.NEQ);
+                writer.write(Instruction.NEQ, type);
                 break;
             case LESS:
-                writer.write(Instruction.LESS);
+                writer.write(Instruction.LESS, type);
                 break;
             case MORE:
-                writer.write(Instruction.MORE);
+                writer.write(Instruction.MORE, type);
                 break;
             case LESS_EQUAL:
-                writer.write(Instruction.LEQ);
+                writer.write(Instruction.LEQ, type);
                 break;
             case MORE_EQUAL:
-                writer.write(Instruction.MEQ);
+                writer.write(Instruction.MEQ, type);
                 break;
             case EXPONENTIAL:
-                writer.write(Instruction.EXP);
+                writer.write(Instruction.EXP, type);
                 break;
             default:
                 break;

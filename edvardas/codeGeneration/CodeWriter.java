@@ -34,8 +34,8 @@ public class CodeWriter
     {
         completeLabel(l, code.size());
     }
-	public void write(Instruction instr) {
-        write(instr, null, null);
+	public void write(Instruction instr, State type) {
+        write(instr, null, type);
     }
 	public void write(Instruction instr, Object o, State type) {
         ArrayList<Object> ops = new ArrayList<Object>(1);
@@ -51,32 +51,35 @@ public class CodeWriter
                 throw new Error("OpCount is " + instr.getOpCount() + " but got " + ops.size() + " operands");
         }
         code.add(instr.getOpcode());
+        if(type != null)
+        {
+            switch (type) {
+                case TYPE_INT:
+                    code.add(0);
+                    break;
+                case TYPE_FLOAT:
+                    code.add(1);
+                    break;
+                case TYPE_CHAR:
+                    code.add(2);
+                    break;
+                case TYPE_BOOL:
+                    code.add(3);
+                    break;
+                case TYPE_STRING:
+                    code.add(4);
+                    break;                    
+                default:
+                    System.out.println("Not implemented: " + type.toString());
+                    break;
+            }
+        }
         if(ops != null)
         {
             for(Object op: ops)
             {
                 if(!(op instanceof Label))
                 {
-                    switch (type) {
-                        case TYPE_INT:
-                            code.add(0);
-                            break;
-                        case TYPE_FLOAT:
-                            code.add(1);
-                            break;
-                        case TYPE_CHAR:
-                            code.add(2);
-                            break;
-                        case TYPE_BOOL:
-                            code.add(3);
-                            break;
-                        case TYPE_STRING:
-                            code.add(4);
-                            break;                    
-                        default:
-                            System.out.println("Not implemented: " + type.toString());
-                            break;
-                    }
                     code.add(objToInt(op));
                 }
                 else
@@ -104,19 +107,18 @@ public class CodeWriter
             Instruction instr = Instruction.instrByOpcode.get(opcode);
             System.out.printf("%2d: %-16s ", offset, instr.toString());
             int type = -1;
-            if(instr.getOpCount() > 0)
-                type = code.get(offset++);
+            type = code.get(offset++);
             for(int i = 0; i < instr.getOpCount(); i++)
             {
                 switch (type) {
                     case 0:
-                        System.out.print((int)code.get(offset++));
+                        System.out.printf("%d", code.get(offset++));
                         break;
                     case 1:
-                        System.out.print((float)code.get(offset++));
+                        System.out.printf("%f", Float.intBitsToFloat(code.get(offset++)));
                         break;
                     case 2:
-                        System.out.print((char)code.get(offset++).intValue());
+                        System.out.printf("%c", code.get(offset++).intValue());
                         break;
                     case 3:
                         System.out.print(code.get(offset++) > 0);
@@ -131,6 +133,14 @@ public class CodeWriter
     }
     private static int objToInt(Object o)
     {
+        if(o instanceof Float)
+            return Float.floatToRawIntBits(((Float)o));
+        if(o instanceof Character)
+            return ((Character)o);
+        if(o instanceof Integer)
+            return ((Integer)o);
+        if(o instanceof Boolean)
+            return ((Boolean)o) ? 1 : 0;
         byte[] arr = objToBytes(o);
         ArrayList<Byte> bytes = new ArrayList<Byte>(arr.length);
         for(Byte b: arr)

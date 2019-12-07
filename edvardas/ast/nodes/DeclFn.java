@@ -79,7 +79,7 @@ public class DeclFn extends Decl {
         body.genCode(writer);
         if(type.getKind() == State.TYPE_VOID)
         {
-            writer.write(Instruction.RET);
+            writer.write(Instruction.RET, type.getKind());
         }
     }
 }
