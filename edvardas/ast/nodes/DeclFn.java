@@ -44,8 +44,7 @@ public class DeclFn extends Decl {
 
     @Override
     public void resolveNames(Scope parentScope) {
-        stack_slot = stack_slot_index;
-        stack_slot_index += 1;
+        Decl.stack_slot_index = 0;
         Scope scope = new Scope(parentScope);
         params.forEach((param) -> {
             try {
