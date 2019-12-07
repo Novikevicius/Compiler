@@ -58,6 +58,7 @@ public class Main
             }
             CodeWriter codeWriter = new CodeWriter();
             root.genCode(codeWriter);
+            codeWriter.showCode();
         }
         catch(Error e)
         {
