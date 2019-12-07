@@ -55,24 +55,6 @@ public class ExprBinArithm extends ExprBinary {
             case MINUS:
                 writer.write(Instruction.SUB, type);
                 break;
-            case EQUAL:
-                writer.write(Instruction.EQ, type);
-                break;
-            case NOT_EQUAL:
-                writer.write(Instruction.NEQ, type);
-                break;
-            case LESS:
-                writer.write(Instruction.LESS, type);
-                break;
-            case MORE:
-                writer.write(Instruction.MORE, type);
-                break;
-            case LESS_EQUAL:
-                writer.write(Instruction.LEQ, type);
-                break;
-            case MORE_EQUAL:
-                writer.write(Instruction.MEQ, type);
-                break;
             case EXPONENTIAL:
                 writer.write(Instruction.EXP, type);
                 break;
