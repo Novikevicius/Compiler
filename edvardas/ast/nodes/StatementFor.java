@@ -2,6 +2,9 @@ package edvardas.ast.nodes;
 
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
+import edvardas.codeGeneration.Label;
 import edvardas.parser.Scope;
 
 public class StatementFor extends Statement {
@@ -51,5 +54,19 @@ public class StatementFor extends Statement {
     public int getLine()
     {
         return initialization.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        initialization.genCode(writer);
+        Label start = new Label();
+        Label end = new Label();
+        writer.placeLabel(start);
+        condition.genCode(writer);
+        writer.write(Instruction.JZ, end, State.TYPE_INT);
+        body.genCode(writer);
+        afterthought.genCode(writer);
+        writer.write(Instruction.JMP, start, State.TYPE_INT);
+        writer.placeLabel(end);
     }
 }
