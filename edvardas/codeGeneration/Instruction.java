@@ -25,10 +25,13 @@ public enum Instruction {
     GET_L (0x0022, 1),
     SET_L (0x0023, 1),
     // Control instructions
-    RET (0xF030, 0),
-    RET_V (0x0030, 0),
-    CALL_BEGIN (0x0031, 0),
-    CALL (0x0032, 2);
+    RET (0x0030, 0),
+    RET_V (0x0031, 0),
+    CALL_BEGIN (0x0032, 0),
+    CALL (0x0033, 2),
+    // Jumps
+    JMP (0x0130, 1),
+    JZ (0x0131, 1);
 
     private int opcode;
     private int opCount;
