@@ -18,6 +18,8 @@ public enum Instruction {
     NEQ (0x0015, 0),
     // Stack instructions
     PUSH (0x0020, 1),
+    GET_L (0x0021, 1),
+    SET_L (0x0022, 1),
     // Control instructions
     RET (0xF030, 0),
     RET_V (0x0030, 0),
