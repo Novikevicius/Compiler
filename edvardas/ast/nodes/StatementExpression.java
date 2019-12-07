@@ -1,6 +1,7 @@
 package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.Scope;
 
 public class StatementExpression extends Statement {
@@ -27,5 +28,10 @@ public class StatementExpression extends Statement {
     public int getLine()
     {
         return expr.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        expr.genCode(writer);
     }
 }
