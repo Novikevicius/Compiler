@@ -24,7 +24,7 @@ public enum Instruction {
     RET (0xF030, 0),
     RET_V (0x0030, 0),
     CALL_BEGIN (0x0031, 0),
-    CALL (0x0032, 0);
+    CALL (0x0032, 2);
 
     private int opcode;
     private int opCount;
