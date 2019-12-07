@@ -89,12 +89,12 @@ public class ExprUnary extends Expression {
                 if(isPostfix)
                 {
                     if(expr instanceof ExprVar)
-                        writer.write(Instruction.SET_L, ( (VarDeclaration) (((ExprVar)expr).getTarget().parent)).stack_slot, type);
+                        writer.write(Instruction.SET_L, ( (VarDeclaration) ((ExprVar)expr).getTarget().parent).stack_slot, type);
                 }
                 else
                 {
                     if(expr instanceof ExprVar)
-                        writer.write(Instruction.SET_L, ((VarDeclaration)((ExprVar)expr).getTarget()).stack_slot, type);
+                        writer.write(Instruction.SET_L, ( (VarDeclaration) ((ExprVar)expr).getTarget().parent).stack_slot, type);
                     expr.genCode(writer);  
                 }
                 break;
@@ -106,12 +106,12 @@ public class ExprUnary extends Expression {
                 if(isPostfix)
                 {
                     if(expr instanceof ExprVar)
-                        writer.write(Instruction.SET_L, ((VarDeclaration)((ExprVar)expr).getTarget()).stack_slot, type);
+                    writer.write(Instruction.SET_L, ( (VarDeclaration) ((ExprVar)expr).getTarget().parent).stack_slot, type);
                 }
                 else
                 {
                     if(expr instanceof ExprVar)
-                        writer.write(Instruction.SET_L, ((VarDeclaration)((ExprVar)expr).getTarget()).stack_slot, type);
+                    writer.write(Instruction.SET_L, ( (VarDeclaration) ((ExprVar)expr).getTarget().parent).stack_slot, type);
                     expr.genCode(writer);  
                 }
                 break;
