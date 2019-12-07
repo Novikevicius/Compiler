@@ -39,6 +39,6 @@ public class ExprVar extends Expression {
     @Override
     public void genCode(CodeWriter writer)
     {
-        writer.write(Instruction.GET_L, ((Decl)target).stack_slot, ((TypePrim)checkTypes()).getKind());
+        writer.write(Instruction.GET_L, ((Decl)target.parent).stack_slot, ((TypePrim)checkTypes()).getKind());
     }
 }

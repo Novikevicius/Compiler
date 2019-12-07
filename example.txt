@@ -1,5 +1,6 @@
 int main()
 {
-    90 ^ 6;
+    int x = 5 + 10;
+    int c = x^3;
     return 0;
 }
