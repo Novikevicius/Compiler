@@ -3,6 +3,8 @@ package edvardas.ast.nodes;
 import edvardas.BinaryOperator;
 import edvardas.State;
 import edvardas.ast.nodes.Expression;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.IComparable;
 
 public class ExprBinComparison extends ExprBinary {
@@ -28,5 +30,39 @@ public class ExprBinComparison extends ExprBinary {
         }
         unifyTypes(t1, t2, this.getLine());
         return new TypePrim(State.TYPE_BOOL);
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        left.genCode(writer);
+        right.genCode(writer);
+        State type = null;
+        try {
+            type = ((TypePrim) left.checkTypes()).getKind();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        switch (operator) {
+            case EQUAL:
+                writer.write(Instruction.EQ, type);
+                break;
+            case NOT_EQUAL:
+                writer.write(Instruction.NEQ, type);
+                break;
+            case LESS:
+                writer.write(Instruction.LESS, type);
+                break;
+            case MORE:
+                writer.write(Instruction.MORE, type);
+                break;
+            case LESS_EQUAL:
+                writer.write(Instruction.LEQ, type);
+                break;
+            case MORE_EQUAL:
+                writer.write(Instruction.MEQ, type);
+                break;
+            default:
+                break;
+        }
     }
 }
