@@ -38,6 +38,23 @@ public class VarPrimaryDeclaration extends VarDeclaration {
     @Override
     public void genCode(CodeWriter writer)
     {
+        switch (type.getKind()) {
+            case TYPE_INT:
+                writer.write(Instruction.PUSH, 0, type.getKind());
+                break;
+            case TYPE_FLOAT:
+                writer.write(Instruction.PUSH, 0.0, type.getKind());
+                break;
+            case TYPE_CHAR:
+                writer.write(Instruction.PUSH, '\0', type.getKind());
+                break;
+            case TYPE_BOOL:
+                writer.write(Instruction.PUSH, false, type.getKind());
+                break;
+            default://TODO: check for TYPE_STRING
+                System.out.println("Should not happen: " + type.getKind().toString());
+                break;
+        }
         writer.write(Instruction.SET_L, stack_slot, type.getKind());
     }
 }
