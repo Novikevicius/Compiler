@@ -24,6 +24,8 @@ public enum Instruction {
     POP  (0x0021, 0),
     GET_L (0x0022, 1),
     SET_L (0x0023, 1),
+    GET_A_L (0x0024, 0),
+    DEC_A_L (0x0025, 2),
     // Control instructions
     RET (0x0030, 0),
     RET_V (0x0031, 0),
