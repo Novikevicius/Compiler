@@ -34,7 +34,10 @@ public enum Instruction {
     CALL (0x0033, 2),
     // Jumps
     JMP (0x0130, 1),
-    JZ (0x0131, 1);
+    JZ (0x0131, 1),
+    // Input/Output instructions
+    WRITE(0x0040, 1),
+    READ(0x0041, 1);
 
     private int opcode;
     private int opCount;
