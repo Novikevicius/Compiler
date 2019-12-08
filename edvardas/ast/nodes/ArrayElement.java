@@ -11,7 +11,7 @@ public class ArrayElement extends Expression {
     private Node type;
     private Token name;
     private Expression index;
-    private int stack_slot;
+    public int stack_slot;
 
     public ArrayElement(Token name, Expression index) {
         this.name = name;
@@ -22,6 +22,10 @@ public class ArrayElement extends Expression {
     {
         printer.print("name", name);
         printer.print("index", index);
+    }
+    public Expression getIndex()
+    {
+        return index;
     }
     @Override
     public void resolveNames(Scope scope) throws Exception
