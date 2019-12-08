@@ -46,13 +46,10 @@ public class CodeWriter
         write(instr, ops, type);
     }
 	public void write(Instruction instr, ArrayList<Object> ops, State type) {
-        if(instr.getOpCount() > 0)
-        {
-            if(ops == null)
-                throw new Error("OpCount is " + instr.getOpCount() + " but ops is null");
-            if(ops.size() != instr.getOpCount())
-                throw new Error("OpCount is " + instr.getOpCount() + " but got " + ops.size() + " operands");
-        }
+        if(ops == null && instr.getOpCount() > 0)
+            throw new Error("OpCount is " + instr.getOpCount() + " but ops is null");
+        if(ops != null && ops.size() != instr.getOpCount())
+            throw new Error("OpCount is " + instr.getOpCount() + " but got " + ops.size() + " operands for instruction " + instr.toString());
         code.add(instr.getOpcode());
         if(type != null)
         {
