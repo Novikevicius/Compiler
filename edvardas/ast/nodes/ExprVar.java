@@ -1,5 +1,6 @@
 package edvardas.ast.nodes;
 
+import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
 import edvardas.codeGeneration.CodeWriter;
@@ -39,6 +40,21 @@ public class ExprVar extends Expression {
     @Override
     public void genCode(CodeWriter writer)
     {
-        writer.write(Instruction.GET_L, ((Decl)target.parent).stack_slot, ((TypePrim)checkTypes()).getKind());
+        State type = null;
+        if(target.parent instanceof Decl)
+            writer.write(Instruction.GET_L, ((Decl)target.parent).stack_slot, ((TypePrim)checkTypes()).getKind());
+        else if(target.parent instanceof StatementVarDecl)
+        {
+            Node n = checkTypes();
+            if(n instanceof ArrayDeclaration){
+                type = ((TypePrim)((ArrayDeclaration)n).getType()).getKind();
+            }else{
+                type = ((TypePrim)checkTypes()).getKind();
+            }
+            writer.write(Instruction.GET_L, ((StatementVarDecl)target.parent).getDeclaration().stack_slot, type);
+        }
+        else if(target.parent instanceof ArrayDeclaration)
+            writer.write(Instruction.GET_L, ((ArrayDeclaration)target.parent).stack_slot, ((TypePrim)checkTypes()).getKind());
+
     }
 }
