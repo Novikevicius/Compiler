@@ -37,7 +37,7 @@ public enum Instruction {
     JZ (0x0131, 1),
     // Input/Output instructions
     WRITE(0x0040, 1),
-    READ(0x0041, 1);
+    READ(0x0041, 0);
 
     private int opcode;
     private int opCount;
