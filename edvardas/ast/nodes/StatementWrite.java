@@ -2,8 +2,11 @@ package edvardas.ast.nodes;
 
 import java.util.ArrayList;
 
+import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class StatementWrite extends Statement {
@@ -48,5 +51,13 @@ public class StatementWrite extends Statement {
     public int getLine()
     {
         return keyword.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        for (Expression expression : args) {
+            expression.genCode(writer);
+        }
+        writer.write(Instruction.WRITE, args.size(), State.TYPE_INT);
     }
 }
