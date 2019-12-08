@@ -51,6 +51,9 @@ public class VarPrimaryDeclaration extends VarDeclaration {
             case TYPE_BOOL:
                 writer.write(Instruction.PUSH, false, type.getKind());
                 break;
+            case TYPE_STRING:
+                writer.write(Instruction.PUSH, "", type.getKind());
+                break;
             default:
                 break;
         }
