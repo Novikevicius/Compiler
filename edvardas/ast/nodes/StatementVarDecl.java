@@ -15,6 +15,10 @@ public class StatementVarDecl extends Statement {
     {
         printer.print("decl", declaration);
     }
+    public VarDeclaration getDeclaration()
+    {
+        return declaration;
+    }
     @Override
     public void resolveNames(Scope scope) throws Exception
     {
