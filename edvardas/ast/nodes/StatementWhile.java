@@ -10,6 +10,8 @@ import edvardas.parser.Scope;
 public class StatementWhile extends Statement {
     private Expression condition;
     private StmtBody body;
+    private Label start;
+    private Label end;
     
     public StatementWhile(Expression cond, StmtBody body) {
         condition = cond;
@@ -21,6 +23,14 @@ public class StatementWhile extends Statement {
     {
         printer.print("condition", condition);
         printer.print("body", body);
+    }
+    public Label getStart()
+    {
+        return start;
+    }
+    public Label getEnd()
+    {
+        return end;
     }
     @Override
     public void resolveNames(Scope s) throws Exception 
@@ -45,8 +55,8 @@ public class StatementWhile extends Statement {
     @Override
     public void genCode(CodeWriter writer)
     {
-        Label start = new Label();
-        Label end = new Label();
+        start = new Label();
+        end = new Label();
         writer.placeLabel(start);
         condition.genCode(writer);
         writer.write(Instruction.JZ, end, State.TYPE_INT);
