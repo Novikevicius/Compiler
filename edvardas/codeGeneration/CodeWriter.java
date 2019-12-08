@@ -113,28 +113,35 @@ public class CodeWriter
             type = code.get(offset++);
             for(int i = 0; i < instr.getOpCount(); i++)
             {
-                switch (type) {
-                    case 0:
-                        System.out.printf("%d ", code.get(offset++));
-                        break;
-                    case 1:
-                        System.out.printf("%f ", Float.intBitsToFloat(code.get(offset++)));
-                        break;
-                    case 2:
-                        System.out.printf("%c ", code.get(offset++).intValue());
-                        break;
-                    case 3:
-                        System.out.print(code.get(offset++) > 0);
-                        break;
-                    case 4:
-                    // TODO: implement TYPE_STRING
-                        break;
-                    case 5:
-                        System.out.printf("%d ", code.get(offset++));
-                        break;
-                
-                    default:
-                        break;
+                if(instr.equals(Instruction.PUSH))
+                {                
+                    switch (type) {
+                        case 0:
+                            System.out.printf("%d ", code.get(offset++));
+                            break;
+                        case 1:
+                            System.out.printf("%f ", Float.intBitsToFloat(code.get(offset++)));
+                            break;
+                        case 2:
+                            System.out.printf("%c ", code.get(offset++).intValue());
+                            break;
+                        case 3:
+                            System.out.print(code.get(offset++) > 0);
+                            break;
+                        case 4:
+                        // TODO: implement TYPE_STRING
+                            break;
+                        case 5:
+                            System.out.printf("%d ", code.get(offset++));
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    System.out.printf("%d ", code.get(offset++));
                 }
             }
             System.out.print("\n");
