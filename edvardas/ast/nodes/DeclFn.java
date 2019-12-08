@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
+import edvardas.codeGeneration.Label;
 import edvardas.parser.Scope;
 
 public class DeclFn extends Decl {
     private ArrayList<VarDeclaration> params;
     private StmtBody body;
+    private Label startLabel;
 
     public DeclFn(Type retType, Token name, ArrayList<VarDeclaration> params, StmtBody body) {
         this.type = retType;
         this.name = name;
         this.params = params;
         this.body = body;
+        startLabel = new Label();
         addChildren(type);
         for (VarDeclaration param : params) {
             addChildren(param);
@@ -25,6 +30,9 @@ public class DeclFn extends Decl {
     public ArrayList<VarDeclaration> getParams()
     {
         return params;
+    }
+    public Label getStartLabel(){
+        return startLabel;
     }
     @Override
     public void print(ASTPrinter printer) throws Exception {
@@ -36,6 +44,7 @@ public class DeclFn extends Decl {
 
     @Override
     public void resolveNames(Scope parentScope) {
+        Decl.stack_slot_index = 0;
         Scope scope = new Scope(parentScope);
         params.forEach((param) -> {
             try {
@@ -68,5 +77,13 @@ public class DeclFn extends Decl {
     public int getLine()
     {
         return name.getLine();
+    }
+    public void genCode(CodeWriter writer) {
+        writer.placeLabel(startLabel);
+        body.genCode(writer);
+        if(type.getKind() == State.TYPE_VOID && !body.checkReturn())
+        {
+            writer.write(Instruction.RET, type.getKind());
+        }
     }
 }

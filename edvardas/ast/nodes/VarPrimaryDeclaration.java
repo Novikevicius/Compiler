@@ -2,6 +2,8 @@ package edvardas.ast.nodes;
 
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class VarPrimaryDeclaration extends VarDeclaration {
@@ -18,6 +20,8 @@ public class VarPrimaryDeclaration extends VarDeclaration {
     @Override
     public void resolveNames(Scope parentScope)
     {
+        stack_slot = stack_slot_index;
+        stack_slot_index += 1;
         parentScope.add(name, type);
     }
     @Override
@@ -30,5 +34,27 @@ public class VarPrimaryDeclaration extends VarDeclaration {
     public int getLine()
     {
         return name.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        switch (type.getKind()) {
+            case TYPE_INT:
+                writer.write(Instruction.PUSH, 0, type.getKind());
+                break;
+            case TYPE_FLOAT:
+                writer.write(Instruction.PUSH, 0.0, type.getKind());
+                break;
+            case TYPE_CHAR:
+                writer.write(Instruction.PUSH, '\0', type.getKind());
+                break;
+            case TYPE_BOOL:
+                writer.write(Instruction.PUSH, false, type.getKind());
+                break;
+            default://TODO: check for TYPE_STRING
+                System.out.println("Should not happen: " + type.getKind().toString());
+                break;
+        }
+        writer.write(Instruction.SET_L, stack_slot, type.getKind());
     }
 }

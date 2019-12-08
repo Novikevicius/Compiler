@@ -3,6 +3,7 @@ package edvardas.ast.nodes;
 import java.util.ArrayList;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.Scope;
 
 public class StmtBody extends Statement {
@@ -62,5 +63,13 @@ public class StmtBody extends Statement {
         if(stmts.size() > 0)
             return stmts.get(0).getLine();
         return 0;
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        for(Statement stmt: stmts)
+        {
+            stmt.genCode(writer);
+        }
     }
 }

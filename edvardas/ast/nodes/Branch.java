@@ -2,6 +2,9 @@ package edvardas.ast.nodes;
 
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
+import edvardas.codeGeneration.Label;
 import edvardas.parser.Scope;
 
 public class Branch extends Node {
@@ -43,5 +46,15 @@ public class Branch extends Node {
     public int getLine()
     {
         return condition.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        Label end = new Label();
+        condition.genCode(writer);
+        writer.write(Instruction.JZ, end, State.TYPE_INT);
+        body.genCode(writer);
+        writer.write(Instruction.JMP, ((StatementIf)parent).getElseStart(), State.TYPE_INT);
+        writer.placeLabel(end);
     }
 }

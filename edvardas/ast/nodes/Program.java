@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.Scope;
 
 public class Program extends Node {
     private ArrayList<Decl> decl;
-
+    private DeclFn mainFn;
     public Program(ArrayList<Decl> decls) {
         decl = decls;
         decls.forEach((d) -> addChildren(d));
@@ -53,7 +54,7 @@ public class Program extends Node {
             semanticError(line, "main function is not found");
             return;
         }
-        DeclFn mainFn = (DeclFn) main;
+        mainFn = (DeclFn) main;
 
         if(mainFn.getParams().size() > 0)
         {
@@ -64,6 +65,17 @@ public class Program extends Node {
         {
             semanticError(main.getLine(), "main function's return type should be int");
             return;
+        }
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        mainFn.genCode(writer);
+        for(Decl d: decl)
+        {
+            if(d.getName().equals(mainFn.getName()))
+                continue;
+            d.genCode(writer);
         }
     }
     

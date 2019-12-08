@@ -5,6 +5,7 @@ import java.util.*;
 import edvardas.ast.ASTPrinter;
 import edvardas.ast.nodes.Node;
 import edvardas.ast.nodes.Program;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.*;
 
 public class Main 
@@ -36,13 +37,13 @@ public class Main
             lexer.start();
             ArrayList<Token> tokens = lexer.getTokens();
             
-            for (Token token : tokens) {
+           /* for (Token token : tokens) {
                 String line   = String.format("%-3s",token.getLine());
                 String column = String.format("%-3s",token.getColumn());
                 String type   = String.format("%-25s",token.getState());
                 String value  = token.getValue() == null ? (token.getType() == State.IDENTIFIER ? token.getIdentifier() : "") : String.format("%-5s",token.getValue());
                 System.out.println(line + " | " + column + " | " + type + " | " + value);
-            }
+            }*/
             Parser parser = new Parser(path, tokens);
             Node root = parser.parse();
             Scope scope = new Scope(null);
@@ -50,7 +51,14 @@ public class Main
             root.checkTypes();
             ((Program)root).checkMain(scope);
             ASTPrinter astPrinter = new ASTPrinter();
-            astPrinter.print("", root);
+            //astPrinter.print("", root);
+            if(errors != null && errors.size() > 0)
+            {
+                return;
+            }
+            CodeWriter codeWriter = new CodeWriter();
+            root.genCode(codeWriter);
+            codeWriter.showCode();
         }
         catch(Error e)
         {

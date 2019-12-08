@@ -1,11 +1,12 @@
 package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
+import edvardas.codeGeneration.CodeWriter;
 import edvardas.parser.Scope;
 
 public class StatementVarDecl extends Statement {
     private VarDeclaration declaration;
-    
+
     public StatementVarDecl(VarDeclaration declaration) {
         this.declaration = declaration;
         addChildren(declaration);
@@ -28,5 +29,10 @@ public class StatementVarDecl extends Statement {
     public int getLine()
     {
         return declaration.getLine();
+    }
+    @Override
+    public void genCode(CodeWriter writer)
+    {
+        declaration.genCode(writer);
     }
 }
