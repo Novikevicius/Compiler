@@ -1,10 +1,30 @@
 int main()
 {
-    int i;
-    for(; i < 10; )
+    string text;
+    if(a != 'c' && b[0] > 0 || c^2 == 4)
     {
-        9+6;
+        int x = f('c', b);
     }
-    int c = -1;
-    return 1;
+    else if(false)
+    {
+        c++;
+    }
+    else { }
+    for(int i = 0; i < 10; i += 1)
+    {
+        while(c > 0)
+        {
+            return c;
+        }
+    }
+    if(6 > 0){
+        return 5;
+    } else if(false)
+    {
+        return -1;
+    }
+    else {
+        return 5;
+    }
 }
+int f(char c, int[2] arr){ return 0;}
