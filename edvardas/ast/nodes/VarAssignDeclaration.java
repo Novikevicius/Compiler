@@ -35,7 +35,7 @@ public class VarAssignDeclaration extends VarDeclaration {
     {
         Node tAssign = expr.checkTypes();
         unifyTypes(tAssign, type, this.getLine());
-        return null;
+        return tAssign;
     }
     @Override
     public int getLine()
