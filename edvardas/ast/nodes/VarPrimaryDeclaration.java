@@ -51,8 +51,7 @@ public class VarPrimaryDeclaration extends VarDeclaration {
             case TYPE_BOOL:
                 writer.write(Instruction.PUSH, false, type.getKind());
                 break;
-            default://TODO: check for TYPE_STRING
-                System.out.println("Should not happen: " + type.getKind().toString());
+            default:
                 break;
         }
         writer.write(Instruction.SET_L, stack_slot, type.getKind());
