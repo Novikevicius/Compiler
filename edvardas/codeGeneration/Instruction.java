@@ -19,6 +19,8 @@ public enum Instruction {
     LEQ (0x0013, 0),
     MEQ (0x0014, 0),
     NEQ (0x0015, 0),
+    AND (0x0116, 0),
+    OR (0x0117, 0),
     // Stack instructions
     PUSH (0x0020, 1),
     POP  (0x0021, 0),
