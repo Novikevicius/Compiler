@@ -9,7 +9,7 @@ import edvardas.parser.Scope;
 
 public class Program extends Node {
     private ArrayList<Decl> decl;
-
+    private DeclFn mainFn;
     public Program(ArrayList<Decl> decls) {
         decl = decls;
         decls.forEach((d) -> addChildren(d));
@@ -54,7 +54,7 @@ public class Program extends Node {
             semanticError(line, "main function is not found");
             return;
         }
-        DeclFn mainFn = (DeclFn) main;
+        mainFn = (DeclFn) main;
 
         if(mainFn.getParams().size() > 0)
         {
@@ -70,8 +70,11 @@ public class Program extends Node {
     @Override
     public void genCode(CodeWriter writer)
     {
+        mainFn.genCode(writer);
         for(Decl d: decl)
         {
+            if(d.getName().equals(mainFn.getName()))
+                continue;
             d.genCode(writer);
         }
     }
