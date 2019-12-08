@@ -2,6 +2,7 @@ package edvardas.ast.nodes;
 
 import edvardas.ast.ASTPrinter;
 import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
 import edvardas.parser.Scope;
 
 public class StatementExpression extends Statement {
@@ -33,5 +34,10 @@ public class StatementExpression extends Statement {
     public void genCode(CodeWriter writer)
     {
         expr.genCode(writer);
+        try {
+			writer.write(Instruction.POP, null, ((TypePrim)expr.checkTypes()).getKind());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }
