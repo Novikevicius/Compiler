@@ -83,7 +83,17 @@ public class CodeWriter
             {
                 if(!(op instanceof Label))
                 {
-                    code.add(objToInt(op));
+                    if(!(op instanceof String))
+                        code.add(objToInt(op));
+                    else
+                    {
+                        String s = (String)op;
+                        code.add(s.length());
+                        for(int i = 0; i < s.length(); i++)
+                        {
+                            code.add((int) s.charAt(i));
+                        }
+                    }
                 }
                 else
                 {
@@ -129,7 +139,11 @@ public class CodeWriter
                             System.out.print(code.get(offset++) > 0);
                             break;
                         case 4:
-                        // TODO: implement TYPE_STRING
+                            int length = code.get(offset++);
+                            StringBuffer s = new StringBuffer(length);
+                            for(int j = 0; j < length; j++)
+                                s.append((char)code.get(offset++).intValue());
+                            System.out.print(new String(s));
                             break;
                         case 5:
                             System.out.printf("%d ", code.get(offset++));
