@@ -12,6 +12,8 @@ public class StatementFor extends Statement {
     private Expression condition;
     private StatementAssignment afterthought;
     private StmtBody body;
+    private Label start;
+    private Label endLoopBody;
     
     public StatementFor(VarDeclaration initialization, Expression cond, StatementAssignment afterthought, StmtBody body) {
         condition = cond;
@@ -29,6 +31,14 @@ public class StatementFor extends Statement {
         printer.print("condition", condition);
         printer.print("afterthought", afterthought);
         printer.print("body", body);
+    }
+    public Label getStart()
+    {
+        return start;
+    }
+    public Label getEnd()
+    {
+        return endLoopBody;
     }
     @Override
     public void resolveNames(Scope parentScope) throws Exception 
@@ -64,12 +74,14 @@ public class StatementFor extends Statement {
     {
         if(initialization != null)
             initialization.genCode(writer);
-        Label start = new Label();
+        start = new Label();
+        endLoopBody = new Label();
         Label end = new Label();
         writer.placeLabel(start);
         condition.genCode(writer);
         writer.write(Instruction.JZ, end, State.TYPE_INT);
         body.genCode(writer);
+        writer.placeLabel(endLoopBody);
         if(afterthought != null)
             afterthought.genCode(writer);
         writer.write(Instruction.JMP, start, State.TYPE_INT);
