@@ -1,5 +1,12 @@
 int main()
 {
+    char a;
+    int[2] b;
+    int c = 1234;
+    c = 123 + b[0];
+    read c;
+    write b;
+    string s = "Hello World!";
     string text;
     if(a != 'c' && b[0] > 0 || c^2 == 4)
     {
