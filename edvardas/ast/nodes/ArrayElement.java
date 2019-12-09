@@ -30,7 +30,13 @@ public class ArrayElement extends Expression {
     @Override
     public void resolveNames(Scope scope) throws Exception
     {
-        ArrayDeclaration decl = (ArrayDeclaration) scope.resolveName(name);
+        Node n = scope.resolveName(name);
+        if(!(n instanceof ArrayDeclaration))
+        {
+            semanticError(name.getLine(), name.getIdentifier() + " is not an array");
+            return;
+        }
+        ArrayDeclaration decl = (ArrayDeclaration) n;
         type = decl.getType();
         stack_slot = decl.stack_slot;
         index.resolveNames(scope);
@@ -39,7 +45,7 @@ public class ArrayElement extends Expression {
     public Node checkTypes() throws Exception
     {
         index.checkTypes();
-        return type.checkTypes();
+        return type != null ? type.checkTypes() : null;
     }
     @Override
     public int getLine()
