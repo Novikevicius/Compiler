@@ -82,8 +82,27 @@ public abstract class Node {
             return false;
         }
         if(t1.getClass() != t2.getClass()){
-            if(printError)
-                semanticError(line, "Type mismatch: got: '" + t1.getClass().getSimpleName() + "', expected: '" + t2.getClass().getSimpleName() + "'");
+            if(printError){
+                Object type1 = null;
+                Object type2 = null;
+                if(t1 instanceof TypePrim)
+                {
+                    type1 = ((TypePrim)t1).getKind().getName();
+                } else if (t1 instanceof ArrayDeclaration){
+                    type1 = "Array";
+                } else {
+                    type1 = t1.getClass().getSimpleName();
+                }
+                if(t2 instanceof TypePrim)
+                {
+                    type2 = ((TypePrim)t2).getKind().getName();
+                } else if (t2 instanceof ArrayDeclaration){
+                    type2 = "Array";
+                } else {
+                    type2 = t2.getClass().getSimpleName();
+                }
+                semanticError(line, "Type mismatch: got: '" + type1 + "', expected: '" + type2 + "'");
+            }
             return false;
         } else if(t1 instanceof TypePrim && t2 instanceof TypePrim) {
             TypePrim p1 = (TypePrim)t1;
