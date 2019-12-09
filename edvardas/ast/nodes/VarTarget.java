@@ -29,6 +29,9 @@ public class VarTarget extends AssignmentTarget {
     
     @Override
     public Node checkTypes() throws Exception{
+        if(var.getTarget() instanceof ArrayDeclaration){
+            semanticError(getLine(), "Array cannot be assignment's target");
+        }
         return var.checkTypes();
     }
     @Override
