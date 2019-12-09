@@ -78,7 +78,8 @@ public class FunctionCall extends Expression {
     @Override
     public void genCode(CodeWriter writer) {
         try {
-            writer.write(Instruction.CALL_BEGIN, ((TypePrim) checkTypes()).getKind());
+            Label l = new Label();
+            writer.write(Instruction.CALL_BEGIN, l, ((TypePrim) checkTypes()).getKind());
             for (Expression arg : args) {
                 arg.genCode(writer);
             }
@@ -86,6 +87,7 @@ public class FunctionCall extends Expression {
             ops.add(((DeclFn)target).getStartLabel());
             ops.add(args.size());
             writer.write(Instruction.CALL, ops, ((TypePrim) checkTypes()).getKind());
+            writer.placeLabel(l);
         } catch (Exception e) {
             e.printStackTrace();
         }
