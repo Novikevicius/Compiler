@@ -204,6 +204,22 @@ class Interpreter {
             memory[fp + i] = pop();
             break;
         }
+        case GET_A_L: {
+            int index = pop();
+            push(memory[fp + index]);
+            break;
+        }
+        case SET_A_L: {
+            int index = pop();
+            memory[fp + index] = pop();
+            break;
+        }
+        case DEC_A_L: {
+            readArg();
+            readArg();
+            // do nothing
+            break;
+        }
         case ALLOC: {
             sp += readArg();
             break;
