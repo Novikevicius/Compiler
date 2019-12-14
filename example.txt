@@ -1,14 +1,7 @@
 int main()
 {
-    while(true)
-    {
-        return 0;
-        while(false)
-        {
-            break;
-        }
-        return 0;
-    }
-    return 0;
+    int a = 10;
+    a = 10^3;
+    int c = -1;
+    return a+c;
 }
-int f(char c, int[2] arr){ return 0;}
