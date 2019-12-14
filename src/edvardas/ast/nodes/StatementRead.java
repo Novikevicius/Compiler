@@ -59,7 +59,6 @@ public class StatementRead extends Statement {
         try {
             for (ReadArgument arg : args) {
                 arg.genCode(writer);
-                writer.write(Instruction.READ, State.TYPE_VOID);
             }
         } catch (Exception e) {
             e.printStackTrace();
