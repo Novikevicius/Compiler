@@ -1,6 +1,8 @@
 package edvardas;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import edvardas.codeGeneration.Instruction;
 
@@ -12,6 +14,7 @@ class Interpreter {
     private int fp = 0;
     private int sp = 0;
     private int type = -1;
+    private Scanner in = null;
 
     public Interpreter(ArrayList<Integer> code) {
         memory = new int[4096];
@@ -21,16 +24,17 @@ class Interpreter {
         running = true;
         fp = STACK_START;
         sp = STACK_START;
+        in = new Scanner(System.in); 
     }
 
-    public void execute() {
+    public void execute() throws IOException {
         while (running) {
             executeOne();
         }
         System.out.println("Exit code: " + pop());
     }
 
-    public void executeOne() {
+    public void executeOne() throws IOException {
         Instruction opcode = Instruction.instrByOpcode.get(readImm());
         switch (opcode) {
         case ADD: {
@@ -205,7 +209,9 @@ class Interpreter {
             break;
         }
         case GET_A_L: {
+            int temp = type;
             int index = pop();
+            type = temp;
             push(memory[fp + index]);
             break;
         }
@@ -292,6 +298,25 @@ class Interpreter {
             for(int i = 0; i < args; i++)
             {
                 System.out.print(arg.get(i));
+            }
+            break;
+        }
+        case READ:
+        {
+            if(type == 0){
+                push(in.nextInt());
+            }
+            else if(type == 1){
+                push(Float.floatToIntBits(in.nextFloat()));
+            }
+            else if(type == 2){
+                push(in.next().charAt(0));
+            }
+            else if(type == 4){
+                //TODO: implement string read
+            }
+            else if(type == 5){
+                push(in.next().equals("true") ? 1 : 0);
             }
             break;
         }
