@@ -29,7 +29,7 @@ public enum Instruction {
     GET_A_L (0x0024, 0),
     SET_A_L (0x0025, 0),
     DEC_A_L (0x0026, 2),
-    ALLOC (0x0026, 1),
+    ALLOC (0x0027, 1),
     // Control instructions
     RET (0x0030, 0),
     RET_V (0x0031, 0),
