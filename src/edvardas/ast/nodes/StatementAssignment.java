@@ -54,6 +54,9 @@ public class StatementAssignment extends Statement {
                 if (target instanceof VarTarget)
                     writer.write(Instruction.GET_L, ((VarDeclaration) (((ExprVar) ((VarTarget) target).getVar())
                             .getTarget().parent)).stack_slot, ((TypePrim) target.checkTypes()).getKind());
+                else if(target instanceof ArrayTarget){
+                    ((ArrayTarget)target).genCodeGet(writer);
+                }
                 switch(operator)
                 {
                     case ASSIGN_OP_PLUS:
