@@ -59,6 +59,8 @@ public class Main
             CodeWriter codeWriter = new CodeWriter();
             root.genCode(codeWriter);
             codeWriter.showCode();
+            Interpreter vm = new Interpreter(codeWriter.getCode());
+            vm.execute();
         }
         catch(Error e)
         {
