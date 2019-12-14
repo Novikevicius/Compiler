@@ -32,6 +32,13 @@
             "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example3.txt",
             "request": "launch",
             "mainClass": "edvardas.Main"
+        },
+        {
+            "type": "java",
+            "name": "Pvz4",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example4.txt",
+            "request": "launch",
+            "mainClass": "edvardas.Main"
         }
     ]
 }
