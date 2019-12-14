@@ -20,6 +20,9 @@ public class CodeWriter
         labels = new ArrayList<Label>();
         Instruction.init();
     }
+    public ArrayList<Integer> getCode(){
+        return code;
+    }
     public Label newLabel()
     {
         Label l = new Label();
