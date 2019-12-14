@@ -1,6 +1,6 @@
 int main()
 {
-    return 0;
+    return fib(5);
 }
 int fib(int i)
 { 
