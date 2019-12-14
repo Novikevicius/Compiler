@@ -57,8 +57,8 @@ public class ArrayElement extends Expression {
     {
         index.genCode(writer);
         State t = ((TypePrim)type).getKind();
-        writer.write(Instruction.PUSH, stack_slot, t);
-        writer.write(Instruction.ADD, t);
+        writer.write(Instruction.PUSH, stack_slot, State.TYPE_INT);
+        writer.write(Instruction.ADD, State.TYPE_INT);
         writer.write(Instruction.GET_A_L, t);
     }
 }
