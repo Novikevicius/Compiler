@@ -14,7 +14,7 @@ public class DeclFn extends Decl {
     private ArrayList<VarDeclaration> params;
     private StmtBody body;
     private Label startLabel;
-
+    private int numLocal = 0;
     public DeclFn(Type retType, Token name, ArrayList<VarDeclaration> params, StmtBody body) {
         this.type = retType;
         this.name = name;
@@ -54,6 +54,7 @@ public class DeclFn extends Decl {
             }
         });
         body.resolveNames(scope);
+        numLocal += stack_slot_index;
     }
 
     @Override
@@ -80,6 +81,8 @@ public class DeclFn extends Decl {
     }
     public void genCode(CodeWriter writer) {
         writer.placeLabel(startLabel);
+        if(numLocal > 0)
+            writer.write(Instruction.ALLOC, numLocal, State.TYPE_INT);
         body.genCode(writer);
         if(type.getKind() == State.TYPE_VOID && !body.checkReturn())
         {
