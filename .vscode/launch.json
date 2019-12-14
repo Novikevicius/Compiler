@@ -39,6 +39,13 @@
             "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example4.txt",
             "request": "launch",
             "mainClass": "edvardas.Main"
+        },
+        {
+            "type": "java",
+            "name": "Primes",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Primes.txt",
+            "request": "launch",
+            "mainClass": "edvardas.Main"
         }
     ]
 }

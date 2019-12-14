@@ -1,0 +1,25 @@
+int main()
+{
+    write "Prime numbers\n";
+    for (int i = 1; i < 100; i += 1)
+    {
+        if(isPrime(i)){
+            write i, ' ';
+        }
+    }
+    write '\n';
+    return 0;
+}
+bool isPrime(int v)
+{ 
+    bool prime = true;
+    for(int i = 2; i <= v / 2; i += 1)
+    {
+        if(v - i * (v / i) == 0)
+        {
+            prime = false;
+            break;
+        }
+    }
+    return prime;
+}
