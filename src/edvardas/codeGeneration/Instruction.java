@@ -34,6 +34,7 @@ public enum Instruction {
     RET_V (0x0031, 0),
     CALL_BEGIN (0x0032, 1),
     CALL (0x0033, 2),
+    EXIT (0x0034, 0),
     // Jumps
     JMP (0x0130, 1),
     JZ (0x0131, 1),
