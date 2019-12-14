@@ -53,11 +53,11 @@ class Interpreter {
             if(type == 0) {
                 int a = pop();
                 int b = pop();
-                push(a - b);
+                push(b - a);
             } else if(type == 1)  {
                 float a = Float.intBitsToFloat(pop());
                 float b = Float.intBitsToFloat(pop());
-                push(Float.floatToIntBits(a - b));
+                push(Float.floatToIntBits(b - a));
             }
             break;
         }
@@ -77,11 +77,11 @@ class Interpreter {
             if(type == 0) {
                 int a = pop();
                 int b = pop();
-                push(a / b);
+                push(b / a);
             } else if(type == 1)  {
                 float a = Float.intBitsToFloat(pop());
                 float b = Float.intBitsToFloat(pop());
-                push(Float.floatToIntBits(a / b));
+                push(Float.floatToIntBits(b / a));
             }
             break;
         }
@@ -240,9 +240,7 @@ class Interpreter {
         }
         case CALL_BEGIN: {
             readArg();
-            push(0);
-            push(0);
-            push(0);
+            sp += 3;
             break;
         }
         case CALL: {
@@ -346,7 +344,7 @@ class Interpreter {
     private void exec_call(int target, int arg_num)
     {
         int newIP = target;
-        int newFP = sp - arg_num;
+        int newFP = sp - arg_num * 2;
         int newSP = newFP;
         memory[newFP - 3] = ip;
         memory[newFP - 2] = fp;
