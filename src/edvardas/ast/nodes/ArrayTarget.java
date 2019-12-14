@@ -47,4 +47,17 @@ public class ArrayTarget extends AssignmentTarget {
         writer.write(Instruction.ADD, t);
         writer.write(Instruction.SET_A_L, t);
     }
+    public void genCodeGet(CodeWriter writer)
+    {
+        arrayElement.getIndex().genCode(writer);
+        State t = null;
+        try {
+            t = ((TypePrim) arrayElement.checkTypes()).getKind();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        writer.write(Instruction.PUSH, arrayElement.stack_slot, t);
+        writer.write(Instruction.ADD, t);
+        writer.write(Instruction.GET_A_L, t);
+    }
 }
