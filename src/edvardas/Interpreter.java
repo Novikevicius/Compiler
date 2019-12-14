@@ -312,6 +312,9 @@ class Interpreter {
             else if(type == 2){
                 push(in.next().charAt(0));
             }
+            else if(type == 3){
+                push(in.next().equals("true") ? 1 : 0);
+            }
             else if(type == 4){
                 //TODO: implement string read
             }
