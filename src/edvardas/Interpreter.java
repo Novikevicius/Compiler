@@ -29,7 +29,7 @@ class Interpreter{
         {
             executeOne();
         }
-        System.out.println(pop());
+        System.out.println("Exit code: " + pop());
     }
     public void executeOne()
     {
@@ -47,20 +47,20 @@ class Interpreter{
             {
                 int a = pop();
                 int b = pop();
-                push(a - b);
+                push(b - a);
                 break;
             }
             case MUL:
             {
-                int a = pop();
                 int b = pop();
+                int a = pop();
                 push(a * b);
                 break;
             }
             case DIV:
             {
-                int a = pop();
                 int b = pop();
+                int a = pop();
                 push(a / b);
                 break;
             }
@@ -68,7 +68,7 @@ class Interpreter{
             {
                 int a = pop();
                 int b = pop();
-                push(a ^ b);
+                push((int)Math.pow(b, a));
                 break;
             }
             case NEG:
@@ -93,14 +93,14 @@ class Interpreter{
             {
                 int a = pop();
                 int b = pop();
-                push(a < b ? 1 : 0);
+                push(b < a ? 1 : 0);
                 break;
             }
             case MORE:
             {
                 int a = pop();
                 int b = pop();
-                push(a > b ? 1 : 0);
+                push(b > a ? 1 : 0);
                 break;
             }
             case EQ:
@@ -114,14 +114,14 @@ class Interpreter{
             {
                 int a = pop();
                 int b = pop();
-                push(a <= b ? 1 : 0);
+                push(b <= a ? 1 : 0);
                 break;
             }
             case MEQ:
             {
                 int a = pop();
                 int b = pop();
-                push(a >= b ? 1 : 0);
+                push(b >= a ? 1 : 0);
                 break;
             }
             case NEQ:
