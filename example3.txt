@@ -1,0 +1,15 @@
+int main()
+{
+    return fib(5);
+}
+int fib(int i)
+{ 
+    if(false)
+    {
+        return 0;
+    }
+    else 
+    {
+        return 5;
+    }
+}

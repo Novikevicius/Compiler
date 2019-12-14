@@ -6,8 +6,30 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch)-Main",
-            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example.txt",
+            "name": "Debug",
+            "args": "C:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example.txt",
+            "request": "launch",
+            "projectName": "MyProgrammingLanguage",
+            "mainClass": "edvardas.Main"
+        },
+        {
+            "type": "java",
+            "name": "Pvz1",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example1.txt",
+            "request": "launch",
+            "mainClass": "edvardas.Main"
+        },
+        {
+            "type": "java",
+            "name": "Pvz2",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example2.txt",
+            "request": "launch",
+            "mainClass": "edvardas.Main"
+        },
+        {
+            "type": "java",
+            "name": "Pvz3",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Example3.txt",
             "request": "launch",
             "mainClass": "edvardas.Main"
         }
