@@ -27,6 +27,12 @@ public class StatementIf extends Statement {
     public Label getElseStart(){
         return elseStart;
     }
+    public boolean hasElse(){
+        return stmtElse != null;
+    }
+    public ArrayList<Branch> getElseifs(){
+        return elseif;
+    }
     public void print(ASTPrinter printer) throws Exception {
         printer.print("branch", branch);
         printer.print("elseif", elseif);
