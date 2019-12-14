@@ -1,5 +1,7 @@
 package edvardas.ast.nodes;
 
+import java.util.ArrayList;
+
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
 import edvardas.codeGeneration.CodeWriter;
@@ -54,7 +56,13 @@ public class Branch extends Node {
         condition.genCode(writer);
         writer.write(Instruction.JZ, end, State.TYPE_INT);
         body.genCode(writer);
-        writer.write(Instruction.JMP, ((StatementIf)parent).getElseStart(), State.TYPE_INT);
+        StatementIf stmtIf = (StatementIf)parent;
+        ArrayList<Branch> elseifs = stmtIf.getElseifs();
+        boolean isLastBranch = (elseifs.size() > 0 && elseifs.get(elseifs.size()-1) == this);
+        if(!isLastBranch || stmtIf.hasElse())
+        {
+            writer.write(Instruction.JMP, ((StatementIf)parent).getElseStart(), State.TYPE_INT);
+        }
         writer.placeLabel(end);
     }
 }
