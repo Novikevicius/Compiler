@@ -1,14 +1,16 @@
 int main()
 {
+    int a;
     while(true)
     {
-        return 0;
+        a = 1;
         while(false)
         {
+            a = 2;
             break;
+             a =3;
         }
-        return 0;
+        a = 8;
     }
-    return 0;
+    return 3;
 }
-int f(char c, int[2] arr){ return 0;}
