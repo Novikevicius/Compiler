@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>MyProgrammingLanguage</name>
-  <comment/>
-  <projects>
-    </projects>
+	<name>MyProgrammingLanguage</name>
+	<comment></comment>
+	<projects>
+	</projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
