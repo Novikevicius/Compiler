@@ -5,16 +5,23 @@ import java.util.ArrayList;
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
 import edvardas.codeGeneration.CodeWriter;
+import edvardas.codeGeneration.Instruction;
+import edvardas.codeGeneration.Label;
 import edvardas.parser.Scope;
 
 public class Program extends Node {
     private ArrayList<Decl> decl;
     private DeclFn mainFn;
+    private Label main_label;
+
     public Program(ArrayList<Decl> decls) {
         decl = decls;
         decls.forEach((d) -> addChildren(d));
+        main_label = new Label();
     }
-
+    public Label getMainLabel(){
+        return main_label;
+    }
     @Override
     public void print(ASTPrinter printer) throws Exception {
         printer.print("func", decl);
@@ -70,6 +77,15 @@ public class Program extends Node {
     @Override
     public void genCode(CodeWriter writer)
     {
+        Label exit = new Label();
+        writer.write(Instruction.CALL_BEGIN, exit, State.TYPE_INT);
+        ArrayList<Object> ops = new ArrayList<Object>(2);
+        ops.add(main_label);
+        ops.add(0);
+        writer.write(Instruction.CALL, ops, State.TYPE_INT);
+        writer.placeLabel(exit);
+        writer.write(Instruction.EXIT, null, State.TYPE_VOID);
+        writer.placeLabel(main_label);
         mainFn.genCode(writer);
         for(Decl d: decl)
         {
