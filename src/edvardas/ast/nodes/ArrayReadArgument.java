@@ -11,6 +11,7 @@ public class ArrayReadArgument extends ReadArgument {
     private Token name;
     private Expression index;
     private int stack_slot;
+    private Node type;
 
     public ArrayReadArgument(Token name, Expression index) {
         this.name = name;
@@ -25,24 +26,35 @@ public class ArrayReadArgument extends ReadArgument {
 
     @Override
     public void resolveNames(Scope scope) throws Exception {
-        stack_slot = ((ArrayDeclaration)scope.resolveName(name)).stack_slot;
+        stack_slot = ((ArrayDeclaration) scope.resolveName(name)).stack_slot;
+
+        type = ((TypePrim) ((ArrayDeclaration) scope.resolveName(name)).getType());
         index.resolveNames(scope);
     }
+
     @Override
     public Node checkTypes() throws Exception {
         index.checkTypes();
-        return null;
+        return type;
     }
+
     @Override
-    public int getLine()
-    {
+    public int getLine() {
         return name.getLine();
     }
+
     @Override
-    public void genCode(CodeWriter writer)
-    {
+    public void genCode(CodeWriter writer) {
+        State t = null;
+        try {
+            t = ((TypePrim) checkTypes()).getKind();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        writer.write(Instruction.READ, t);
         index.genCode(writer);
         writer.write(Instruction.PUSH, stack_slot, State.TYPE_INT);
         writer.write(Instruction.ADD, State.TYPE_INT);
+        writer.write(Instruction.SET_A_L, t);
     }
 }
