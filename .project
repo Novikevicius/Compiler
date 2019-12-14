@@ -4,12 +4,6 @@
 	<comment></comment>
 	<projects>
 	</projects>
-<<<<<<< HEAD
-	<buildSpec>
-	</buildSpec>
-	<natures>
-	</natures>
-=======
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
@@ -20,5 +14,4 @@
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
->>>>>>> dev-code-gen
 </projectDescription>
