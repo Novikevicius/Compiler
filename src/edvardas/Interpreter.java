@@ -34,95 +34,149 @@ class Interpreter {
         Instruction opcode = Instruction.instrByOpcode.get(readImm());
         switch (opcode) {
         case ADD: {
-            int a = pop();
-            int b = pop();
-            push(a + b);
+            if(type == 0) {
+                int a = pop();
+                int b = pop();
+                push(a + b);
+            } else if(type == 1)  {
+                float a = Float.intBitsToFloat(pop());
+                float b = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(a + b));
+            }
             break;
         }
         case SUB: {
-            int a = pop();
-            int b = pop();
-            push(b - a);
+            if(type == 0) {
+                int a = pop();
+                int b = pop();
+                push(a - b);
+            } else if(type == 1)  {
+                float a = Float.intBitsToFloat(pop());
+                float b = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(a - b));
+            }
             break;
         }
         case MUL: {
-            int b = pop();
-            int a = pop();
-            push(a * b);
+            if(type == 0) {
+                int a = pop();
+                int b = pop();
+                push(a * b);
+            } else if(type == 1)  {
+                float a = Float.intBitsToFloat(pop());
+                float b = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(a * b));
+            }
             break;
         }
         case DIV: {
-            int b = pop();
-            int a = pop();
-            push(a / b);
+            if(type == 0) {
+                int a = pop();
+                int b = pop();
+                push(a / b);
+            } else if(type == 1)  {
+                float a = Float.intBitsToFloat(pop());
+                float b = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(a / b));
+            }
             break;
         }
         case EXP: {
-            int a = pop();
-            int b = pop();
-            push((int) Math.pow(b, a));
+            if(type == 0) {
+                int a = pop();
+                int b = pop();
+                push((int) Math.pow(b, a));
+            } else if(type == 1)  {
+                double a = Float.intBitsToFloat(pop());
+                double b = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits((float)Math.pow(b, a)));
+            }
             break;
         }
         case NEG: {
-            int a = pop();
-            push(-a);
+            if(type == 0) {
+                int a = pop();
+                push(-a);
+            } else if(type == 1){
+                float a = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(-a));
+            }
             break;
         }
         case INC: {
-            int a = pop();
-            push(++a);
+            if(type == 0) {
+                int a = pop();
+                push(++a);
+            } else if(type == 1){
+                float a = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(++a));
+            }
             break;
         }
         case DEC: {
-            int a = pop();
-            push(--a);
+            if(type == 0) {
+                int a = pop();
+                push(--a);
+            } else if(type == 1){
+                float a = Float.intBitsToFloat(pop());
+                push(Float.floatToIntBits(-a));
+            }
             break;
         }
         case LESS: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(b < a ? 1 : 0);
             break;
         }
         case MORE: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(b > a ? 1 : 0);
             break;
         }
         case EQ: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(a == b ? 1 : 0);
             break;
         }
         case LEQ: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(b <= a ? 1 : 0);
             break;
         }
         case MEQ: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(b >= a ? 1 : 0);
             break;
         }
         case NEQ: {
             int a = pop();
             int b = pop();
+            type = 3;
+            type = 3;
             push(a != b ? 1 : 0);
             break;
         }
         case AND: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(a == b && a == 1 ? 1 : 0);
             break;
         }
         case OR: {
             int a = pop();
             int b = pop();
+            type = 3;
             push(a == 1 || b == 1 ? 1 : 0);
             break;
         }
@@ -201,7 +255,7 @@ class Interpreter {
                         o = v;
                         break;
                     case 1:
-                        o = (float)v;
+                        o = Float.intBitsToFloat(v);
                         break;
                     case 2:
                         o = (char)v;
