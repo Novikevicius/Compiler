@@ -61,6 +61,7 @@ public class StatementWhile extends Statement {
         condition.genCode(writer);
         writer.write(Instruction.JZ, end, State.TYPE_INT);
         body.genCode(writer);
+        writer.write(Instruction.JMP, start, State.TYPE_INT);
         writer.placeLabel(end);
     }
 }
