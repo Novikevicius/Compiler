@@ -85,8 +85,8 @@ public class StatementIf extends Statement {
         {
             elseif.get(i).genCode(writer);
         }
-        writer.placeLabel(elseStart);
         if(stmtElse != null)
             stmtElse.genCode(writer);
+        writer.placeLabel(elseStart);
     }
 }
