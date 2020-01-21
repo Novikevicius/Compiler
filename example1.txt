@@ -7,10 +7,11 @@ int main()
         while(false)
         {
             a = 2;
+            continue;
             break;
-             a =3;
+            a = 3;
         }
         a = 8;
     }
-    return 3;
+    return 4;
 }

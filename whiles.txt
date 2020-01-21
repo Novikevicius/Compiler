@@ -1,0 +1,22 @@
+int main()
+{
+    int x = 10;
+    write "X - nelyginiai: \n";
+    while(x > 0)
+    {
+        if(x - 2 * x / 2 == 0)
+        {
+            continue;
+        }
+        for(int y = 0; y < 10; y += 1)
+        {
+            write "Lyginis 
+            if(y - 2 * y / 2 == 1)
+            {
+                break;
+            }
+        }
+        x++;
+    }
+    return 0;
+}

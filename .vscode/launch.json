@@ -46,6 +46,13 @@
             "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Primes.txt",
             "request": "launch",
             "mainClass": "edvardas.Main"
+        },
+        {
+            "type": "java",
+            "name": "Guess",
+            "args": "c:/Users/Edvardas/OneDrive - Vilnius University/Transliavimo metodai/MyProgrammingLanguage/Guess.txt",
+            "request": "launch",
+            "mainClass": "edvardas.Main"
         }
     ]
 }

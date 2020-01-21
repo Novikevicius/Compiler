@@ -1,0 +1,23 @@
+int main()
+{
+    int n = 345;
+    bool running = true;
+    int guess = 0;
+    write "Spekite skaiciu nuo 0 iki 1000\n";
+    int count = 0;
+    while(running)
+    {
+        `` count++; ``
+        read guess;
+        if(guess == n){
+            write "Yey!!! Atspejote po ", count, " spejimu\n";
+            running = false;
+            break;
+        } else if(guess > n) {            
+            write "Neteisngai skaicius turi buti mazesnis\n";
+        } else {            
+            write "Neteisngai skaicius turi buti didesnis\n";
+        }
+    }
+    return 0;
+}

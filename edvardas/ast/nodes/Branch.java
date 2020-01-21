@@ -1,12 +1,7 @@
 package edvardas.ast.nodes;
 
-import java.util.ArrayList;
-
 import edvardas.State;
 import edvardas.ast.ASTPrinter;
-import edvardas.codeGeneration.CodeWriter;
-import edvardas.codeGeneration.Instruction;
-import edvardas.codeGeneration.Label;
 import edvardas.parser.Scope;
 
 public class Branch extends Node {
@@ -48,22 +43,5 @@ public class Branch extends Node {
     public int getLine()
     {
         return condition.getLine();
-    }
-    @Override
-    public void genCode(CodeWriter writer)
-    {
-        Label end = new Label();
-        condition.genCode(writer);
-        writer.write(Instruction.JZ, end, State.TYPE_INT);
-        body.genCode(writer);
-        StatementIf stmtIf = (StatementIf)parent;
-        ArrayList<Branch> elseifs = stmtIf.getElseifs();
-        boolean isLastBranch = (elseifs.size() > 0 && elseifs.get(elseifs.size()-1) == this);
-        if((!isLastBranch || stmtIf.hasElse()))
-        {
-            if(this != stmtIf.getBranch() || stmtIf.hasElse() || elseifs.size() > 0)
-                writer.write(Instruction.JMP, ((StatementIf)parent).getElseStart(), State.TYPE_INT);
-        }
-        writer.placeLabel(end);
     }
 }

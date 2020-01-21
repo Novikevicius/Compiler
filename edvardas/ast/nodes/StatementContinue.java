@@ -1,12 +1,8 @@
 package edvardas.ast.nodes;
 
 import edvardas.Main;
-import edvardas.State;
 import edvardas.Token;
 import edvardas.ast.ASTPrinter;
-import edvardas.codeGeneration.CodeWriter;
-import edvardas.codeGeneration.Instruction;
-import edvardas.codeGeneration.Label;
 import edvardas.parser.Scope;
 
 public class StatementContinue extends Statement {
@@ -36,20 +32,5 @@ public class StatementContinue extends Statement {
     public int getLine()
     {
         return keyword.getLine();
-    }
-    @Override
-    public void genCode(CodeWriter writer)
-    {
-        Label start = null;
-        StatementFor forStmt = (StatementFor)findAncestor(StatementFor.class);
-        if(forStmt == null)
-        {
-            start = ((StatementWhile)findAncestor(StatementWhile.class)).getStart();
-        }
-        else
-        {
-            start = forStmt.getStart();
-        }
-        writer.write(Instruction.JMP, start, State.TYPE_VOID);
     }
 }
